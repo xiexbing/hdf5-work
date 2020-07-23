@@ -9,9 +9,9 @@ import shutil
 from scipy import stats
 
 machines = ["summit"]
-experiments = ["collective"]
-data_dir = "dir_to_your_experiment_data"
-runs = ["summit_collective"]
+experiments = ["baseline"]
+data_dir = "/gpfs/alpine/stf008/scratch/bing/darshan/hdf5"
+runs = ["summit_baseline"]
 rdir = "/ccs/home/bing/hdf5/data"
 nodes = [2, 8, 32, 128]
 insuf = "insufficient"
@@ -256,7 +256,7 @@ def build_insufficient(api, asize, ncores, nblocks, ifile, exp):
         iff.write(iorline)
         iff.write(doneline)
     if exp == "baseline":
-        iorline = "ior $i $api $aggr $unit" + '\n'
+        iorline = "ior $i $api $size $unit" + '\n'
         iff.write(iorline)
 
     iff.write(doneline)
