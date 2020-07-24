@@ -9,9 +9,9 @@ import shutil
 from scipy import stats
 
 machines = ["summit"]
-experiments = ["baseline"]
+experiments = ["collective"]
 data_dir = "/gpfs/alpine/stf008/scratch/bing/darshan/hdf5"
-runs = ["summit_baseline"]
+runs = ["summit_collective"]
 rdir = "/ccs/home/bing/hdf5/data"
 nodes = [2, 8, 32, 128]
 insuf = "insufficient"
@@ -222,7 +222,8 @@ loc='upper right',  ncol=3)
         ndir = os.path.join(rdir, name)
         plt.savefig(ndir)
 
-def build_insufficient(api, asize, ncores, nblocks, ifile, exp):
+def build_insufficient(per, iff, exp):
+    [api, asize, ncores, nblocks] = per
     if 'k' in asize:
         wsize = asize.replace("k", "")
         unit = 'k'
@@ -234,12 +235,19 @@ def build_insufficient(api, asize, ncores, nblocks, ifile, exp):
         unit = 'g'
 
     doneline = "done" + '\n'
-    iff = open(ifile, 'a')
 
     apiline = "for api in '" + api + "'; do" + '\n'
     iff.write(apiline)
-    sizeline = "for size in '" + wsize + "'; do" + '\n'
-    iff.write(sizeline)
+    if exp == "baseline":
+        sizeline = "for size in '" + wsize + "'; do" + '\n'
+        iff.write(sizeline)
+    elif exp == "blocks":
+        sizeline = "for aggr in '" + wsize + "'; do" + '\n'
+        iff.write(sizeline)
+    elif exp == "collective":
+        sizeline = "for aggr in '" + wsize + "'; do" + '\n'
+        iff.write(sizeline)
+   
     unitline = "for unit in '" + unit + "'; do" + '\n'
     iff.write(unitline)
     if exp == "blocks":
@@ -279,6 +287,7 @@ def per_results(run_dir, result_dir, exp, imdir):
             bandsum = []
             rwsum = []
             closesum = []
+            insufficient = []
 
             if name == d:
                 ddir = os.path.join(run_dir, d)
@@ -327,8 +336,10 @@ def per_results(run_dir, result_dir, exp, imdir):
                         #check data stability
                         if io == 'r' or io == 'f':
                             if len(agrw) < cut or relative_error(interval, agrw) > threshold:
-                                ifile = os.path.join(imdir, name)
-                                build_insufficient(api, asize, ncores, nblocks, ifile, exp)
+                                
+                                api = api.replace("C", "")
+                                if [api, asize, ncores, nblocks] not in insufficient:
+                                    insufficient.append([api, asize, ncores, nblocks])
  
                         #write bandwidth result
                         rfile = os.path.join(rd_dir, "rw-bandwidth")
@@ -383,7 +394,14 @@ def per_results(run_dir, result_dir, exp, imdir):
                             rf.write(line_string)
                         rf.truncate()
                         rf.close()
+            
+            ifile = os.path.join(imdir, name)
+            iff = open(ifile, 'a')
+            for per in insufficient:
+                build_insufficient(per, iff, exp)
 
+            iff.truncate()
+            iff.close()                
 
 
 def main():
