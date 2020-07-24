@@ -15,8 +15,8 @@ runs = ["summit_collective"]
 rdir = "/ccs/home/bing/hdf5/data"
 nodes = [2, 8, 32, 128]
 insuf = "insufficient"
-threshold = 0.1
-interval = 0.98
+threshold = 0.2
+interval = 0.95
 cut = 30
 
 def relative_error(confidence_interval, x):
