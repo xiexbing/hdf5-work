@@ -679,10 +679,12 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
                         HDF5_CHECK(dataSet, "cannot create data set");
                 }
         } else {                /* READ or CHECK */
-                sprintf(dataSetName, "%s-%04d.%04d.%d", "Dataset", dataSetID,
-                        dataSetSuffix++, i);
-                dataSet[i] = H5Dopen(*(hid_t *) fd, dataSetName);
-                HDF5_CHECK(dataSet, "cannot create data set");
+                for (i = 0; i < ndataSet; i++) {
+                        sprintf(dataSetName, "%s-%04d.%04d.%d", "Dataset", dataSetID,
+                                dataSetSuffix++, i);
+                        dataSet[i] = H5Dopen(*(hid_t *) fd, dataSetName);
+                        HDF5_CHECK(dataSet, "cannot create data set");
+                }
         }
 }
 
