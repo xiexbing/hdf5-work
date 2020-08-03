@@ -30,6 +30,7 @@
 #include "iordef.h"
 
 #define NUM_DIMS 1              /* number of dimensions to data set */
+#define MAX_NDATASET 1024       /* Tang: Max number of datasets */
 
 /******************************************************************************/
 /*
@@ -147,11 +148,12 @@ ior_aiori_t hdf5_aiori = {
 };
 
 static hid_t xferPropList;      /* xfer property list */
-hid_t dataSet;                  /* data set id */
+hid_t dataSet[MAX_NDATASET];                  /* data set id */
 hid_t dataSpace;                /* data space id */
 hid_t fileDataSpace;            /* file data space id */
 hid_t memDataSpace;             /* memory data space id */
 int newlyOpenedFile;            /* newly opened file */
+int ndataSet = 1;
 
 /***************************** F U N C T I O N S ******************************/
 
@@ -260,6 +262,17 @@ static void *HDF5_Open(char *testFileName, IOR_param_t * param)
         HDF5_CHECK(H5Pset_alignment(accessPropList, param->setAlignment,
                                     param->setAlignment),
                    "cannot set alignment");
+
+        // Tang: get the number of datasets from environment variable
+        char *envchar = getenv("HDF5_NUM_DATASET"); 
+        if (NULL != envchar) 
+                ndataSet = atoi(envchar);
+        
+        if (ndataSet < 0 ) 
+                ndataSet = 1;
+        
+        if (ndataSet > MAX_NDATASET)
+                ndataSet = MAX_NDATASET;
 
 #ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS
         HDF5_options_t *o = (HDF5_options_t*) param->backend_options;
@@ -417,6 +430,7 @@ static IOR_offset_t HDF5_Xfer(int access, void *fd, IOR_size_t * buffer,
 {
         static int firstReadCheck = FALSE, startNewDataSet;
         IOR_offset_t segmentPosition, segmentSize;
+        int i;
 
         /*
          * this toggle is for the read check operation, which passes through
@@ -461,7 +475,9 @@ static IOR_offset_t HDF5_Xfer(int access, void *fd, IOR_size_t * buffer,
         if (startNewDataSet == TRUE) {
                 /* if just opened this file, no data set to close yet */
                 if (newlyOpenedFile != TRUE) {
-                        HDF5_CHECK(H5Dclose(dataSet), "cannot close data set");
+                        for (i = 0; i < ndataSet; i++) {
+                                HDF5_CHECK(H5Dclose(dataSet[i]), "cannot close data set");
+                        }
                         HDF5_CHECK(H5Sclose(fileDataSpace),
                                    "cannot close file data space");
                 }
@@ -476,15 +492,19 @@ static IOR_offset_t HDF5_Xfer(int access, void *fd, IOR_size_t * buffer,
 
         /* access the file */
         if (access == WRITE) {  /* WRITE */
-                HDF5_CHECK(H5Dwrite(dataSet, H5T_NATIVE_LLONG,
-                                    memDataSpace, fileDataSpace,
-                                    xferPropList, buffer),
-                           "cannot write to data set");
+                for (i = 0; i < ndataSet; i++) {
+                        HDF5_CHECK(H5Dwrite(dataSet[i], H5T_NATIVE_LLONG,
+                                            memDataSpace, fileDataSpace,
+                                            xferPropList, buffer),
+                                   "cannot write to data set");
+                }
         } else {                /* READ or CHECK */
-                HDF5_CHECK(H5Dread(dataSet, H5T_NATIVE_LLONG,
-                                   memDataSpace, fileDataSpace,
-                                   xferPropList, buffer),
-                           "cannot read from data set");
+                for (i = 0; i < ndataSet; i++) {
+                        HDF5_CHECK(H5Dread(dataSet[i], H5T_NATIVE_LLONG,
+                                           memDataSpace, fileDataSpace,
+                                           xferPropList, buffer),
+                                   "cannot read from data set");
+                }
         }
         if((access == WRITE) && (param->fsyncPerWrite == TRUE))
                HDF5_Fsync(fd, param);
@@ -505,12 +525,15 @@ static void HDF5_Fsync(void *fd, IOR_param_t * param)
  */
 static void HDF5_Close(void *fd, IOR_param_t * param)
 {
+        int i;
         /*Bing add fsync line */
         HDF5_Fsync(fd, param);
         if(param->dryRun)
           return;
         if (param->fd_fppReadCheck == NULL) {
-                HDF5_CHECK(H5Dclose(dataSet), "cannot close data set");
+                for (i = 0; i < ndataSet; i++) {
+                        HDF5_CHECK(H5Dclose(dataSet[i]), "cannot close data set");
+                }
                 HDF5_CHECK(H5Sclose(dataSpace), "cannot close data space");
                 HDF5_CHECK(H5Sclose(fileDataSpace),
                            "cannot close file data space");
@@ -588,7 +611,7 @@ static IOR_offset_t SeekOffset(void *fd, IOR_offset_t offset,
         hsBlock[0] = (hsize_t) (param->transferSize / sizeof(IOR_size_t));
 
         /* retrieve data space from data set for hyperslab */
-        fileDataSpace = H5Dget_space(dataSet);
+        fileDataSpace = H5Dget_space(dataSet[0]);       // Tang: use the same dataspace for all datasets
         HDF5_CHECK(fileDataSpace, "cannot get data space from data set");
         HDF5_CHECK(H5Sselect_hyperslab(fileDataSpace, H5S_SELECT_SET,
                                        hsStart, hsStride, hsCount, hsBlock),
@@ -605,6 +628,7 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
         hid_t dataSetPropList;
         int dataSetID;
         static int dataSetSuffix = 0;
+        int i;
 
         /* may want to use an extendable dataset (H5S_UNLIMITED) someday */
         /* may want to use a chunked dataset (H5S_CHUNKED) someday */
@@ -619,9 +643,6 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
         } else {
                 dataSetID = 0;
         }
-
-        sprintf(dataSetName, "%s-%04d.%04d", "Dataset", dataSetID,
-                dataSetSuffix++);
 
         if (param->open == WRITE) {     /* WRITE */
                 /* create data set */
@@ -647,13 +668,23 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
 #else
                 WARN("unable to determine HDF5 version for 'no fill' usage");
 #endif
-                dataSet =
-                    H5Dcreate(*(hid_t *) fd, dataSetName, H5T_NATIVE_LLONG,
-                              dataSpace, dataSetPropList);
-                HDF5_CHECK(dataSet, "cannot create data set");
+
+                for (i = 0; i < ndataSet; i++) {
+                        sprintf(dataSetName, "%s-%04d.%04d.%d", "Dataset", dataSetID,
+                                dataSetSuffix++, i);
+
+                        dataSet[i] =
+                            H5Dcreate(*(hid_t *) fd, dataSetName, H5T_NATIVE_LLONG,
+                                      dataSpace, dataSetPropList);
+                        HDF5_CHECK(dataSet, "cannot create data set");
+                }
         } else {                /* READ or CHECK */
-                dataSet = H5Dopen(*(hid_t *) fd, dataSetName);
-                HDF5_CHECK(dataSet, "cannot create data set");
+                for (i = 0; i < ndataSet; i++) {
+                        sprintf(dataSetName, "%s-%04d.%04d.%d", "Dataset", dataSetID,
+                                dataSetSuffix++, i);
+                        dataSet[i] = H5Dopen(*(hid_t *) fd, dataSetName);
+                        HDF5_CHECK(dataSet, "cannot create data set");
+                }
         }
 }
 
