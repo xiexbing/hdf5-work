@@ -1,0 +1,31 @@
+#!/bin/bash -l
+#SBATCH -A projID 
+#SBATCH -t 12:00:00
+#SBATCH -N 1 
+##SBATCH -d PREV
+#SBATCH -J TIME 
+#SBATCH -o o.TIME
+#SBATCH -e e.TIME
+
+module load darshan-util
+
+month=`echo "TIME" | awk -F "_" '{print $1}'`
+day=`echo "TIME" | awk -F "_" '{print $2}'`
+cdir=$summit_dir_onsite/2020/$month/$day
+rdir=$self_defined_darshan_dir/EXP/darshan
+jobs=IDs
+
+mkdir -p $rdir
+
+process(){
+    local log=$1
+    local ldir=$cdir/$log
+    local name=${log}.output
+    #crashed before parse completed
+    srun -n 1 darshan-dxt-parser $ldir&>$rdir/$name
+}
+for log in `ls $cdir|grep $jobs`; do
+    process $log
+done
+
+echo "${jobs} ${month}_${day}">>complete 
