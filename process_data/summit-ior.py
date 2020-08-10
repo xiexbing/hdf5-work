@@ -11,14 +11,13 @@ import subprocess as sp
 
 machines = ["summit"]
 experiments = ["collective"]
-data_dir = "/gpfs/alpine/stf008/scratch/bing/darshan/hdf5"
 data_dir = "/gpfs/alpine/stf008/scratch/bing/script"
 rdir = "/ccs/home/bing/hdf5/data"
-nodes = [2, 8, 32, 128]
 insuf = "insufficient"
+nodes = [2, 8, 32, 128]
 complete = "complete"
-threshold = 0.1
-interval = 0.95
+threshold = 0.2
+interval = 0.8
 cut = 30
 
 def relative_error(confidence_interval, x):
@@ -48,10 +47,12 @@ def complete_check(complete_file, datesum):
     recorded = read_file(complete_file)
     for i, per in enumerate(recorded):
         recorded[i] = recorded[i].split()[0]
+    
     for time in datesum:
-            if time not in recorded:
-                break
-    check = "y"   
+        if time not in recorded:
+            check = "n"
+            break
+        check = "y"   
  
     return check 
 
@@ -259,7 +260,7 @@ def insufficient_check(imdir, result_dir, n, exp):
     for rname in os.listdir(rdir):
         [api, asize, ncores, nblocks, io] = rname.split("_")
         #check data stability
-        rnamefile = os.path.join(rdir, rname + "/aggregate-bandwidth")
+        rnamefile = os.path.join(rdir, rname + "/time-total")
         agrw = []
         rinform = read_file(rnamefile)
         for line in rinform:
@@ -267,6 +268,7 @@ def insufficient_check(imdir, result_dir, n, exp):
             agrw.append(bandwidth)
         agrw = list(set(agrw))
         if len(agrw) < cut or relative_error(interval, agrw) > threshold:
+            print (rname,  relative_error(interval, agrw), len(agrw))
             api = api.replace("C", "")
             if [api, asize, ncores, nblocks] not in insufficient:
                 insufficient.append([api, asize, ncores, nblocks])
@@ -279,9 +281,72 @@ def insufficient_check(imdir, result_dir, n, exp):
     iff.truncate()
     iff.close()                
 
+def process_one(inform, name, rname, rdir, exp, dinform, datesum, n, asize, io, run):
+
+#process data
+    print (inform, name, exp)
+    [aopen, aclose, agrw, ostraggler, cstraggler] = process_raw(dinform, n, io)
+    aband = get_bandwidth(agrw, asize, n)
+    nd_dir = os.path.join(rdir, name)
+    rd_dir = os.path.join(nd_dir, rname)
+    if not os.path.exists(rd_dir):
+        os.makedirs(rd_dir)
+    #write aggregate bandwidth result
+    rfile = os.path.join(rd_dir, "aggregate-bandwidth")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(datesum):
+        line_string = str(aband[i]) + ' ' + per + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
+ 
+    #write aggregate bandwidth result
+    rfile = os.path.join(rd_dir, "time-total")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(datesum):
+        line_string = str(agrw[i]) + ' ' + per + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
+ 
+    #open result
+    rfile = os.path.join(rd_dir, "open")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(datesum):
+        line_string = str(aopen[i]) + ' ' + per + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
+
+    #close result
+    rfile = os.path.join(rd_dir, "close")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(datesum):
+        line_string = str(aclose[i]) + ' ' + per + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
+
+    #open straggler result
+    rfile = os.path.join(rd_dir, "open-straggler")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(datesum):
+        line_string = str(ostraggler[i]) + ' ' + per + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
+
+    #close straggler result
+    rfile = os.path.join(rd_dir, "close-straggler")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(datesum):
+        line_string = str(cstraggler[i]) + ' ' + per + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
 
 
-def per_results(ddir, rdir, machine, exp, n): 
+def per_results(ddir, rdir, machine, exp, n, run): 
 
     name="node"+str(n)
     #plot per node setting
@@ -320,67 +385,20 @@ def per_results(ddir, rdir, machine, exp, n):
             #check completeness
             complete_dir = os.path.join(complete, machine + "/" + exp + "/" + name)
             complete_file = os.path.join(complete_dir, rname)
-            check = "n"
             if os.path.isfile(complete_file):
+                complete_inform = read_file(complete_file)
                 check = complete_check(complete_file, datesum)
-
-            if check == "n":
-                #process data
-                print (inform, name, exp)
-                [aopen, aclose, agrw, ostraggler, cstraggler] = process_raw(dinform, n, io)
-                aband = get_bandwidth(agrw, asize, n)
-                nd_dir = os.path.join(rdir, name)
-                rd_dir = os.path.join(nd_dir, rname)
-                if not os.path.exists(rd_dir):
-                    os.makedirs(rd_dir)
-                #write aggregate bandwidth result
-                rfile = os.path.join(rd_dir, "aggregate-bandwidth")
-                rf = open(rfile, 'a')
-                for i, per in enumerate(aband):
-                    line_string = str(per) + ' ' + datesum[i] + '\n' 
-                    rf.write(line_string)
-                rf.truncate()
-                rf.close()
- 
-                #open result
-                rfile = os.path.join(rd_dir, "open")
-                rf = open(rfile, 'a')
-                for per in aopen:
-                    line_string = str(per) + ' ' + datesum[i] + '\n' 
-                    rf.write(line_string)
-                rf.truncate()
-                rf.close()
-
-                #close result
-                rfile = os.path.join(rd_dir, "close")
-                rf = open(rfile, 'a')
-                for per in aclose:
-                    line_string = str(per) + ' ' + datesum[i] + '\n' 
-                    rf.write(line_string)
-                rf.truncate()
-                rf.close()
-
-                #open straggler result
-                rfile = os.path.join(rd_dir, "open-straggler")
-                rf = open(rfile, 'a')
-                for per in ostraggler:
-                    line_string = str(per) + ' ' + datesum[i] + '\n' 
-                    rf.write(line_string)
-                rf.truncate()
-                rf.close()
-
-                #close straggler result
-                rfile = os.path.join(rd_dir, "close-straggler")
-                rf = open(rfile, 'a')
-                for per in cstraggler:
-                    line_string = str(per) + ' ' + datesum[i] + '\n' 
-                    rf.write(line_string)
-                rf.truncate()
-                rf.close()
-
+                if check == "n":
+                    process_one(inform, name, rname, rdir, exp, dinform, datesum, n, asize, io, run) 
+                    record_complete(complete_file, datesum) 
+                print (check, run)
+            else:
                 if not os.path.isdir(complete_dir):
-                     os.makedirs(complete_dir)
-                record_complete(complete_file, datesum)
+                    os.makedirs(complete_dir)
+                process_one(inform, name, rname, rdir, exp, dinform, datesum, n, asize, io, run) 
+                record_complete(complete_file, datesum) 
+
+
 
 def main():
     for machine in machines:
@@ -399,7 +417,7 @@ def main():
                     nname = "node" + str(n)
                     ndir = os.path.join(run_dir, nname)
                     if os.path.isdir(ndir):
-                        per_results(ndir, result_dir, machine, exp, n)
+                        per_results(ndir, result_dir, machine, exp, n, run)
 
                 insufficient_check(imdir, result_dir, n, exp)          
 
