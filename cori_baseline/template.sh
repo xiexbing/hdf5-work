@@ -3,15 +3,16 @@
 #SBATCH -p regular
 #SBATCH --qos=premium
 # #SBATCH -p debug
-#SBATCH -A projID 
+#SBATCH -A m1248
 #SBATCH -t 02:00:00
-#SBATCH -C xxx
+#SBATCH -C haswell
 #SBATCH -L SCRATCH # needs the parallel file system
 #SBATCH -J IOR_NNODEnode
 #SBATCH -o o%j.ior_NNODEnode
 #SBATCH -e o%j.ior_NNODEnode
 
 #module load hdf5/1.10.3
+module swap PrgEnv-gnu PrgEnv-intel
 
 let NPROC=NNODE
 mydir=$(pwd)
@@ -57,21 +58,25 @@ ior(){
     #if it is HDF5 and with a specific alignment value setting
     if [[ $input == "HDF5" ]] && [[ ! -z "$alignment" ]]
     then
+        export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
         #flush data in file close
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -J $alignment -w -o $CDIR/${NPROC}p_${i}_${api}&>>${api}_${aggr}${unit}_w   
         #flush data in data transfer, before file close 
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -J $alignment -e -w -o $CDIR/${NPROC}p_${i}_${api}_f&>>${api}_${aggr}${unit}_f_w    
         #read
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -J $alignment  -r -C -o $CDIR/${NPROC}p_${i}_${api}_f &>>${api}_${aggr}${unit}_r
+        export LD_PRELOAD=""
         rm -rf $CDIR/*
 
         #collectiveIO set on
         #flush data in file close
+        export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -J $alignment -w -o $CDIR/${NPROC}p_${i}_${api}&>>${api}C_${aggr}${unit}_w --hdf5.collectiveMetadata 
         #flush data in data transfer, before file close 
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -J $alignment -e -w -o $CDIR/${NPROC}p_${i}_${api}_f&>>${api}C_${aggr}${unit}_f_w --hdf5.collectiveMetadata 
         #read
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -J $alignment  -r -C -o $CDIR/${NPROC}p_${i}_${api}_f &>>${api}C_${aggr}${unit}_r --hdf5.collectiveMetadata 
+        export LD_PRELOAD=""
 
  
     #HDF5 with default alignment setting
@@ -79,16 +84,19 @@ ior(){
     then
         export HDF5_COL_META=0
         #flush data in file close
+        export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -w -o $CDIR/${NPROC}p_${i}_${api}&>>${api}_${aggr}${unit}_w   
         #flush data in data transfer, before file close 
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -e -w -o $CDIR/${NPROC}p_${i}_${api}_f&>>${api}_${aggr}${unit}_f_w    
         #read
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -r -C -o $CDIR/${NPROC}p_${i}_${api}_f &>>${api}_${aggr}${unit}_r
+        export LD_PRELOAD=""
         rm -rf $CDIR/*
  
         #collectiveIO set on
         #flush data in file close
         export HDF5_COL_META=1
+        export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -w -o $CDIR/${NPROC}p_${i}_${api}&>>${api}C_${aggr}${unit}_w --hdf5.collectiveMetadata 
 
         #flush data in data transfer, before file close 
@@ -96,16 +104,19 @@ ior(){
 
         #read
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $input -r -C -o $CDIR/${NPROC}p_${i}_${api}_f &>>${api}C_${aggr}${unit}_r --hdf5.collectiveMetadata 
+        export LD_PRELOAD=""
 
     else 
     #MPI, or POSIX
         #flush data in file close
+        export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
         echo " $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $api -w -o $CDIR/${NPROC}p_${i}_${api}&>>${api}_${aggr}${unit}_w" 
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $api -w -o $CDIR/${NPROC}p_${i}_${api}&>>${api}_${aggr}${unit}_w   
         #flush data in data transfer, before file close 
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $api -e -w -o $CDIR/${NPROC}p_${i}_${api}_f&>>${api}_${aggr}${unit}_f_w    
         #read
         $run_cmd $EXEC -b ${aggr}${unit} -t ${size}${unit} -i 1 -v -v -v -k -a $api  -r -C -o $CDIR/${NPROC}p_${i}_${api}_f &>>${api}_${aggr}${unit}_r
+        export LD_PRELOAD=""
  
      fi
 
