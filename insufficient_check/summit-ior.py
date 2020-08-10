@@ -7,16 +7,17 @@ import pandas as pd
 import numpy as np
 import shutil
 from scipy import stats
+import subprocess as sp
 
 machines = ["summit"]
-experiments = ["collective"]
-data_dir = "/gpfs/alpine/stf008/scratch/bing/darshan/hdf5"
-runs = ["summit_collective"]
+experiments = ["baseline"]
+data_dir = "/gpfs/alpine/stf008/scratch/bing/script"
 rdir = "/ccs/home/bing/hdf5/data"
-nodes = [2, 8, 32, 128]
 insuf = "insufficient"
+nodes = [2, 8, 32, 128]
+complete = "complete"
 threshold = 0.2
-interval = 0.95
+interval = 0.8
 cut = 30
 
 def relative_error(confidence_interval, x):
@@ -32,6 +33,42 @@ def relative_error(confidence_interval, x):
 
     return relative_value
 
+def record_complete(complete_file, datesum):
+    cfile = open(complete_file, 'a')
+    for datetime in datesum:
+        line = datetime + '\n'
+        cfile.write(line)
+    cfile.truncate()
+    cfile.close()
+
+def complete_check(complete_file, datesum):
+
+    check = "n"
+    recorded = read_file(complete_file)
+    for i, per in enumerate(recorded):
+        recorded[i] = recorded[i].split()[0]
+    
+    for time in datesum:
+        if time not in recorded:
+            check = "n"
+            break
+        check = "y"   
+ 
+    return check 
+
+def time_check(dinform):
+
+    datesum = []
+    for line in dinform:
+        if "Finished" in line:
+            tinform = line.split()
+            date = ' '.join(str(f) for f in tinform[2:])
+            cmd = 'date --date="' + date + '" +%s'
+            datetime = sp.getoutput(cmd)
+            datesum.append(datetime)
+
+    return datesum
+
 
 def read_file(data_file):
     d_f = open(data_file, 'r')
@@ -40,15 +77,12 @@ def read_file(data_file):
 
     return dfile
 
-def process_raw(datafile, n, io):
-    #log data
-    inform = read_file(datafile)
+def process_raw(dinform, n, io):
+
     #open time
     osum = []
     #end to end time
     asum = []
-    # read/write time
-    rwsum = []
     #close time
     csum = []
 
@@ -65,7 +99,7 @@ def process_raw(datafile, n, io):
         c_start = []
         c_stop = []
 
-        for line in inform:
+        for line in dinform:
             if taski in line:
                 if io == "r":
                     if "read open start" in line:
@@ -109,65 +143,49 @@ def process_raw(datafile, n, io):
  
 
 
-        o_start.sort()
-        o_stop.sort()
-        rw_start.sort()
-        rw_stop.sort()
-        c_start.sort()
-        c_stop.sort()
-
         if len(c_stop) < nmin:
             nmin = len(c_stop) 
         otimes = []
         atimes = []
-        rwtimes = []
         ctimes = []
         for j in range(nmin):
             otime = o_stop[j] - o_start[j]
             #end to end times from file create to file close
             atime = c_stop[j] - o_start[j]
-            rwtime = rw_stop[j] - rw_start[j]
             ctime = c_stop[j] - c_start[j]
             otimes.append(otime)
             atimes.append(atime)
-            rwtimes.append(rwtime)
             ctimes.append(ctime)
              
         osum.append(otimes)
         asum.append(atimes)
-        rwsum.append(rwtimes) 
         csum.append(ctimes)
    
     aopen = []
     agrw = []
-    rw = []
     aclose = []
     ostraggler = []
-    rwstraggler = []
     cstraggler = []
     for j in range(nmin):
         ao = []
         arw = []
-        ab = []
         ac = [] 
         for i in range(n):
             ao.append(osum[i][j])
             arw.append(asum[i][j])
-            ab.append(rwsum[i][j])
             ac.append(csum[i][j])
         aopen.append(np.max(ao))
         agrw.append(np.max(arw))
-        rw.append(np.max(ab))
         aclose.append(np.max(ac))
       
         #straggler: the worst / median value
         ostraggler.append(np.max(ao)/np.median(ao))
-        rwstraggler.append(np.max(ab)/np.median(ab))
         cstraggler.append(np.max(ac)/np.median(ac)) 
 
-    return [aopen, aclose, agrw, rw, ostraggler, rwstraggler, cstraggler]
+    return [aopen, aclose, agrw, ostraggler, cstraggler]
 
-def get_bandwidth(agrw, rw, asize, n):
+def get_bandwidth(agrw, asize, n):
+
     #aggregate size, unit: GB
     if 'k' in asize:
         size=float(asize.replace('k', ''))/1024/1024
@@ -178,49 +196,8 @@ def get_bandwidth(agrw, rw, asize, n):
     #aggregate bandwidth
     for i, per in enumerate(agrw):
         agrw[i] = n*size/per
-        rw[i] = n*size/rw[i]
-    return [agrw, rw] 
 
-def plot_result(summary, n, op):
-    #organize data
-    basic_apis = ["POSIX", "MPIIO", "HDF5","HDF5C", "HDF51m", "HDF51mC", "HDF54m", "HDF54mC", "HDF516m", "HDF516mC", "HDF564m", "HDF564mC", "HDF5256m", "HDF5256mC"] 
-    asize = ["1k", "16k", "256k", "1m", "16m", "256m", "1g"]
-    modes = ["f", "w",  "r"]
-    colors = ['blue', 'green', 'red']
-
-    for size in asize:
-        #generate figure per size
-        fig, ax = plt.subplots()
-        i = 1
-        for api in basic_apis:
-            pos = [i+0.2, i+0.4, i+0.6] 
-            api_perf = []
-            for mode in modes:
-                mode_perf = []
-                for per in summary:
-                    [performance, setting] = per              
-                    [papi, psize, pmode] = setting
-                    if size == psize and api == papi and mode == pmode:
-                        mode_perf.append(performance)   
-                api_perf.append(mode_perf)
-            aperf = ax.boxplot(api_perf, positions = pos, widths =0.2, patch_artist=True)
-            for patch, color in zip(aperf['boxes'], colors):
-                patch.set_facecolor(color)
-            i += 1
-        tname = op + " " + size
-        ax.set_title(tname, fontsize=8)
-        ax.legend([aperf["boxes"][0], aperf["boxes"][1], aperf["boxes"][2]],["write flush", "write",  "read"],
-loc='upper right',  ncol=3)
-        plt.setp(ax, xticks=[1.2, 2.2, 3.2, 4.2, 5.2, 6.2, 7.2, 8.2, 9.2, 10.2, 11.2, 12.2, 13.2, 14.2], xticklabels=basic_apis)
-        plt.rc('xtick', labelsize=4)
-        ax.set_xlim(1, 15)
-        if op == 'bandwidth':
-            ax.set_ylabel('Aggregate Bandwidth, unit:GB/s')
-        else:
-            ax.set_ylabel('Time, Unit:second')
-        name = op + "_" + size + "_node" + str(n) + ".pdf"
-        ndir = os.path.join(rdir, name)
-        plt.savefig(ndir)
+    return agrw 
 
 def build_insufficient(per, iff, exp):
     [api, asize, ncores, nblocks] = per
@@ -270,155 +247,180 @@ def build_insufficient(per, iff, exp):
     iff.write(doneline)
     iff.write(doneline)
     iff.write(doneline)
+
+
+def insufficient_check(imdir, result_dir, n, exp):
+
+   
+    name = "node" + str(n)
+    rdir = os.path.join(result_dir, name)
+    idir = os.path.join(imdir, rdir)
+    insufficient = []
  
+    for rname in os.listdir(rdir):
+        [api, asize, ncores, nblocks, io] = rname.split("_")
+        #check data stability
+        rnamefile = os.path.join(rdir, rname + "/time-total")
+        agrw = []
+        rinform = read_file(rnamefile)
+        for line in rinform:
+            bandwidth = float(line.split()[0])
+            agrw.append(bandwidth)
+        agrw = list(set(agrw))
+        if len(agrw) < cut or relative_error(interval, agrw) > threshold:
+            print (rname,  relative_error(interval, agrw), len(agrw))
+            api = api.replace("C", "")
+            if [api, asize, ncores, nblocks] not in insufficient:
+                insufficient.append([api, asize, ncores, nblocks])
 
+    ifile = os.path.join(imdir, name)
+    iff = open(ifile, 'a')
+    for per in insufficient:
+        build_insufficient(per, iff, exp)
 
+    iff.truncate()
+    iff.close()                
 
+def process_one(inform, name, rname, rdir, exp, dinform, datesum, n, asize, io, run):
 
-#we summarize IO R  results here
-def per_results(run_dir, result_dir, exp, imdir):
-
-    for d in os.listdir(run_dir):
-        for n in nodes:
-            name="node"+str(n)
-            ndir = os.path.join(result_dir, name)
-            #plot per node setting
-            opensum = []
-            bandsum = []
-            rwsum = []
-            closesum = []
-            insufficient = []
-
-            if name == d:
-                ddir = os.path.join(run_dir, d)
-                for f in os.listdir(ddir):
-                    if '.' not in f:
-                        #api hdf5setting size r/w  in filename
-                        inform = f.split("_")
-                        print (inform)
-                        if exp == "baseline":
-                            api = inform[0]
-                            asize = inform[1]
-                            io = inform[2]
-                            nblocks = "1"
-                            ncores = "1"
-                        elif exp == "blocks":
-                            api = inform[0]
-                            asize = inform[1]
-                            nblocks = inform[2]
-                            io = inform[3]
-                            ncores = "1"
-                        elif exp == "collective":
-                            api = inform[0]
-                            asize = inform[1]
-                            ncores = inform[2]
-                            io = inform[3]
-                            nblocks = "1"
+#process data
+    print (inform, name, exp)
+    [aopen, aclose, agrw, ostraggler, cstraggler] = process_raw(dinform, n, io)
+    aband = get_bandwidth(agrw, asize, n)
+    nd_dir = os.path.join(rdir, name)
+    rd_dir = os.path.join(nd_dir, rname)
+    if not os.path.exists(rd_dir):
+        os.makedirs(rd_dir)
+    #write aggregate bandwidth result
+    rfile = os.path.join(rd_dir, "aggregate-bandwidth")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(aband):
+        line_string = str(per) + ' ' + datesum[i] + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
+    aaaa = read_file(rfile)
+    print (rname, len(aaaa), run)
  
-                        setting = [api, asize, io]
-                        #process data
-                        datafile = os.path.join(ddir, f)
-                        [aopen, aclose, agrw, rw, ostraggler, rwstraggler, cstraggler] = process_raw(datafile, n, io)
-                        [aband, band] = get_bandwidth(agrw, rw, asize, n)
-                        rname = api + "_" + asize + "_" + ncores + "_" + nblocks + "_" + io
-                        rd_dir = os.path.join(ndir, rname)
-                        if not os.path.exists(rd_dir):
-                            os.makedirs(rd_dir)
-                        #write aggregate bandwidth result
-                        rfile = os.path.join(rd_dir, "aggregate-bandwidth")
-                        rf = open(rfile, 'a')
-                        for per in aband:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
+    #write aggregate bandwidth result
+    rfile = os.path.join(rd_dir, "time-total")
+    rf = open(rfile, 'a')
+    for i, per in enumerate(agrw):
+        line_string = str(per) + ' ' + datesum[i] + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
  
-                        #check data stability
-                        if io == 'r' or io == 'f':
-                            if len(agrw) < cut or relative_error(interval, agrw) > threshold:
-                                
-                                api = api.replace("C", "")
-                                if [api, asize, ncores, nblocks] not in insufficient:
-                                    insufficient.append([api, asize, ncores, nblocks])
- 
-                        #write bandwidth result
-                        rfile = os.path.join(rd_dir, "rw-bandwidth")
-                        rf = open(rfile, 'a')
-                        for per in band:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
+    #open result
+    rfile = os.path.join(rd_dir, "open")
+    rf = open(rfile, 'a')
+    for per in aopen:
+        line_string = str(per) + ' ' + datesum[i] + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
 
-                        #open result
-                        rfile = os.path.join(rd_dir, "open")
-                        rf = open(rfile, 'a')
-                        for per in aopen:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
+    #close result
+    rfile = os.path.join(rd_dir, "close")
+    rf = open(rfile, 'a')
+    for per in aclose:
+        line_string = str(per) + ' ' + datesum[i] + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
 
-                        #close result
-                        rfile = os.path.join(rd_dir, "close")
-                        rf = open(rfile, 'a')
-                        for per in aclose:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
+    #open straggler result
+    rfile = os.path.join(rd_dir, "open-straggler")
+    rf = open(rfile, 'a')
+    for per in ostraggler:
+        line_string = str(per) + ' ' + datesum[i] + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
 
-                        #open straggler result
-                        rfile = os.path.join(rd_dir, "open-straggler")
-                        rf = open(rfile, 'a')
-                        for per in ostraggler:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
+    #close straggler result
+    rfile = os.path.join(rd_dir, "close-straggler")
+    rf = open(rfile, 'a')
+    for per in cstraggler:
+        line_string = str(per) + ' ' + datesum[i] + '\n' 
+        rf.write(line_string)
+    rf.truncate()
+    rf.close()
 
-                        #close straggler result
-                        rfile = os.path.join(rd_dir, "close-straggler")
-                        rf = open(rfile, 'a')
-                        for per in cstraggler:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
 
-                        #read write straggler result
-                        rfile = os.path.join(rd_dir, "rw-straggler")
-                        rf = open(rfile, 'a')
-                        for per in cstraggler:
-                            line_string = str(per) + '\n' 
-                            rf.write(line_string)
-                        rf.truncate()
-                        rf.close()
-            
-            ifile = os.path.join(imdir, name)
-            iff = open(ifile, 'a')
-            for per in insufficient:
-                build_insufficient(per, iff, exp)
+def per_results(ddir, rdir, machine, exp, n, run): 
 
-            iff.truncate()
-            iff.close()                
+    name="node"+str(n)
+    #plot per node setting
+    opensum = []
+    bandsum = []
+    closesum = []
+   
+    for f in os.listdir(ddir):
+        if '.' not in f and f != "ior_data":
+            #api hdf5setting size r/w  in filename
+            inform = f.split("_")
+            if exp == "baseline":
+                api = inform[0]
+                asize = inform[1]
+                io = inform[2]
+                nblocks = "1"
+                ncores = "1"
+            elif exp == "blocks":
+                api = inform[0]
+                asize = inform[1]
+                nblocks = inform[2]
+                io = inform[3]
+                ncores = "1"
+            elif exp == "collective":
+                api = inform[0]
+                asize = inform[1]
+                ncores = inform[2]
+                io = inform[3]
+                nblocks = "1"
+
+            rname = api + "_" + asize + "_" + ncores + "_" + nblocks + "_" + io
+            datafile = os.path.join(ddir, f)
+            dinform = read_file(datafile)
+            datesum = time_check(dinform)
+
+            #check completeness
+            complete_dir = os.path.join(complete, machine + "/" + exp + "/" + name)
+            complete_file = os.path.join(complete_dir, rname)
+            if os.path.isfile(complete_file):
+                complete_inform = read_file(complete_file)
+                check = complete_check(complete_file, datesum)
+                if check == "n":
+                    process_one(inform, name, rname, rdir, exp, dinform, datesum, n, asize, io, run) 
+                    record_complete(complete_file, datesum) 
+                print (check, run)
+            else:
+                if not os.path.isdir(complete_dir):
+                    os.makedirs(complete_dir)
+                process_one(inform, name, rname, rdir, exp, dinform, datesum, n, asize, io, run) 
+                record_complete(complete_file, datesum) 
+
 
 
 def main():
     for machine in machines:
         for exp in experiments:
             result_dir = os.path.join(rdir, machine + "/" + exp)
-            if  os.path.exists(result_dir):
-                shutil.rmtree(result_dir)
-
             imdir = os.path.join(insuf, machine + "/" + exp)
-            if os.path.isdir(imdir):
+            #every time rebuild the insufficient record from scratch 
+            if  os.path.isdir(imdir):
                 shutil.rmtree(imdir)
             os.makedirs(imdir)
 
-            for run in runs:
-                run_dir = os.path.join(data_dir, run)
-                run_dir = os.path.join(run_dir, machine + "_"+exp)
-                per_results(run_dir, result_dir, exp, imdir)                                
+            edir = os.path.join(data_dir, machine + "_"+exp)
+            for n in nodes:
+                for run in os.listdir(edir):
+                    run_dir = os.path.join(edir, run)
+                    nname = "node" + str(n)
+                    ndir = os.path.join(run_dir, nname)
+                    if os.path.isdir(ndir):
+                        per_results(ndir, result_dir, machine, exp, n, run)
+
+                insufficient_check(imdir, result_dir, n, exp)          
 
 main()                                   
