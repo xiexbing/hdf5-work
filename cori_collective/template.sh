@@ -83,21 +83,3 @@ ior(){
 
 }
 for i in $(seq 1 1 5); do
-    for api in $apis; do
-        for aggr in $sizes; do
-            for unit in $units; do
-                for proc in $procs; do
-                    ior $i $api $aggr $unit $proc
-                done
-            done
-        done
-        
-        for aggr in $sizeg; do
-            for unit in $unitg; do
-                for proc in $procs; do
-                    ior $i $api $aggr $unit $proc
-                done
-            done
-        done
-    done
-done
