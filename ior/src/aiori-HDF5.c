@@ -679,12 +679,27 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
                         HDF5_CHECK(dataSet, "cannot create data set");
                 }
         } else {                /* READ or CHECK */
+                hid_t dapl = H5Pcreate(H5P_DATASET_ACCESS);
+#ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS
+                HDF5_options_t *o = (HDF5_options_t*) param->backend_options;
+                if (o->collective_md) {
+                        /* more scalable metadata */
+                        HDF5_CHECK(H5Pset_all_coll_metadata_ops(dapl, 1),
+                                "cannot set collective md read");
+                        if (rank == 0) {
+                            fprintf(stdout,
+                                    "\nHDF5 dataset collective metadata enabled\n");
+                        }
+                }
+#endif
+
                 for (i = 0; i < ndataSet; i++) {
                         sprintf(dataSetName, "%s-%04d.%04d.%d", "Dataset", dataSetID,
                                 dataSetSuffix++, i);
-                        dataSet[i] = H5Dopen(*(hid_t *) fd, dataSetName);
+                        dataSet[i] = H5Dopen2(*(hid_t *) fd, dataSetName, dapl);
                         HDF5_CHECK(dataSet, "cannot create data set");
                 }
+                H5Pclose(dapl);
         }
 }
 
