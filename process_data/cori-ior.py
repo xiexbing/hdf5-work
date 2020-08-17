@@ -215,15 +215,8 @@ def build_insufficient(per, iff, exp):
 
     apiline = "for api in '" + api + "'; do" + '\n'
     iff.write(apiline)
-    if exp == "baseline":
-        sizeline = "for size in '" + wsize + "'; do" + '\n'
-        iff.write(sizeline)
-    elif exp == "blocks":
-        sizeline = "for aggr in '" + wsize + "'; do" + '\n'
-        iff.write(sizeline)
-    elif exp == "collective":
-        sizeline = "for aggr in '" + wsize + "'; do" + '\n'
-        iff.write(sizeline)
+    sizeline = "for aggr in '" + wsize + "'; do" + '\n'
+    iff.write(sizeline)
    
     unitline = "for unit in '" + unit + "'; do" + '\n'
     iff.write(unitline)
@@ -241,7 +234,7 @@ def build_insufficient(per, iff, exp):
         iff.write(iorline)
         iff.write(doneline)
     if exp == "baseline":
-        iorline = "ior $i $api $size $unit" + '\n'
+        iorline = "ior $i $api $aggr $unit" + '\n'
         iff.write(iorline)
 
     iff.write(doneline)
