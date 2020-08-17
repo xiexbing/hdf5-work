@@ -16,12 +16,11 @@ for (( j = $MIN_PROC; j <= $MAX_PROC ; j*=4 )); do
         # Submit first job w/o dependency
         echo "Submitting $filename"
         first_submit=0
+        job=`sbatch $filename`
     else
-        echo "Submitting $filename after ${job:5:6}"
-        sed -i "s/##BSUB/#BSUB/g" $filename
-        sed -i "s/PREVJOBID/${job:5:6}/g" $filename
+        echo "Submitting $filename after ${job: -8}"
+        job=`sbatch -d afterany:${job: -8} $filename`
     fi
-    job=`bsub $filename`
 
     sleeptime=$[ ( $RANDOM % 10 ) ]
     sleep $sleeptime

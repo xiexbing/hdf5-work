@@ -1,11 +1,12 @@
 #!/bin/bash
 
 MIN_PROC=2
-MAX_PROC=128
+MAX_PROC=8
 
 curdir=$(pwd)
 ./gen.sh
 
+last=`bjobs|tail -1|awk '{print $1}'`
 first_submit=1
 for (( j = $MIN_PROC; j <= $MAX_PROC ; j*=4 )); do
 
@@ -17,9 +18,15 @@ for (( j = $MIN_PROC; j <= $MAX_PROC ; j*=4 )); do
         echo "Submitting $filename"
         first_submit=0
     else
-        echo "Submitting $filename after ${job:5:6}"
-        sed -i "s/##BSUB/#BSUB/g" $filename
-        sed -i "s/PREVJOBID/${job:5:6}/g" $filename
+        if [[ $first_submit == 1 ]]; then 
+            echo "Submitting $filename after $last"
+            sed -i -e "s/##BSUB/#BSUB/g" -e "s/PREVJOBID/${last}/g" $filename
+            first_submit=0
+        else 
+            echo "Submitting $filename after ${job:5:6}"
+            sed -i "s/##BSUB/#BSUB/g" $filename
+            sed -i "s/PREVJOBID/${job:5:6}/g" $filename
+        fi
     fi
     job=`bsub $filename`
 
