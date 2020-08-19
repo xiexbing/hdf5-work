@@ -31,6 +31,7 @@
 
 #define NUM_DIMS 1              /* number of dimensions to data set */
 #define MAX_NDATASET 1024       /* Tang: Max number of datasets */
+#define METADATA_BLOCK_SIZE 65536   /* Tang: metadata block size */
 
 /******************************************************************************/
 /*
@@ -99,6 +100,7 @@ static int HDF5_Access(const char *, int, IOR_param_t *);
 typedef struct{
   int collective_md;
   int defer_flush;
+  int meta_block;
 } HDF5_options_t;
 /***************************** F U N C T I O N S ******************************/
 
@@ -111,6 +113,7 @@ static option_help * HDF5_options(void ** init_backend_options, void * init_valu
     /* initialize the options properly */
     o->collective_md = 0;
     o->defer_flush = 0;
+    o->meta_block = 0;
   }
 
   *init_backend_options = o;
@@ -118,6 +121,7 @@ static option_help * HDF5_options(void ** init_backend_options, void * init_valu
   option_help h [] = {
     {0, "hdf5.collectiveMetadata", "Use collectiveMetadata (available since HDF5-1.10.0)", OPTION_FLAG, 'd', & o->collective_md},
     {0, "hdf5.deferFlush", "Use defer cache flush", OPTION_FLAG, 'd', & o->defer_flush},
+    {0, "hdf5.metaBlock", "Use larger metadata block size", OPTION_FLAG, 'd', & o->meta_block},
     LAST_OPTION
   };
   option_help * help = malloc(sizeof(h));
@@ -274,6 +278,11 @@ static void *HDF5_Open(char *testFileName, IOR_param_t * param)
         if (ndataSet > MAX_NDATASET)
                 ndataSet = MAX_NDATASET;
 
+        if (rank == 0) {
+            fprintf(stdout,
+                    "\nHDF5 write %d datasets\n", ndataSet);
+        }
+
 #ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS
         HDF5_options_t *o = (HDF5_options_t*) param->backend_options;
         if (o->collective_md) {
@@ -308,6 +317,14 @@ static void *HDF5_Open(char *testFileName, IOR_param_t * param)
                 }
         }
 
+        /* Tang added: use large metadata block size */
+        if (o->meta_block) {
+                HDF5_CHECK(H5Pset_meta_block_size(accessPropList, METADATA_BLOCK_SIZE), "cannot set metadata block size" );
+                if (rank == 0) {
+                    fprintf(stdout,
+                            "\nHDF5 metadata block size set to %d\n", METADATA_BLOCK_SIZE);
+                }
+        }
 
 
         /* open file */
