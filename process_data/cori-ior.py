@@ -260,7 +260,7 @@ def insufficient_check(imdir, result_dir, n, exp):
             bandwidth = float(line.split()[0])
             agrw.append(bandwidth)
         agrw = list(set(agrw))
-        if len(agrw) < cut and relative_error(interval, agrw) > threshold:
+        if len(agrw) < cut and relative_error(interval, agrw) > threshold and "C" not in api:
             print (rname,  relative_error(interval, agrw), len(agrw))
             if [api, asize, ncores, nblocks] not in insufficient:
                 insufficient.append([api, asize, ncores, nblocks])
