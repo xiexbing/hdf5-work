@@ -23,7 +23,7 @@ export DARSHAN_DISABLE_SHARED_REDUCTION=1
 export DXT_ENABLE_IO_TRACE=4
 
 
-sizes="1m 16m"
+sizes="16k 256k 1m 16m 64m"
 
 datasets="2 8 32 128"
 
