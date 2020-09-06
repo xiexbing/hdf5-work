@@ -1,8 +1,8 @@
 #!/bin/bash -l
 
 curr_dir=`pwd`
-data_dir=/gpfs/alpine/stf008/scratch/bing/darshan/hdf5
-darshan_dir=/gpfs/alpine/darshan/summit
+data_dir=/darshan/hdf5
+darshan_dir=/darshan/summit
 exps="summit_baseline summit_blocks summit_collective"
 IDs=""
 

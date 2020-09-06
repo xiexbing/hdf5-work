@@ -16,7 +16,7 @@ module swap PrgEnv-gnu PrgEnv-intel
 let NPROC=NNODE
 
 CDIR=${SCRATCH}/ior_data
-EXEC=/global/u1/h/houhun/hdf5-work/ior/src/ior
+EXEC=/hdf5-work/ior/src/ior
 
 export MPICH_MPIIO_STATS=1
 export MPICH_MPIIO_HINTS_DISPLAY=1

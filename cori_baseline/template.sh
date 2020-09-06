@@ -26,7 +26,7 @@ export DXT_ENABLE_IO_TRACE=4
 
 
 #for the hdf5 setting with specific alignment value, the api is HDF5+alignment_setting_value, for the runs with hdf5 setting we perform the ior with no collective i/o for hdf5 metadata, and with collective i/o for hdf5 metadata.
-apis="POSIX MPIIO HDF5 HDF5C HDF51m HDF51mC HDF54m HDF54mC HDF516m HDF516mC HDF564m HDF564mC HDF5256m HDF5256mC"
+apis="POSIX MPIIO HDF5 HDF51m HDF54m HDF516m HDF564m HDF5256m"
 
 sizes="1 16 256"
 units="k m"

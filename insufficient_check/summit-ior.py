@@ -11,8 +11,8 @@ import subprocess as sp
 
 machines = ["summit"]
 experiments = ["baseline"]
-data_dir = "/gpfs/alpine/stf008/scratch/bing/script"
-rdir = "/ccs/home/bing/hdf5/data"
+data_dir = "/script"
+rdir = "/data"
 insuf = "insufficient"
 nodes = [2, 8, 32, 128]
 complete = "complete"

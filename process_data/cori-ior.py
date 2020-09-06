@@ -11,8 +11,8 @@ import subprocess as sp
 
 machines = ["cori"]
 experiments = ["baseline"]
-data_dir = "/gpfs/alpine/csc300/world-shared"
-rdir = "/ccs/home/bing/hdf5/data"
+data_dir = "/directory-to-your-data"
+rdir = "/directory-to-your-result"
 insuf = "insufficient"
 nodes = [2, 8, 32, 128]
 complete = "complete"

@@ -1,7 +1,7 @@
 #!/bin/bash
 START=2
 END=8
-idir=/ccs/home/bing/hdf5/ior-process/insufficient/summit/collective
+idir=/insufficient/summit/collective
 
 for (( i = $START; i <= $END; i*=4 )); do
     mkdir -p ./node${i}

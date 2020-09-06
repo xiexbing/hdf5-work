@@ -12,9 +12,8 @@
 
 let NPROC=NNODE
 CDIR=ior_data
-EXEC=/gpfs/alpine/stf008/scratch/bing/ior/src/ior
-LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/hdf5-1.10.6/hdf5/lib:$LD_LIBRARY_PATH
-EXEC_C=/gpfs/alpine/stf008/scratch/bing/ior_rank/src/ior
+EXEC=/directory-to-ior/ior/src/ior
+LD_LIBRARY_PATH=/directory-to-hdf5/hdf5-1.10.6/hdf5/lib:$LD_LIBRARY_PATH
 
 export MPICH_MPIIO_STATS=1
 export MPICH_MPIIO_HINTS_DISPLAY=1

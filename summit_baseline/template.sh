@@ -12,9 +12,8 @@
 
 let NPROC=NNODE
 CDIR=ior_data
-EXEC=/gpfs/alpine/stf008/scratch/bing/ior/src/ior
-LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/hdf5-1.10.6/hdf5/lib:$LD_LIBRARY_PATH
-EXEC_C=/gpfs/alpine/stf008/scratch/bing/ior_rank/src/ior
+EXEC=/directory-to-your-ior/ior/src/ior
+LD_LIBRARY_PATH=/directory-to-your-hdf5/hdf5-1.10.6/hdf5/lib:$LD_LIBRARY_PATH
 
 export MPICH_MPIIO_STATS=1
 export MPICH_MPIIO_HINTS_DISPLAY=1
@@ -24,7 +23,7 @@ export DXT_ENABLE_IO_TRACE=4
 
 
 #for the hdf5 setting with specific alignment value, the api is HDF5+alignment_setting_value, for the runs with hdf5 setting we perform the ior with no collective i/o for hdf5 metadata, and with collective i/o for hdf5 metadata.
-apis="POSIX MPIIO HDF5 HDF5C HDF51m HDF51mC HDF54m HDF54mC HDF516m HDF516mC HDF564m HDF564mC HDF5256m HDF5256mC"
+apis="POSIX MPIIO HDF5 HDF51m HDF54m HDF516m HDF564m HDF5256m"
 
 sizes="1 16 256"
 units="k m"

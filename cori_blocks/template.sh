@@ -17,9 +17,9 @@ module swap PrgEnv-gnu PrgEnv-intel
 let NPROC=NNODE
 
 CDIR=${SCRATCH}/ior_data
-EXEC=/global/u1/h/houhun/hdf5-work/ior/src/ior
+EXEC=hdf5-work/ior/src/ior
 
-export LD_LIBRARY_PATH=/global/homes/h/houhun/cori/hdf5-1.10.6/build/hdf5/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/cori/hdf5-1.10.6/build/hdf5/lib:$LD_LIBRARY_PATH
 export MPICH_MPIIO_STATS=1
 export MPICH_MPIIO_HINTS_DISPLAY=1
 export MPICH_MPIIO_TIMERS=1
