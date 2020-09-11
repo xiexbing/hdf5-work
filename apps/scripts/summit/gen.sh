@@ -21,7 +21,7 @@ do
         QUEUE_NAME=debug
     fi
 
-    TARGET=./${mycase}/${nnode}node/run_lustre.sh
+    TARGET=./${mycase}/${nnode}node/run_gpfs.sh
     cp template.sh $TARGET
     sed -i "s/QUEUE/${QUEUE_NAME}/g"      $TARGET
     sed -i "s/NNODE/${nnode}/g"           $TARGET

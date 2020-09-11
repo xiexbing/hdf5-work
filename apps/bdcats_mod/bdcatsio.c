@@ -233,6 +233,7 @@ int main (int argc, char* argv[])
 
     if((gapl = H5Pcreate(H5P_DATASET_ACCESS)) < 0)
         goto error;
+    H5Pset_all_coll_metadata_ops(gapl, 1);
 
     /* Open file */
     file_id = H5Fopen(file_name, H5F_ACC_RDONLY, fapl);
