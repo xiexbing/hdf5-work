@@ -1,0 +1,11 @@
+
+for i in $(seq 1 1 3); do
+for size in '136k'; do
+for core in '8'; do
+for dataset in '5'; do
+per $i $group $size $core $dataset
+done
+done
+done
+done
+echo g2_136k_8_5 done

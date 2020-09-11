@@ -1,0 +1,13 @@
+
+for i in $(seq 1 1 3); do
+for group in 'g1'; do
+for size in '53k'; do
+for core in '7'; do
+for dataset in '3'; do
+per $i $group $size $core $dataset
+done
+done
+done
+done
+done
+echo g1_53k_7_3 done
