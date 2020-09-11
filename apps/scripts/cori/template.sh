@@ -17,6 +17,12 @@ if [[ "$PE_ENV" != "GNU" ]]; then
     module swap PrgEnv-intel PrgEnv-gnu 
 fi
 
+export MPICH_MPIIO_STATS=1
+export MPICH_MPIIO_HINTS_DISPLAY=1
+export MPICH_MPIIO_TIMERS=1
+export DARSHAN_DISABLE_SHARED_REDUCTION=1
+export DXT_ENABLE_IO_TRACE=4
+
 let NPROC=NNODE*32
 CDIR=${SCRATCH}/hdf5_data/MYCASE
 CURDIR=$(pwd)
@@ -116,7 +122,9 @@ for (( i = 0; i < REPEAT; i++ )); do
     INPUT1="ARGV1"
     run="$RUN_CMD $EXEC1 $INPUT1"
     echo $run
+export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
     $run
+export LD_PRELOAD=""
 
     sleep 5
 
@@ -131,7 +139,9 @@ for (( i = 0; i < REPEAT; i++ )); do
     INPUT2="ARGV2"
     run="$RUN_CMD $EXEC2 $INPUT2"
     echo $run
+export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
     $run
+export LD_PRELOAD=""
 
     sleep 5
 
@@ -146,7 +156,9 @@ for (( i = 0; i < REPEAT; i++ )); do
     INPUT3="ARGV3"
     run="$RUN_CMD $EXEC2 $INPUT3"
     echo $run
+export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
     $run
+export LD_PRELOAD=""
 
     sleep 5
 
