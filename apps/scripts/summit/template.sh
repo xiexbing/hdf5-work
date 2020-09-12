@@ -11,11 +11,12 @@ echo "====Start===="
 date
 
 ml gcc
-export MPICH_MPIIO_STATS=1
-export MPICH_MPIIO_HINTS_DISPLAY=1
-export MPICH_MPIIO_TIMERS=1
-export DARSHAN_DISABLE_SHARED_REDUCTION=1
-export DXT_ENABLE_IO_TRACE=4
+module unload darshan
+# export MPICH_MPIIO_STATS=1
+# export MPICH_MPIIO_HINTS_DISPLAY=1
+# export MPICH_MPIIO_TIMERS=1
+# export DARSHAN_DISABLE_SHARED_REDUCTION=1
+# export DXT_ENABLE_IO_TRACE=4
 
 
 SCRATCH=/gpfs/alpine/scratch/houjun/csc300/

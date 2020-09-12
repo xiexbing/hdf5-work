@@ -3,11 +3,11 @@
 # nts=3
 nnode=$1
 nts=1
-REPEAT_TIME=1
+REPEAT_TIME=10
 
 CASES=("vpicio" "bdcatsio" "amrex_single" "amrex_multi")
 ndebugq=64
-QUEUE_TIME="0:30"
+QUEUE_TIME="2:00"
 
 curdir=$(pwd)
 
@@ -30,8 +30,8 @@ do
     # sed -i "s/QTIME/1:30:00/g"  $TARGET
     sed -i "s/APP/${mycase}_${nts}ts/g"  $TARGET
     if [[ $mycase == "vpicio" ]]; then
-        INPUT1="\$CDIR/${nnode}node_${nts}ts_hdf5_1.h5 $nts 0"
-        INPUT2="\$CDIR/${nnode}node_${nts}ts_hdf5_2.h5 $nts 0"
+        INPUT1="\$CDIR/${nnode}node_${nts}ts_hdf5_1_iter\$\{i\}.h5 $nts 0"
+        INPUT2="\$CDIR/${nnode}node_${nts}ts_hdf5_2_iter\$\{i\}.h5 $nts 0"
         # INPUT3="\$CDIR/${nnode}node_${nts}ts_hdf5_3.h5 $nts 0"
         EXEC1="$curdir/../../vpicio_hdf5/vpicio_uni_h5.exe"
         EXEC2="$curdir/../../vpicio_mod/vpicio_uni_h5.exe"
@@ -40,8 +40,8 @@ do
         sed -i "s!MYCASE!$mycase!g"  $TARGET
 
     elif [[ $mycase == "bdcatsio" ]]; then
-        INPUT1="\$CDIR/${nnode}node_${nts}ts_hdf5_1.h5 $nts 0"
-        INPUT2="\$CDIR/${nnode}node_${nts}ts_hdf5_2.h5 $nts 0"
+        INPUT1="\$CDIR/${nnode}node_${nts}ts_hdf5_1_iter\$\{i\}.h5 $nts 0"
+        INPUT2="\$CDIR/${nnode}node_${nts}ts_hdf5_2_iter\$\{i\}.h5 $nts 0"
         # INPUT3="\$CDIR/${nnode}node_${nts}ts_hdf5_3.h5 $nts 0"
         EXEC1="$curdir/../../bdcats_hdf5/bdcatsio.exe"
         EXEC2="$curdir/../../bdcats_mod/bdcatsio.exe"

@@ -15,13 +15,13 @@ ncomp = 6
 nppc = 0
 
 # Number of plot files to write
-nplotfile = 5
+nplotfile = 3
 
 # Number of plot files to write
 nparticlefile = 0
 
 # Time to sleep before each write
-sleeptime = 40
+sleeptime = 0
 
 # Whether to check the correctness of Checkpoint / Restart
 restart_check = 0
