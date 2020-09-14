@@ -45,8 +45,8 @@ def generate_pattern():
 
 def generate_sizes():
 
-    #aggregate size 512kb --- 1GB 
-    g1 = np.random.randint(nodes, 1024*1024, 50)
+    #aggregate size 512MB --- 1GB 
+    g1 = np.random.randint(512*1024, 1024*1024, 50)
 
     #aggregate size 1GB --- 10GB 
     g2 = np.random.randint(1024*1024, 10*1024*1024, 50)
