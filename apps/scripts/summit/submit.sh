@@ -19,7 +19,7 @@ do
 
     echo "${mycase}"
     cd $curdir/${mycase}/${nnode}node
-    filename=run_lustre.sh
+    filename=run_gpfs.sh
 
     if [[ $first_submit == 1 ]]; then
         # Submit first job w/o dependency
