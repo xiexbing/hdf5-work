@@ -4,6 +4,7 @@ import shutil
 import math
 
 nodes = 512
+per_set = 30
 
 def generate_pattern():
    
@@ -47,22 +48,22 @@ def generate_pattern():
 def generate_sizes():
 
     #aggregate size 512MB --- 1GB 
-    g1 = np.random.randint(512*1024, 1024*1024, 50)
+    g1 = np.random.randint(512*1024, 1024*1024, per_set)
 
     #aggregate size 1GB --- 10GB 
-    g2 = np.random.randint(1024*1024, 10*1024*1024, 50)
+    g2 = np.random.randint(1024*1024, 10*1024*1024, per_set)
 
     #aggregate size 10GB --- 100GB 
-    g3 = np.random.randint(10*1024*1024, 100*1024*1024, 50)
+    g3 = np.random.randint(10*1024*1024, 100*1024*1024, per_set)
 
     #aggregate size 100GB --- 2TB 
-    g4 = np.random.randint(100*1024*1024, 2*1024*1024*1024, 50)
+    g4 = np.random.randint(100*1024*1024, 2*1024*1024*1024, per_set)
 
     return [[g1,'g1'], [g2,'g2'], [g3,'g3'], [g4, 'g4']]
 
 def per_pattern(machine, size, core, dataset, gname, j):
 
-    if j < 25:
+    if j < per_set/2:
         d = 'f1'
     else:
         d = 'f2'
