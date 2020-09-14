@@ -16,11 +16,12 @@ def generate_pattern():
                 confirm = 0
                 while confirm == 0:
                     if gname != 'g4':
-                       core = np.random.randint(1, 16, 1)[0]
-                       dataset = np.random.randint(1, 200, 1)[0]
+                       core = np.random.randint(1, 17, 1)[0]
+ 
+                       dataset = np.random.randint(1, 201, 1)[0]
                     else:
-                       core = np.random.randint(1, 4, 1)[0]
-                       dataset = np.random.randint(1, 40, 1)[0]
+                       core = np.random.randint(1, 5, 1)[0]
+                       dataset = np.random.randint(1, 41, 1)[0]
  
 
                     if nodes * core * dataset <= size:
