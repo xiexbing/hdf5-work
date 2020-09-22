@@ -7,8 +7,6 @@ ior/ includes the modified source code of IOR, which exeplicitly fsync() I/O wri
 
 summit_/ include all the IOR templates designed for and runing on summit.
 
-
-theta_/ include all the IOR templates designed for and running on theta.
-
-
 cori_/ include all the IOR templates designed for and running on cori.  
+
+experiment_result/ include all the experiment result plots for various access patterns and APIs.
