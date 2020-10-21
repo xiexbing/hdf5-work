@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+int     uniform_distribution(int rangeLow, int rangeHigh);
+int *   uniform_array(int n, int mean, double diff);
+int     evaluate_diff(int * burst_sizes, int n);
+double  evaluate_mean(int * burst_sizes, int n);
+
+
+int main(void) {
+    /*
+    input parameters:
+        n:    the number of processes
+        mean: the mean burst size
+        diff: size difference between min and max bursts, unit:kb
+
+    output file:
+        uniform_bursts.data
+    */
+
+
+    int n = 42*1000;
+    int mean = 1048576*9;
+    int diff = 100;
+
+    //the array of burst sizes 
+    int *burst_sizes;
+  
+    //the output file for uniform bursts
+    FILE *f;
+
+    //loop counter for burst in burst_sizes;
+    int i;
+
+    /* set the seed */
+    srand( (unsigned)time( NULL ) );
+ 
+    burst_sizes = calloc(n, sizeof(int) );  
+    burst_sizes = uniform_array(n, mean, diff);
+
+    f = fopen("uniform_bursts.data", "w");
+
+    if(f) {
+        for (i = 0; i <n; i++) {
+            fprintf(f, "%d \n", burst_sizes[i]);
+        }
+    }
+ 
+    fclose(f);
+    free(burst_sizes);
+
+    return 0;
+
+}
+
+
+int uniform_distribution(int rangeLow, int rangeHigh) {
+    int range = rangeHigh - rangeLow + 1; 
+    int copies=RAND_MAX/range; 
+    int limit=range*copies;    
+    int myRand=-1;
+    int rand_burst; 
+
+    while( myRand<0 || myRand>=limit){
+        myRand=rand();   
+    }
+
+    rand_burst = myRand/copies+rangeLow;
+
+//    printf("array i: %d \n", rand_burst);
+ 
+    return rand_burst;
+}
+
+
+int  evaluate_diff(int * burst_sizes, int n) {
+    int min, max;
+    int i;
+
+    min = max = burst_sizes[0];
+
+    for (i = 1; i < n; i++) {
+        if (min > burst_sizes[i]) {
+            min = burst_sizes[i];
+        }
+        if (max < burst_sizes[i]) {
+            max = burst_sizes[i];
+        }
+
+    }
+
+    int curr_diff = max - min;
+    printf("n min max: %d %d %d \n", n, min, max);
+  
+    return curr_diff; 
+}
+
+
+double  evaluate_mean(int * burst_sizes, int n) {
+    double sum = 0;
+    int i;
+    for (i = 0; i < n; i++) {
+        sum = sum + burst_sizes[i];
+    }
+
+    double curr_mean = sum/n;
+
+    return curr_mean; 
+}
+
+
+/* 
+ * the mean value of per burst size, unit:KB
+ * the relative std is std/mean
+ */
+int * uniform_array(int n, int mean, double diff) {
+    int *burst_sizes = malloc (sizeof (int) * n);
+
+    int intLow = (int) abs(mean - diff/2);
+    int intHigh = (int) mean + diff/2;
+    printf("uniform range low to high: %d %d \n", intLow, intHigh);
+    
+    int curr_diff = diff + 1;
+    while (curr_diff > diff) {
+
+        int i;
+        for (i = 0; i < n; i++) { 
+
+            burst_sizes[i] = uniform_distribution(intLow, intHigh);
+        }
+
+        curr_diff = evaluate_diff(burst_sizes, n);
+    }
+
+    double curr_mean = evaluate_mean(burst_sizes, n);
+
+    printf("input mean curr mean: %d %lf \n", mean, curr_mean);
+    printf("input diff curr diff: %lf %d \n", diff, curr_diff);
+ 
+    
+    return burst_sizes; 
+}
