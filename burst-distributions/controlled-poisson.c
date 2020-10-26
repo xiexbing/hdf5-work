@@ -13,7 +13,7 @@ double  evaluate_mean(int * burst_sizes, int n);
 
 
 
-int main(void)
+int main(int argc, char* argv[])
 {
     /*
     input parameters:
@@ -26,9 +26,28 @@ int main(void)
     */
 
 
-    int n = 42;
-    double mean = 1048*9;
-    double diff = 500;
+    printf("\n----Input Three Parameters for Poisson Distribution----\n");
+    printf("\n----int n: the number of MPI ranks----\n");
+    printf("\n----double mean: the mean of burst size of the n ranks, unit:KB----\n");
+    printf("\n----double diff: (max - min) burst size of the n ranks, unit:KB----\n");
+
+
+    int n;
+    double mean, diff;
+
+
+    if (argc == 4) {
+        printf("\n----the parameters n, mean, and diff are taken in order----\n");
+        n = (int) atoi(argv[1]);
+        mean = (double) atoi(argv[2]);
+        diff = (double) atoi(argv[3]);
+    }
+    else {
+        printf("\n----ERROR:request three parameters for n, mean and diff!!!----\n");
+        printf("\n----ERROR:you input %d----\n", argc);
+        exit(1);
+    }
+
 
     //the array of burst sizes 
     int *burst_sizes;

@@ -9,7 +9,7 @@ int     evaluate_diff(int * burst_sizes, int n);
 double  evaluate_mean(int * burst_sizes, int n);
 
 
-int main(void) {
+int main(int argc, char* argv[]) {
     /*
     input parameters:
         n:    the number of processes
@@ -20,10 +20,26 @@ int main(void) {
         uniform_bursts.data
     */
 
+    printf("\n----Input Three Parameters for Uniform Distribution----\n"); 
+    printf("\n----int n: the number of MPI ranks----\n"); 
+    printf("\n----int mean: the mean of burst size of the n ranks, unit:KB----\n"); 
+    printf("\n----int diff: (max - min) burst size of the n ranks, unit:KB----\n"); 
 
-    int n = 42*1000;
-    int mean = 1048576*9;
-    int diff = 100;
+
+    int n, mean, diff;
+
+    if (argc == 4) {
+        printf("\n----the parameters n, mean, and diff are taken in order----\n");
+        n = (int) atoi(argv[1]);
+        mean = (int) atoi(argv[2]);
+        diff = (int) atoi(argv[3]); 
+    }
+    else {
+        printf("\n----ERROR:request three parameters for n, mean, and diff!!!----\n");
+        printf("\n----ERROR:you input %d----\n", argc);
+        exit(1); 
+    }
+
 
     //the array of burst sizes 
     int *burst_sizes;
@@ -136,8 +152,8 @@ int * uniform_array(int n, int mean, double diff) {
 
     double curr_mean = evaluate_mean(burst_sizes, n);
 
-    printf("input mean curr mean: %d %lf \n", mean, curr_mean);
-    printf("input diff curr diff: %lf %d \n", diff, curr_diff);
+    printf("expected mean curr mean: %d %lf \n", mean, curr_mean);
+    printf("expected diff curr diff: %lf %d \n", diff, curr_diff);
  
     
     return burst_sizes; 
