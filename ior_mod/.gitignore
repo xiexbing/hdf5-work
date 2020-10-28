@@ -1,0 +1,8 @@
+*.Po
+*.o
+*.a
+*Makefile
+config.*
+src/ior
+src/mdtest
+src/testlib
