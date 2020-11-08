@@ -107,7 +107,7 @@ def generate_sizes():
 
 def per_pattern(machine, sizeName, node, core, per_size):
 
-    name = sizeName + "_" + str(core) + "_" + str(per_size) + "k"
+    name = sizeName + "_" + str(int(core)) + "_" + str(int(per_size)) + "k"
     ndir = rdir + '/' + machine + '/node' + str(node) 
     
     if not os.path.isdir(ndir):

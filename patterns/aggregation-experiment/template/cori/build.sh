@@ -25,7 +25,6 @@ node(){
 
         cp template.sh $name
         cat $pdir/$per>>$name
-        echo "rm -rf /tmp/jsm.login1.4069">>${name}
         sed -i -e "s/NNODE/$node/g" ${name}
 
         last=`bjobs|grep "IOR"|tail -1|awk '{print $1}'`
