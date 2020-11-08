@@ -111,17 +111,17 @@ static option_help * HDF5_options(void ** init_backend_options, void * init_valu
     memcpy(o, init_values, sizeof(HDF5_options_t));
   }else{
     /* initialize the options properly */
-    o->collective_md = 0;
-    o->defer_flush = 0;
-    o->meta_block = 0;
+    o->collective_md = 1;
+    o->defer_flush = 1;
+    o->meta_block = 1;
   }
 
   *init_backend_options = o;
 
   option_help h [] = {
-    {0, "hdf5.collectiveMetadata", "Use collectiveMetadata (available since HDF5-1.10.0)", OPTION_FLAG, 'd', & o->collective_md},
-    {0, "hdf5.deferFlush", "Use defer cache flush", OPTION_FLAG, 'd', & o->defer_flush},
-    {0, "hdf5.metaBlock", "Use larger metadata block size", OPTION_FLAG, 'd', & o->meta_block},
+    {1, "hdf5.collectiveMetadata", "Use collectiveMetadata (available since HDF5-1.10.0)", OPTION_FLAG, 'd', & o->collective_md},
+    {1, "hdf5.deferFlush", "Use defer cache flush", OPTION_FLAG, 'd', & o->defer_flush},
+    {1, "hdf5.metaBlock", "Use larger metadata block size", OPTION_FLAG, 'd', & o->meta_block},
     LAST_OPTION
   };
   option_help * help = malloc(sizeof(h));
