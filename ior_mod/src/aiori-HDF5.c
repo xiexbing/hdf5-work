@@ -286,7 +286,7 @@ static void *HDF5_Open(char *testFileName, IOR_param_t * param)
                     "\nHDF5 write %d datasets\n", ndataSet);
         }
 
-#ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS
+/* #ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS */
         HDF5_options_t *o = (HDF5_options_t*) param->backend_options;
         if (o->collective_md) {
                 /* more scalable metadata */
@@ -299,7 +299,7 @@ static void *HDF5_Open(char *testFileName, IOR_param_t * param)
                             "\nHDF5 collective metadata enabled\n");
                 }
         }
-#endif
+/* #endif */
 
         /* Tang added: defer metadata cache flushing until file close */
         o = (HDF5_options_t*) param->backend_options;
@@ -770,7 +770,7 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
                 }
         } else {                /* READ or CHECK */
                 hid_t dapl = H5Pcreate(H5P_DATASET_ACCESS);
-#ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS
+/* #ifdef HAVE_H5PSET_ALL_COLL_METADATA_OPS */
                 HDF5_options_t *o = (HDF5_options_t*) param->backend_options;
                 if (o->collective_md) {
                         /* more scalable metadata */
@@ -781,7 +781,7 @@ static void SetupDataSet(void *fd, IOR_param_t * param)
                                     "\nHDF5 dataset collective metadata enabled\n");
                         }
                 }
-#endif
+/* #endif */
 
                 for (i = 0; i < ndataSet; i++) {
                         sprintf(dataSetName, "%s-%04d.%04d.%d", "Dataset", dataSetID,
