@@ -1,16 +1,20 @@
 #!/bin/bash -l
-#BSUB -P stf008 
-#BSUB -W 2:00
-#BSUB -nnodes NNODE
-##BSUB -w ended(PREVJOBID)
-# #BSUB -alloc_flags gpumps
-#BSUB -J IOR_NNODEnode
-#BSUB -o o%J.ior_NNODEnode
-#BSUB -e o%J.ior_NNODEnode
+#SBATCH -N NNODE
+#SBATCH -p regular
+# #SBATCH --qos=premium
+# #SBATCH -p debug
+#SBATCH -A m1248
+#SBATCH -t 02:00:00
+#SBATCH -C haswell
+#SBATCH -L SCRATCH # needs the parallel file system
+#SBATCH -J IOR_NNODEnode
+#SBATCH -o o%j.ior_NNODEnode
+#SBATCH -e o%j.ior_NNODEnode
 
-CDIR=ior_data
-EXEC=/gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior
-LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:$LD_LIBRARY_PATH
+module swap PrgEnv-gnu PrgEnv-intel
+
+CDIR=${SCRATCH}/ior_data
+EXEC=${HOME}/hdf5-work/ior/src/ior
 
 #enable darshan dxt trace 
 export MPICH_MPIIO_STATS=1
@@ -31,6 +35,9 @@ naggrs="$eqal_aggr $half_aggr $quat_aggr"
 buff_sizes="1M 4M 16M 64M 256M"
 stripe_sizes="1m 4m 16m 32m 64m"
 
+
+run_cmd="srun -N NNODE -n $ncore"
+
 ior(){
     local i=$1
     local ncore=$2
@@ -38,7 +45,8 @@ ior(){
     local stripe_size=$4
  
     #check file size to determine alignment setting
-    size="${burst//k}"
+    tmpsize="${burst//k}"
+    size=${tmpsize%.*}
     fileSize=$(($size*$ncore*NNODE/1024))
 
     if [[ $fileSize -ge 16 ]]; then
@@ -58,7 +66,10 @@ ior(){
         ind_write(){
             #independent write
             #flush data in data transfer, before file close
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata 
+            let NPROC=NNODE*$ncore
+            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
+            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata 
+            export LD_PRELOAD=""
         }
 
         col_write(){
@@ -104,7 +115,10 @@ ior(){
             export ROMIO_HINTS=$hfile
 
             #flush data in data transfer, before file close 
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata
+            let NPROC=NNODE*$ncore
+            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
+            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata
+            export LD_PRELOAD=""
         }
 
         default_write(){
@@ -113,7 +127,10 @@ ior(){
             export ROMIO_HINTS=$rdir/default
 
             #flush data in data transfer, before file close 
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata
+            let NPROC=NNODE*$ncore
+            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
+            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata
+            export LD_PRELOAD=""
         }
 
 
@@ -131,7 +148,10 @@ ior(){
     read(){
         ind_read(){
             #independent read
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>ind_${ncore}_${burst}_${stripe_size}_r --hdf5.collectiveMetadata     
+            let NPROC=NNODE*$ncore
+            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
+            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>ind_${ncore}_${burst}_${stripe_size}_r --hdf5.collectiveMetadata     
+            export LD_PRELOAD=""
         }
 
         col_read(){ 
@@ -141,7 +161,10 @@ ior(){
             hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
             #load romio hints
             export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_r --hdf5.collectiveMetadata      
+            let NPROC=NNODE*$ncore
+            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
+            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_r --hdf5.collectiveMetadata      
+            export LD_PRELOAD=""
         }
         for naggr in $naggrs; do
             for buffer in $buff_sizes; do
@@ -152,7 +175,10 @@ ior(){
         default_read(){ 
             #load romio hints
             export ROMIO_HINTS=$rdir/default
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_r --hdf5.collectiveMetadata       
+            let NPROC=NNODE*$ncore
+            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
+            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_r --hdf5.collectiveMetadata       
+            export LD_PRELOAD=""
         }
  
         for naggr in $naggrs; do

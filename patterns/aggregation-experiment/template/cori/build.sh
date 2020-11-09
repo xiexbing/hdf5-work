@@ -1,13 +1,14 @@
 #!/bin/bash
 
-cdir=/ccs/home/bing/hdf5/ior_aggregation/patterns/benchmark_pattern
-machine=summit
+cdir=~/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern/
+machine=cori
 idir=$cdir/$machine
 
 
 nodes="4"
 curr_dir=`pwd`
 
+first_submit=1
 node(){
     local node=$1
     ndir=node${node}
@@ -25,16 +26,19 @@ node(){
 
         cp template.sh $name
         cat $pdir/$per>>$name
+        # echo "rm -rf /tmp/jsm.login1.4069">>${name}
         sed -i -e "s/NNODE/$node/g" ${name}
 
-        last=`bjobs|grep "IOR"|tail -1|awk '{print $1}'`
-        if [[ -z $last ]]; then
-            echo "Submitting $per in node${node}"
-            bsub ${name}
+        if [[ $first_submit == 1 ]]; then
+            # Submit first job w/o dependency
+            echo "Submitting $name"
+            first_submit=0
+            job=`sbatch $name`
         else
-            sed -i "s/##BSUB/#BSUB/g" ${name}
-            sed -i "s/PREVJOBID/${last}/g" ${name}
+            echo "Submitting $name after ${job: -8}"
+            job=`sbatch -d afterany:${job: -8} $name`
         fi
+ 
     }   
     for per in $patterns; do
         pattern $per
