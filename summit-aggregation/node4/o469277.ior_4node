@@ -1,0 +1,20 @@
+n5_13_33575k done
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@batch1>
+Subject: Job 469277: <IOR_4node> in cluster <summit> Done
+
+Job <IOR_4node> was submitted from host <login5> by user <bing> in cluster <summit> at Mon Nov  9 10:25:59 2020
+Job was executed on host(s) <1*batch1>, in queue <batch>, as user <bing> in cluster <summit> at Mon Nov  9 10:29:28 2020
+                            <42*c27n14>
+                            <42*c27n15>
+                            <42*c27n16>
+                            <42*c27n17>
+</ccs/home/bing> was used as the home directory.
+</gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4> was used as the working directory.
+Started at Mon Nov  9 10:29:28 2020
+Terminated at Mon Nov  9 10:32:50 2020
+Results reported at Mon Nov  9 10:32:50 2020
+
+The output (if any) is above this job summary.
+

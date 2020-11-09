@@ -1,0 +1,2580 @@
+IOR-3.3.0+dev: MPI Coordinated Test of Parallel I/O
+Began               : Mon Nov  9 10:30:07 2020
+Command line        : /gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior -b 33575k -t 33575k -i 1 -v -v -v -k -a HDF5 -J 16m -c -e -w -o ior_data/col_1_13_33575k_default_f
+Machine             : Linux c27n14 4.14.0-115.21.2.el7a.ppc64le #1 SMP Thu May 7 22:22:31 UTC 2020 ppc64le
+Using synchronized MPI timer
+Start time skew across all tasks: 0.00 sec
+STARTING ENVIRON LOOP
+XDG_SESSION_ID=11475
+HOSTNAME=c27n14
+SHELL=/bin/bash
+HISTSIZE=1000
+SSH_CLIENT=67.187.116.217 60160 22
+LC_ALL=
+USER=bing
+MAIL=/var/spool/mail/bing
+PATH=/opt/ibm/csm/bin:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin:/sw/sources/lsf-tools/2.0/summit/bin:/sw/summit/xalt/1.2.0/bin:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/bin:/sw/sources/hpss/bin:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/bin:/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin:/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibm/flightlog/bin:/opt/ibutils/bin:/opt/ibm/spectrum_mpi/jsm_pmix/bin:/opt/puppetlabs/bin:/usr/lpp/mmfs/bin
+PWD=/autofs/nccs-svm1_home1/bing
+HISTCONTROL=ignoredups
+SHLVL=5
+HOME=/ccs/home/bing
+LOGNAME=bing
+SSH_CONNECTION=67.187.116.217 60160 128.219.134.75 22
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+XDG_RUNTIME_DIR=/run/user/4069
+_=/opt/ibm/spectrum_mpi/jsm_pmix/bin/jsrun
+LD_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:/opt/ibm/spectrum_mpi/jsm_pmix/lib/:/opt/ibm/spectrum_mpi/jsm_pmix/../lib/:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:/opt/ibm/csm/lib/:/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:/sw/summit/xl/16.1.1-5/xlsmp/5.1.1/lib:/sw/summit/xl/16.1.1-5/xlmass/9.1.1/lib:/sw/summit/xl/16.1.1-5/xlC/16.1.1/lib:/sw/summit/xl/16.1.1-5/xlf/16.1.1/lib:/sw/summit/xl/16.1.1-5/lib:/opt/ibm/spectrum_mpi/jsm_pmix/lib
+JSM_ENABLE_CGROUP=1
+PMIX_INSTALL_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+JSM_NUM_THREADS=15
+TMPDIR=/tmp
+JSM_TOP_SESSION_DIR=/tmp/jsm.c27n14.4069
+JSM_LOG_PATH=/tmp/jsm.c27n14.4069/1511558
+PTS_LOG_PATH=/tmp/jsm.c27n14.4069/1511558
+JSM_BATCH_SESSION_DIR=/tmp/jsm.c27n14.4069/1511558
+PMIX_SYSTEM_TMPDIR=/tmp/jsm.c27n14.4069/1511558
+PMIX_SERVER_TMPDIR=/tmp/jsm.c27n14.4069/1511558
+JSM_ENV_VAR_SPINDLE_PORT=/tmp/jsm.c27n14.4069/1511558/JSM_rm_port_4069_1511558-spindle
+JSM_JSRUN_PORT=/tmp/jsm.c27n14.4069/1511558/JSM_rm_port_4069_1511558:16
+CSM_LIB_PATH=/opt/ibm/csm/lib/libcsmi.so
+LSF_PTS_USOCK=@PTS_CLIENT.65214.1
+LSF_PTS_IPSTR=10.134.7.107
+PTS_PARENT_PID=65214
+
+OMPI_MCA_orte_externally_bound=1
+LMOD_FAMILY_COMPILER_VERSION=16.1.1-5
+dl=/gpfs/alpine/stf008/scratch/bing/dl
+MANPATH=/sw/sources/hpss/man:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/share/man:/sw/summit/xl/16.1.1-5/xlC/16.1.1/man/en_US:/sw/summit/xl/16.1.1-5/xlf/16.1.1/man/en_US:/sw/summit/lmod/8.2.10/share/man:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/man:::/opt/puppetlabs/puppet/share/man
+LSB_EXEC_CLUSTER=summit
+XALT_ETC_DIR=/sw/summit/xalt/1.2.0/etc
+hpss=/ccs/sys/adm/rats/hpss_data/
+hdf5=/gpfs/alpine/stf008/scratch/bing/script
+_ModuleTable003_=LH0sWyJsc2YtdG9vbHMiXT17WyJmbiJdPSIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS9Db3JlL2xzZi10b29scy8yLjAubHVhIixbImZ1bGxOYW1lIl09ImxzZi10b29scy8yLjAiLFsibG9hZE9yZGVyIl09NSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJsc2YtdG9vbHMiLH0sWyJzcGVjdHJ1bS1tcGkiXT17WyJmbiJdPSIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS94bC8xNi4xLjEtNS9zcGVjdHJ1bS1tcGkvMTAuMy4xLjItMjAyMDAxMjEubHVhIixbImZ1bGxOYW1lIl09InNwZWN0cnVtLW1waS8xMC4zLjEuMi0yMDIwMDEyMSIs
+LSB_EFFECTIVE_RSRCREQ=1*{select[((LN) && (type == any))] order[r15s:pg] span[hosts=1] cu[type=rack:pref=config]}+168*{select[((CN) && (type == any))] order[r15s:pg] span[ptile=42] cu[type=rack:pref=config]}
+LSF_LIM_API_NTRIES=1
+LSF_LOGDIR=/var/log/lsf
+LSB_BATCH_JID=469277
+__LMOD_REF_COUNT_MODULEPATH=/autofs/nccs-svm1_sw/summit/modulefiles/site/linux-rhel7-ppc64le/spectrum-mpi/10.3.1.2-20200121-p6nrnt6/xl/16.1.1-5:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core:1;/sw/summit/modulefiles/core:1
+LMOD_ROOT=/sw/summit/lmod
+DXT_ENABLE_IO_TRACE=4
+LMOD_SYSTEM_DEFAULT_MODULES=DefApps
+MODULEPATH_ROOT=/sw/summit/modulefiles
+LS_EXECCWD=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+LSB_TRAPSIGS=trap # 15 10 12 2 1
+genarray=/ccs/home/bing/adios1.2/tests/genarray/
+LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib
+ROMIO_PRINT_HINTS=1
+LS_JOBPID=68764
+PAMI_IBV_ADAPTER_AFFINITY=1
+LSB_JOBRES_CALLBACK=48923@batch1
+LSB_MAX_NUM_PROCESSORS=169
+LMOD_PKG=/sw/summit/lmod/8.2.10
+LSB_JOB_EXECUSER=bing
+LSB_JOBID=469277
+PAMI_ENABLE_STRIPING=0
+LSF_SERVERDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc
+OLCF_XL_ROOT=/sw/summit/xl/16.1.1-5
+LSB_JOBRES_PID=68764
+LMOD_VERSION=8.2.10
+OMPI_FC=/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin/xlf2008_r
+LSB_JOBNAME=IOR_4node
+OLCF_DARSHAN_RUNTIME_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43
+OLCF_XLSMP_ROOT=/sw/summit/xl/16.1.1-5/xlsmp/5.1.1
+SSH_TTY=/dev/pts/47
+BSUB_BLOCK_EXEC_HOST=
+__LMOD_REF_COUNT_LOADEDMODULES=xl/16.1.1-5:1;spectrum-mpi/10.3.1.2-20200121:1;hsi/5.0.2.p5:1;xalt/1.2.0:1;lsf-tools/2.0:1;darshan-runtime/3.1.7:1;DefApps:1
+__LMOD_REF_COUNT_CMAKE_PREFIX_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2:1
+LSF_LIBDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib
+LSB_PROJECT_NAME=STF008
+logs=/gpfs/alpine/stf008/scratch/bing/darshan/general
+OPAL_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+LMOD_sys=Linux
+LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+PAMI_IBV_ENABLE_OOO_AR=1
+SBD_KRB5CCNAME_VAL=
+LSB_EEXEC_REAL_UID=
+LMOD_MPI_NAME=spectrum-mpi
+HOSTTYPE=LINUXPPC64LE
+_ModuleTable004_=WyJsb2FkT3JkZXIiXT0yLHByb3BUPXt9LFsic3RhY2tEZXB0aCJdPTEsWyJzdGF0dXMiXT0iYWN0aXZlIixbInVzZXJOYW1lIl09InNwZWN0cnVtLW1waSIsfSx4YWx0PXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUveGFsdC8xLjIuMC5sdWEiLFsiZnVsbE5hbWUiXT0ieGFsdC8xLjIuMCIsWyJsb2FkT3JkZXIiXT00LHByb3BUPXt9LFsic3RhY2tEZXB0aCJdPTEsWyJzdGF0dXMiXT0iYWN0aXZlIixbInVzZXJOYW1lIl09InhhbHQiLH0seGw9e1siZm4iXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZS94bC8xNi4xLjEtNS5sdWEiLFsiZnVsbE5hbWUiXT0ieGwv
+CPATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/include
+LSF_INVOKE_CMD=bsub
+__LMOD_REF_COUNT__LMFILES_=/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xl/16.1.1-5.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5/spectrum-mpi/10.3.1.2-20200121.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/hsi/5.0.2.p5.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xalt/1.2.0.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/lsf-tools/2.0.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/darshan-runtime/3.1.7.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/DefApps.lua:1
+LS_EXEC_T=START
+OLCF_LMOD_ROOT=/sw/summit
+OLCF_XLMASS_ROOT=/sw/summit/xl/16.1.1-5/xlmass/9.1.1
+data=/ccs/home/bing/data
+MPICH_MPIIO_HINTS_DISPLAY=1
+OLCF_FAMILY_MPI_VERSION=10.3.1.2-20200121
+LSB_SUB_RES_REQ=1*{select[LN]span[hosts=1]} + 168*{select[CN]span[ptile=42]}
+LS_SUBCWD=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+PROJWORK=/gpfs/alpine/proj-shared
+LSB_HOSTS=batch1 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17
+LMOD_FAMILY_MPI_VERSION=10.3.1.2-20200121
+LSB_UNIXGROUP_INT=bing
+LSB_JOBFILENAME=/ccs/home/bing/.lsbatch/1604935559.469277
+OLCF_FAMILY_MPI=spectrum-mpi
+NLSPATH=/sw/summit/xl/16.1.1-5/msg/en_US/%N:/sw/summit/xl/16.1.1-5/xlC/16.1.1/msg/en_US/%N:/sw/summit/xl/16.1.1-5/xlf/16.1.1/msg/en_US/%N
+LSB_JOBINDEX=0
+__LMOD_REF_COUNT_NLSPATH=/sw/summit/xl/16.1.1-5/msg/en_US/%N:2;/sw/summit/xl/16.1.1-5/xlC/16.1.1/msg/en_US/%N:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/msg/en_US/%N:1
+_ModuleTable001_=X01vZHVsZVRhYmxlXz17WyJNVHZlcnNpb24iXT0zLFsiY19yZWJ1aWxkVGltZSJdPWZhbHNlLFsiY19zaG9ydFRpbWUiXT1mYWxzZSxkZXB0aFQ9e30sZmFtaWx5PXtbImNvbXBpbGVyIl09InhsIixbIm1waSJdPSJzcGVjdHJ1bS1tcGkiLH0sbVQ9e0RlZkFwcHM9e1siZm4iXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZS9EZWZBcHBzLmx1YSIsWyJmdWxsTmFtZSJdPSJEZWZBcHBzIixbImxvYWRPcmRlciJdPTcscHJvcFQ9e30sWyJzdGFja0RlcHRoIl09MCxbInN0YXR1cyJdPSJhY3RpdmUiLFsidXNlck5hbWUiXT0iRGVmQXBwcyIsfSxbImRhcnNoYW4tcnVudGltZSJdPXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmls
+PAMI_IBV_QP_SERVICE_LEVEL=8
+LSB_EXIT_PRE_ABORT=99
+OLCF_XLC_ROOT=/sw/summit/xl/16.1.1-5/xlC/16.1.1
+OPAL_LIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib
+LSB_JOBEXIT_STAT=0
+hdata=/gpfs/alpine/stf008/scratch/bing/darshan/hdf5
+PAMI_CUDA_AWARE_THRESH=320000
+OMPI_DIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+_LMFILES_=/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xl/16.1.1-5.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5/spectrum-mpi/10.3.1.2-20200121.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/hsi/5.0.2.p5.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xalt/1.2.0.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/lsf-tools/2.0.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/darshan-runtime/3.1.7.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/DefApps.lua
+OLCF_MODULEPATH_ROOT=/sw/summit/modulefiles
+EDITOR=vim
+LSB_RES_GET_FANOUT_INFO=Y
+__LMOD_REF_COUNT_PYTHONPATH=/sw/summit/xalt/1.2.0/site:1;/sw/summit/xalt/1.2.0/libexec:1
+LSB_CHKFILENAME=/ccs/home/bing/.lsbatch/1604935559.469277
+MODULEPATH=/autofs/nccs-svm1_sw/summit/modulefiles/site/linux-rhel7-ppc64le/spectrum-mpi/10.3.1.2-20200121-p6nrnt6/xl/16.1.1-5:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core:/sw/summit/modulefiles/core
+atlas2=/lustre/atlas2/stf008/scratch/bing
+LSB_DJOB_HOSTFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostfile
+LMOD_SYSTEM_NAME=summit
+_ModuleTable_Sz_=6
+OLCF_FAMILY_COMPILER_VERSION=16.1.1-5
+LOADEDMODULES=xl/16.1.1-5:spectrum-mpi/10.3.1.2-20200121:hsi/5.0.2.p5:xalt/1.2.0:lsf-tools/2.0:darshan-runtime/3.1.7:DefApps
+OMPI_LD_PRELOAD_PREPEND=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/libdarshan.so
+OLCF_FAMILY_COMPILER=xl
+LSF_JOB_TIMESTAMP_VALUE=1604935768
+OLCF_XLF_ROOT=/sw/summit/xl/16.1.1-5/xlf/16.1.1
+LSB_AFFINITY_HOSTFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostAffinityFile
+LMOD_CMD=/sw/summit/lmod/8.2.10/libexec/lmod
+_ModuleTable005_=MTYuMS4xLTUiLFsibG9hZE9yZGVyIl09MSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJ4bCIsfSx9LG1wYXRoQT17Ii9hdXRvZnMvbmNjcy1zdm0xX3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvc3BlY3RydW0tbXBpLzEwLjMuMS4yLTIwMjAwMTIxLXA2bnJudDYveGwvMTYuMS4xLTUiLCIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS94bC8xNi4xLjEtNSIsIi9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUiLCIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL2NvcmUiLH0sWyJzeXN0ZW1CYXNlTVBB
+LSB_DJOB_NUMPROC=169
+LSB_EXEC_HOSTTYPE=LINUXPPC64LE
+LSF_BINDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin
+WORLDWORK=/gpfs/alpine/world-shared
+MEMBERWORK=/gpfs/alpine/scratch/bing
+LSB_APPLICATION_NAME=small
+__LMOD_REF_COUNT_PATH=/sw/sources/lsf-tools/2.0/summit/bin:2;/sw/summit/xalt/1.2.0/bin:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/bin:1;/sw/sources/hpss/bin:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/bin:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin:1;/opt/ibm/csm/bin:1;/usr/local/bin:1;/usr/bin:1;/usr/local/sbin:1;/usr/sbin:1;/opt/ibm/flightlog/bin:1;/opt/ibutils/bin:1;/opt/ibm/spectrum_mpi/jsm_pmix/bin:1
+OMPI_CC=/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin/xlc_r
+JOB_TERMINATE_INTERVAL=10
+__LMOD_REF_COUNT_CPATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/include:1
+LSB_ACCT_FILE=/tmp/469277.tmpdir/.1604935559.469277.acct
+CSM_ALLOCATION_ID=1511558
+BINARY_TYPE_HPC=
+_ModuleTable002_=ZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUvZGFyc2hhbi1ydW50aW1lLzMuMS43Lmx1YSIsWyJmdWxsTmFtZSJdPSJkYXJzaGFuLXJ1bnRpbWUvMy4xLjciLFsibG9hZE9yZGVyIl09Nixwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJkYXJzaGFuLXJ1bnRpbWUiLH0saHNpPXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUvaHNpLzUuMC4yLnA1Lmx1YSIsWyJmdWxsTmFtZSJdPSJoc2kvNS4wLjIucDUiLFsibG9hZE9yZGVyIl09Myxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJoc2ki
+LSB_SUB_HOST=login5
+raw_data=/ccs/home/bing/raw_data
+__LSF_JOB_TMPDIR__=/tmp/469277.tmpdir
+LSB_SUB_USER=bing
+LSFUSER=bing
+OLCF_HSI_ROOT=/sw/sources/hpss
+BASH_ENV=/sw/summit/lmod/8.2.10/init/bash
+LSB_OUTDIR=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+LSB_QUEUE=batch
+LSB_MCPU_HOSTS=batch1 1 c27n14 42 c27n15 42 c27n16 42 c27n17 42 
+LSB_OUTPUTFILE=o469277.ior_4node
+PAMI_IBV_ENABLE_DCT=1
+PYTHONPATH=/sw/summit/xalt/1.2.0/site:/sw/summit/xalt/1.2.0/libexec
+MPI_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+CVS_RSH=ssh
+OLCF_SPECTRUM_MPI_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+XLSF_UIDDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib/uid
+LSB_ECHKPNT_RSH_CMD=ssh -o 'PasswordAuthentication no' -o 'StrictHostKeyChecking no'
+JSM_JSRUN_NO_WARN_TOPOLOGY=1
+MODULESHOME=/sw/summit/lmod/8.2.10
+__LMOD_REF_COUNT_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:1
+LSF_CGROUP_TOPDIR_KEY=summit
+LMOD_SETTARG_FULL_SUPPORT=no
+PKG_CONFIG_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/pkgconfig
+__LMOD_REF_COUNT_LD_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:1;/sw/summit/xl/16.1.1-5/xlsmp/5.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlmass/9.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/lib:1;/sw/summit/xl/16.1.1-5/lib:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib:1
+OMPI_CXX=/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin/xlc++_r
+__Init_Default_Modules=1
+OMPI_MCA_io=romio321
+LMOD_MPI_VERSION=10.3.1.2-20200121-p6nrnt6
+gpfs=/gpfs/alpine/stf008/scratch/bing
+LSB_XFER_OP=
+LMOD_FAMILY_COMPILER=xl
+gen_bench=/tmp/work/bing/genarray_benchmark
+MPICH_MPIIO_TIMERS=1
+LSB_EEXEC_REAL_GID=
+XALT_OLCF=1
+XL_LINKER=/sw/summit/xalt/1.2.0/bin/ld
+__LMOD_REF_COUNT_PKG_CONFIG_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/pkgconfig:1
+fast=/gpfs/alpine/stf008/scratch/bing/darshan/fast
+CMAKE_PREFIX_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+DARSHAN_DISABLE_SHARED_REDUCTION=1
+LSF_ENVDIR=/opt/ibm/spectrumcomputing/lsf/conf
+LMOD_DIR=/sw/summit/lmod/8.2.10/libexec
+widow2=/lustre/widow2/scratch/bing
+__LMOD_REF_COUNT_MANPATH=/sw/sources/hpss/man:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/share/man:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/man/en_US:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/man/en_US:1;/sw/summit/lmod/8.2.10/share/man:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/man:1
+_ModuleTable006_=VEgiXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZTovc3cvc3VtbWl0L21vZHVsZWZpbGVzL2NvcmUiLH0=
+MPICH_MPIIO_STATS=1
+__LMOD_Priority_PATH=/sw/sources/lsf-tools/2.0/summit/bin:-9999;/sw/summit/xalt/1.2.0/bin:-9999
+widow3=/lustre/widow3/scratch/bing
+ROMIO_HINTS=result_13_33575k/default
+LSB_DJOB_RANKFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostfile
+LMOD_FAMILY_MPI=spectrum-mpi
+widow1=/lustre/widow1/scratch/bing
+BASH_FUNC_module()=() {  eval $($LMOD_CMD bash "$@") && eval $(${LMOD_SETTARG_CMD:-:} -s sh)
+}
+BASH_FUNC_ml()=() {  eval $($LMOD_DIR/ml_cmd "$@")
+}
+OMPI_MCA_opal_signal=6,7,8,11
+OMPI_MCA_ess_base_forward_signals=6,10,11,12,14,18,21
+OMPI_MCA_backtrace_lwcore_enable=0
+OMPI_MCA_spml=ucx
+OMPI_MCA_spml_ucx_priority=80
+OMPI_MCA_atomic=ucx
+OMPI_MCA_atomic_ucx_priority=80
+OMPI_MCA_mpi_leave_pinned=1
+OMPI_MCA_memory=patcher
+OMPI_MCA_mca_base_component_show_load_errors=0
+OMPI_MCA_btl_openib_allow_ib=true
+OMPI_MCA_btl_openib_warn_default_gid_prefix=0
+IBV_FORK_SAFE=1
+OMPI_MCA_coll_tuned_priority=-1
+PMIX_MCA_gds=ds21,hash
+OMPI_MCA_schizo_ompi_prepend_ld_library_path=pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port
+PAMI_IBV_SKIP_CQOVERFLOW_CHECK=1
+OMPI_MCA_coll_hcoll_priority=-1
+OMPI_MCA_coll_hcoll_enable=0
+HCOLL_ALLREDUCE_ZCOPY_TUNE=static
+HCOLL_EXTERNAL_UCM_EVENTS=1
+UCX_MEM_MMAP_HOOK_MODE=none
+OMPI_MCA_opal_common_ucx_opal_mem_hooks=1
+OMPI_MCA_pml=pami
+OMPI_MCA_osc=pami
+OMPI_MCA_btl=self
+OMPI_MCA_bml=^r2
+OMPI_LD_PRELOAD_POSTPEND_DISTRO=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/libpami_cudahook.so
+OMPI_MCA_ompi_async_mpi_init=f
+OMPI_MCA_opal_pmix_base_async_modex=t
+OMPI_MCA_opal_pmix_base_collect_data=f
+OMPI_LD_LIBRARY_PATH_PREPEND_DISTRO=pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port
+OMPI_MCA_compress=^bzip,gzip
+OMPI_MCA_dfs=^app,orted,test
+OMPI_MCA_errmgr=default_app
+OMPI_MCA_oob=^ud
+OMPI_MCA_pmix=ext3x
+OMPI_MCA_routed=^direct,radix,debruijn,binomial
+OMPI_MCA_schizo=jsm
+OMPI_MCA_state=app
+OMPI_MCA_mca_base_env_list_distro=MPI_ROOT,OPAL_PREFIX,OPAL_LIBDIR,PMIX_INSTALL_PREFIX,IBV_FORK_SAFE,PMIX_MCA_ptl_tcp_handshake_wait_time,PMIX_MCA_ptl_tcp_handshake_max_retries,PMIX_MCA_gds,PAMI_IBV_SKIP_CQOVERFLOW_CHECK,HCOLL_ALLREDUCE_ZCOPY_TUNE,HCOLL_EXTERNAL_UCM_EVENTS,UCX_MEM_MMAP_HOOK_MODE,OMPI_LD_PRELOAD_POSTPEND_DISTRO,OMPI_LD_LIBRARY_PATH_PREPEND_DISTRO,SMPI_INTERNAL_MPIRUN_LAUNCH_JSM
+LD_PRELOAD=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/libdarshan.so /autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/libpami_cudahook.so
+JSM_NAMESPACE_RANK=0
+OMPI_COMM_WORLD_RANK=0
+JSM_NAMESPACE_SIZE=52
+OMPI_COMM_WORLD_SIZE=52
+JSM_NAMESPACE_LOCAL_RANK=0
+OMPI_COMM_WORLD_LOCAL_RANK=0
+JSM_NAMESPACE_LOCAL_SIZE=13
+OMPI_COMM_WORLD_LOCAL_SIZE=13
+JSM_SMPI_SHARP_ID=277217296
+OMP_PROC_BIND=true
+OMP_PLACES={0:4}
+OMP_NUM_THREADS=4
+PMIX_NAMESPACE=16
+PMIX_RANK=0
+PMIX_SERVER_URI3=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SERVER_URI2=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SERVER_URI21=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SECURITY_MODE=native
+PMIX_PTL_MODULE=tcp
+PMIX_BFROP_BUFFER_TYPE=PMIX_BFROP_BUFFER_NON_DESC
+PMIX_GDS_MODULE=ds21,ds12,hash
+PMIX_DSTORE_21_BASE_PATH=/tmp/jsm.c27n14.4069/1511558/pmix_dstor_ds21_65214
+PMIX_DSTORE_ESH_BASE_PATH=/tmp/jsm.c27n14.4069/1511558/pmix_dstor_ds12_65214
+65904-CPU_ASSIGNMENTS=0
+JSM_SMT_ASSIGNMENTS=0-3
+OPAL_EXEC_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+OPAL_BINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../bin
+OPAL_SBINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../sbin
+OPAL_LIBEXECDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../libexec
+OPAL_DATAROOTDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+OPAL_DATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+OPAL_SYSCONFDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc
+OPAL_SHAREDSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../com
+OPAL_LOCALSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../var
+OPAL_INCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include
+OPAL_INFODIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../info
+OPAL_MANDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../man
+OPAL_PKGDATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share/spectrum_mpi
+OPAL_PKGLIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/spectrum_mpi
+OPAL_PKGINCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include/spectrum_mpi
+PMIX_EXEC_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+PMIX_BINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../bin
+PMIX_SBINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../sbin
+PMIX_LIBEXECDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../libexec
+PMIX_DATAROOTDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+PMIX_DATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+PMIX_SYSCONFDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc
+PMIX_SHAREDSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../com
+PMIX_LOCALSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../var
+PMIX_LIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib
+PMIX_INCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include
+PMIX_INFODIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../info
+PMIX_MANDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../man
+PMIX_PKGDATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share/pmix
+PMIX_PKGLIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pmix
+PMIX_PKGINCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include/pmix
+IPATH_NO_BACKTRACE=1
+HFI_NO_BACKTRACE=1
+OMPI_COMMAND=/gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior
+OMPI_ARGV=-b 33575k -t 33575k -i 1 -v -v -v -k -a HDF5 -J 16m -c -e -w -o ior_data/col_1_13_33575k_default_f
+OMPI_MCA_ess=pmi
+ORTE_SCHIZO_DETECTION=JSM
+PMIX_MCA_mca_base_component_show_load_errors=0
+OMPI_MCA_orte_ess_num_procs=52
+OMPI_APP_CTX_NUM_PROCS=52
+OMPI_MCA_orte_precondition_transports=000042ac0000001a-00004e0d0000001a
+PAMI_ENABLE_SYS_INTERCEPT=0
+LIBCOLL_COLLSEL_FILE=/tmp/jsm.c27n14.4069/1511558/libcoll_xml_cache//autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc/libcoll_tune_results.xml
+ENDING ENVIRON LOOP
+TestID              : 0
+StartTime           : Mon Nov  9 10:30:07 2020
+Path                : /gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4/ior_data
+FS                  : 225668.2 TiB   Used FS: 25.8%   Inodes: 30000.0 Mi   Used Inodes: 7.1%
+
+Parameters: 
+testID              : 0
+refnum              : 0
+api                 : HDF5
+platform            : c27n(Linux)
+testFileName        : ior_data/col_1_13_33575k_default_f
+hintsFileName       : (null)
+deadlineForStonewall: 0
+stoneWallingWearOut : 0
+maxTimeDuration     : 0
+outlierThreshold    : 0
+options             : (null)
+dryRun              : 0
+nodes               : 4
+memoryPerTask       : 0
+memoryPerNode       : 0
+tasksPerNode        : 13
+repetitions         : 1
+multiFile           : 0
+interTestDelay      : 0
+fsync               : 1
+fsyncperwrite       : 0
+useExistingTestFile : 0
+showHints           : 0
+uniqueDir           : 0
+individualDataSets  : 0
+singleXferAttempt   : 0
+readFile            : 0
+writeFile           : 1
+filePerProc         : 0
+reorderTasks        : 0
+reorderTasksRandom  : 0
+reorderTasksRandomSeed: 0
+randomOffset        : 0
+checkWrite          : 0
+checkRead           : 0
+preallocate         : 0
+useFileView         : 0
+setAlignment        : 16777216
+storeFileOffset     : 0
+useSharedFilePointer: 0
+useStridedDatatype  : 0
+keepFile            : 1
+keepFileWithError   : 0
+quitOnError         : 0
+verbose             : 3
+data packet type    : g
+setTimeStampSignature/incompressibleSeed: 0
+collective          : 1
+segmentCount        : 1
+gpfsHintAccess      : 0
+gpfsReleaseToken    : 0
+transferSize        : 34380800
+blockSize           : 34380800
+Participating tasks: 52
+
+Options: 
+api                 : HDF5
+apiVersion          : 1.10.6 (Parallel)
+test filename       : ior_data/col_1_13_33575k_default_f
+access              : single-shared-file
+type                : collective
+segments            : 1
+ordering in a file  : sequential
+ordering inter file : no tasks offsets
+nodes               : 4
+tasks               : 52
+clients per node    : 13
+repetitions         : 1
+xfersize            : 32.79 MiB
+blocksize           : 32.79 MiB
+aggregate filesize  : 1.67 GiB
+
+Results: 
+Using Time Stamp 1604935807 (0x5fa9607f) for Data Signature
+
+access    bw(MiB/s)  IOPS       Latency(s)  block(KiB) xfer(KiB)  open(s)    wr/rd(s)   close(s)   total(s)   iter
+------    ---------  ----       ----------  ---------- ---------  --------   --------   --------   --------   ----
+task 0 writing ior_data/col_1_13_33575k_default_f
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 1         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0         
+
+HDF5 write 1 datasets
+
+HDF5 collective metadata enabled
+
+HDF5 defer cache flush enabled
+
+HDF5 metadata block size set to 65536
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+Commencing write performance test: Mon Nov  9 10:30:07 2020
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+Test 0: Iter=0, Task=0, Time=0.046276, write open start
+Test 0: Iter=0, Task=0, Time=0.068199, write open stop
+Test 0: Iter=0, Task=0, Time=0.068207, write start
+Test 0: Iter=0, Task=0, Time=1.333469, write stop
+Test 0: Iter=0, Task=0, Time=1.333469, write close start
+Test 0: Iter=0, Task=0, Time=1.336421, write close stop
+write     1320.84    41.09      1.27        33575      33575      0.022147   1.27       0.003638   1.29       0   
+Max Write: 1320.84 MiB/sec (1385.00 MB/sec)
+
+Summary of all tests:
+Operation   Max(MiB)   Min(MiB)  Mean(MiB)     StdDev   Max(OPs)   Min(OPs)  Mean(OPs)     StdDev    Mean(s) Stonewall(s) Stonewall(MiB) Test# #Tasks tPN reps fPP reord reordoff reordrand seed segcnt   blksiz    xsize aggs(MiB)   API RefNum
+write        1320.84    1320.84    1320.84       0.00      40.28      40.28      40.28       0.00    1.29083         NA            NA     0     52  13    1   0     0        1         0    0      1 34380800 34380800    1705.0 HDF5      0
+task 50 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=50, Time=0.046280, write open start
+Test 0: Iter=0, Task=50, Time=0.068275, write open stop
+Test 0: Iter=0, Task=50, Time=0.068275, write start
+Test 0: Iter=0, Task=50, Time=1.333514, write stop
+Test 0: Iter=0, Task=50, Time=1.333514, write close start
+Test 0: Iter=0, Task=50, Time=1.336909, write close stop
+task 51 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=51, Time=0.046280, write open start
+Test 0: Iter=0, Task=51, Time=0.068163, write open stop
+Test 0: Iter=0, Task=51, Time=0.068163, write start
+Test 0: Iter=0, Task=51, Time=1.333513, write stop
+Test 0: Iter=0, Task=51, Time=1.333513, write close start
+Test 0: Iter=0, Task=51, Time=1.337040, write close stop
+task 47 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=47, Time=0.046280, write open start
+Test 0: Iter=0, Task=47, Time=0.068353, write open stop
+Test 0: Iter=0, Task=47, Time=0.068353, write start
+Test 0: Iter=0, Task=47, Time=1.333510, write stop
+Test 0: Iter=0, Task=47, Time=1.333511, write close start
+Test 0: Iter=0, Task=47, Time=1.336317, write close stop
+task 49 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=49, Time=0.046280, write open start
+Test 0: Iter=0, Task=49, Time=0.068265, write open stop
+Test 0: Iter=0, Task=49, Time=0.068265, write start
+Test 0: Iter=0, Task=49, Time=1.333503, write stop
+Test 0: Iter=0, Task=49, Time=1.333503, write close start
+Test 0: Iter=0, Task=49, Time=1.336945, write close stop
+task 45 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=45, Time=0.046280, write open start
+Test 0: Iter=0, Task=45, Time=0.068282, write open stop
+Test 0: Iter=0, Task=45, Time=0.068282, write start
+Test 0: Iter=0, Task=45, Time=1.333502, write stop
+Test 0: Iter=0, Task=45, Time=1.333502, write close start
+Test 0: Iter=0, Task=45, Time=1.336888, write close stop
+task 46 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=46, Time=0.046280, write open start
+Test 0: Iter=0, Task=46, Time=0.068285, write open stop
+Test 0: Iter=0, Task=46, Time=0.068285, write start
+Test 0: Iter=0, Task=46, Time=1.333502, write stop
+Test 0: Iter=0, Task=46, Time=1.333503, write close start
+Test 0: Iter=0, Task=46, Time=1.337005, write close stop
+task 42 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=42, Time=0.046280, write open start
+Test 0: Iter=0, Task=42, Time=0.068260, write open stop
+Test 0: Iter=0, Task=42, Time=0.068260, write start
+Test 0: Iter=0, Task=42, Time=1.333502, write stop
+Test 0: Iter=0, Task=42, Time=1.333502, write close start
+Test 0: Iter=0, Task=42, Time=1.336786, write close stop
+task 43 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=43, Time=0.046280, write open start
+Test 0: Iter=0, Task=43, Time=0.068323, write open stop
+Test 0: Iter=0, Task=43, Time=0.068323, write start
+Test 0: Iter=0, Task=43, Time=1.333502, write stop
+Test 0: Iter=0, Task=43, Time=1.333502, write close start
+Test 0: Iter=0, Task=43, Time=1.337097, write close stop
+task 41 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=41, Time=0.046280, write open start
+Test 0: Iter=0, Task=41, Time=0.068260, write open stop
+Test 0: Iter=0, Task=41, Time=0.068260, write start
+Test 0: Iter=0, Task=41, Time=1.333501, write stop
+Test 0: Iter=0, Task=41, Time=1.333501, write close start
+Test 0: Iter=0, Task=41, Time=1.336851, write close stop
+task 44 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=44, Time=0.046280, write open start
+Test 0: Iter=0, Task=44, Time=0.068326, write open stop
+Test 0: Iter=0, Task=44, Time=0.068326, write start
+Test 0: Iter=0, Task=44, Time=1.333502, write stop
+Test 0: Iter=0, Task=44, Time=1.333502, write close start
+Test 0: Iter=0, Task=44, Time=1.336977, write close stop
+task 39 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=39, Time=0.046280, write open start
+Test 0: Iter=0, Task=39, Time=0.068407, write open stop
+Test 0: Iter=0, Task=39, Time=0.068407, write start
+Test 0: Iter=0, Task=39, Time=1.333501, write stop
+Test 0: Iter=0, Task=39, Time=1.333501, write close start
+Test 0: Iter=0, Task=39, Time=1.336817, write close stop
+task 48 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=48, Time=0.046280, write open start
+Test 0: Iter=0, Task=48, Time=0.068367, write open stop
+Test 0: Iter=0, Task=48, Time=0.068367, write start
+Test 0: Iter=0, Task=48, Time=1.333505, write stop
+Test 0: Iter=0, Task=48, Time=1.333506, write close start
+Test 0: Iter=0, Task=48, Time=1.336715, write close stop
+task 40 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=40, Time=0.046280, write open start
+Test 0: Iter=0, Task=40, Time=0.068374, write open stop
+Test 0: Iter=0, Task=40, Time=0.068374, write start
+Test 0: Iter=0, Task=40, Time=1.333500, write stop
+Test 0: Iter=0, Task=40, Time=1.333501, write close start
+Test 0: Iter=0, Task=40, Time=1.336611, write close stop
+task 6 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=6, Time=0.046277, write open start
+Test 0: Iter=0, Task=6, Time=0.068211, write open stop
+Test 0: Iter=0, Task=6, Time=0.068211, write start
+Test 0: Iter=0, Task=6, Time=1.333472, write stop
+Test 0: Iter=0, Task=6, Time=1.333472, write close start
+Test 0: Iter=0, Task=6, Time=1.336622, write close stop
+task 2 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=2, Time=0.046276, write open start
+Test 0: Iter=0, Task=2, Time=0.068167, write open stop
+Test 0: Iter=0, Task=2, Time=0.068168, write start
+Test 0: Iter=0, Task=2, Time=1.333470, write stop
+Test 0: Iter=0, Task=2, Time=1.333470, write close start
+Test 0: Iter=0, Task=2, Time=1.336495, write close stop
+task 3 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=3, Time=0.046276, write open start
+Test 0: Iter=0, Task=3, Time=0.068155, write open stop
+Test 0: Iter=0, Task=3, Time=0.068155, write start
+Test 0: Iter=0, Task=3, Time=1.333470, write stop
+Test 0: Iter=0, Task=3, Time=1.333471, write close start
+Test 0: Iter=0, Task=3, Time=1.336486, write close stop
+task 8 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=8, Time=0.046277, write open start
+Test 0: Iter=0, Task=8, Time=0.068326, write open stop
+Test 0: Iter=0, Task=8, Time=0.068326, write start
+Test 0: Iter=0, Task=8, Time=1.333472, write stop
+Test 0: Iter=0, Task=8, Time=1.333472, write close start
+Test 0: Iter=0, Task=8, Time=1.336851, write close stop
+Finished            : Mon Nov  9 10:30:08 2020
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = enable    
+key = romio_cb_write            value = enable    
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = true      
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+task 10 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=10, Time=0.046277, write open start
+Test 0: Iter=0, Task=10, Time=0.068234, write open stop
+Test 0: Iter=0, Task=10, Time=0.068234, write start
+Test 0: Iter=0, Task=10, Time=1.333472, write stop
+Test 0: Iter=0, Task=10, Time=1.333473, write close start
+Test 0: Iter=0, Task=10, Time=1.336754, write close stop
+task 1 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=1, Time=0.046277, write open start
+Test 0: Iter=0, Task=1, Time=0.068258, write open stop
+Test 0: Iter=0, Task=1, Time=0.068258, write start
+Test 0: Iter=0, Task=1, Time=1.333470, write stop
+Test 0: Iter=0, Task=1, Time=1.333470, write close start
+Test 0: Iter=0, Task=1, Time=1.336928, write close stop
+task 7 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=7, Time=0.046277, write open start
+Test 0: Iter=0, Task=7, Time=0.068182, write open stop
+Test 0: Iter=0, Task=7, Time=0.068183, write start
+Test 0: Iter=0, Task=7, Time=1.333472, write stop
+Test 0: Iter=0, Task=7, Time=1.333472, write close start
+Test 0: Iter=0, Task=7, Time=1.336849, write close stop
+task 4 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=4, Time=0.046277, write open start
+Test 0: Iter=0, Task=4, Time=0.068281, write open stop
+Test 0: Iter=0, Task=4, Time=0.068281, write start
+Test 0: Iter=0, Task=4, Time=1.333472, write stop
+Test 0: Iter=0, Task=4, Time=1.333472, write close start
+Test 0: Iter=0, Task=4, Time=1.336516, write close stop
+task 11 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=11, Time=0.046277, write open start
+Test 0: Iter=0, Task=11, Time=0.068236, write open stop
+Test 0: Iter=0, Task=11, Time=0.068236, write start
+Test 0: Iter=0, Task=11, Time=1.333472, write stop
+Test 0: Iter=0, Task=11, Time=1.333472, write close start
+Test 0: Iter=0, Task=11, Time=1.336257, write close stop
+task 12 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=12, Time=0.046277, write open start
+Test 0: Iter=0, Task=12, Time=0.068146, write open stop
+Test 0: Iter=0, Task=12, Time=0.068146, write start
+Test 0: Iter=0, Task=12, Time=1.333472, write stop
+Test 0: Iter=0, Task=12, Time=1.333472, write close start
+Test 0: Iter=0, Task=12, Time=1.336772, write close stop
+task 9 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=9, Time=0.046277, write open start
+Test 0: Iter=0, Task=9, Time=0.068273, write open stop
+Test 0: Iter=0, Task=9, Time=0.068273, write start
+Test 0: Iter=0, Task=9, Time=1.333472, write stop
+Test 0: Iter=0, Task=9, Time=1.333472, write close start
+Test 0: Iter=0, Task=9, Time=1.336802, write close stop
+task 5 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=5, Time=0.046277, write open start
+Test 0: Iter=0, Task=5, Time=0.068260, write open stop
+Test 0: Iter=0, Task=5, Time=0.068260, write start
+Test 0: Iter=0, Task=5, Time=1.333471, write stop
+Test 0: Iter=0, Task=5, Time=1.333472, write close start
+Test 0: Iter=0, Task=5, Time=1.336811, write close stop
+task 28 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=28, Time=0.046277, write open start
+Test 0: Iter=0, Task=28, Time=0.068188, write open stop
+Test 0: Iter=0, Task=28, Time=0.068188, write start
+Test 0: Iter=0, Task=28, Time=1.333480, write stop
+Test 0: Iter=0, Task=28, Time=1.333480, write close start
+Test 0: Iter=0, Task=28, Time=1.336638, write close stop
+task 31 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=31, Time=0.046277, write open start
+Test 0: Iter=0, Task=31, Time=0.068373, write open stop
+Test 0: Iter=0, Task=31, Time=0.068373, write start
+Test 0: Iter=0, Task=31, Time=1.333481, write stop
+Test 0: Iter=0, Task=31, Time=1.333481, write close start
+Test 0: Iter=0, Task=31, Time=1.336966, write close stop
+task 33 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=33, Time=0.046277, write open start
+Test 0: Iter=0, Task=33, Time=0.068325, write open stop
+Test 0: Iter=0, Task=33, Time=0.068325, write start
+Test 0: Iter=0, Task=33, Time=1.333482, write stop
+Test 0: Iter=0, Task=33, Time=1.333482, write close start
+Test 0: Iter=0, Task=33, Time=1.336683, write close stop
+task 32 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=32, Time=0.046277, write open start
+Test 0: Iter=0, Task=32, Time=0.068366, write open stop
+Test 0: Iter=0, Task=32, Time=0.068366, write start
+Test 0: Iter=0, Task=32, Time=1.333482, write stop
+Test 0: Iter=0, Task=32, Time=1.333482, write close start
+Test 0: Iter=0, Task=32, Time=1.336935, write close stop
+task 34 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=34, Time=0.046277, write open start
+Test 0: Iter=0, Task=34, Time=0.068290, write open stop
+Test 0: Iter=0, Task=34, Time=0.068290, write start
+Test 0: Iter=0, Task=34, Time=1.333482, write stop
+Test 0: Iter=0, Task=34, Time=1.333482, write close start
+Test 0: Iter=0, Task=34, Time=1.336989, write close stop
+task 26 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=26, Time=0.046277, write open start
+Test 0: Iter=0, Task=26, Time=0.068424, write open stop
+Test 0: Iter=0, Task=26, Time=0.068424, write start
+Test 0: Iter=0, Task=26, Time=1.333487, write stop
+Test 0: Iter=0, Task=26, Time=1.333488, write close start
+Test 0: Iter=0, Task=26, Time=1.336945, write close stop
+task 38 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=38, Time=0.046277, write open start
+Test 0: Iter=0, Task=38, Time=0.068369, write open stop
+Test 0: Iter=0, Task=38, Time=0.068369, write start
+Test 0: Iter=0, Task=38, Time=1.333482, write stop
+Test 0: Iter=0, Task=38, Time=1.333482, write close start
+Test 0: Iter=0, Task=38, Time=1.336732, write close stop
+task 29 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=29, Time=0.046277, write open start
+Test 0: Iter=0, Task=29, Time=0.068371, write open stop
+Test 0: Iter=0, Task=29, Time=0.068371, write start
+Test 0: Iter=0, Task=29, Time=1.333481, write stop
+Test 0: Iter=0, Task=29, Time=1.333481, write close start
+Test 0: Iter=0, Task=29, Time=1.337107, write close stop
+task 37 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=37, Time=0.046277, write open start
+Test 0: Iter=0, Task=37, Time=0.068277, write open stop
+Test 0: Iter=0, Task=37, Time=0.068277, write start
+Test 0: Iter=0, Task=37, Time=1.333494, write stop
+Test 0: Iter=0, Task=37, Time=1.333494, write close start
+Test 0: Iter=0, Task=37, Time=1.336935, write close stop
+task 36 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=36, Time=0.046277, write open start
+Test 0: Iter=0, Task=36, Time=0.068258, write open stop
+Test 0: Iter=0, Task=36, Time=0.068258, write start
+Test 0: Iter=0, Task=36, Time=1.333492, write stop
+Test 0: Iter=0, Task=36, Time=1.333492, write close start
+Test 0: Iter=0, Task=36, Time=1.336868, write close stop
+task 30 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=30, Time=0.046277, write open start
+Test 0: Iter=0, Task=30, Time=0.068364, write open stop
+Test 0: Iter=0, Task=30, Time=0.068364, write start
+Test 0: Iter=0, Task=30, Time=1.333481, write stop
+Test 0: Iter=0, Task=30, Time=1.333481, write close start
+Test 0: Iter=0, Task=30, Time=1.337007, write close stop
+task 35 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=35, Time=0.046277, write open start
+Test 0: Iter=0, Task=35, Time=0.068247, write open stop
+Test 0: Iter=0, Task=35, Time=0.068247, write start
+Test 0: Iter=0, Task=35, Time=1.333481, write stop
+Test 0: Iter=0, Task=35, Time=1.333482, write close start
+Test 0: Iter=0, Task=35, Time=1.336777, write close stop
+task 27 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=27, Time=0.046277, write open start
+Test 0: Iter=0, Task=27, Time=0.068247, write open stop
+Test 0: Iter=0, Task=27, Time=0.068247, write start
+Test 0: Iter=0, Task=27, Time=1.333480, write stop
+Test 0: Iter=0, Task=27, Time=1.333480, write close start
+Test 0: Iter=0, Task=27, Time=1.336800, write close stop
+task 19 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=19, Time=0.046277, write open start
+Test 0: Iter=0, Task=19, Time=0.068299, write open stop
+Test 0: Iter=0, Task=19, Time=0.068299, write start
+Test 0: Iter=0, Task=19, Time=1.333487, write stop
+Test 0: Iter=0, Task=19, Time=1.333487, write close start
+Test 0: Iter=0, Task=19, Time=1.336885, write close stop
+task 15 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=15, Time=0.046277, write open start
+Test 0: Iter=0, Task=15, Time=0.068341, write open stop
+Test 0: Iter=0, Task=15, Time=0.068341, write start
+Test 0: Iter=0, Task=15, Time=1.333485, write stop
+Test 0: Iter=0, Task=15, Time=1.333485, write close start
+Test 0: Iter=0, Task=15, Time=1.336713, write close stop
+task 18 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=18, Time=0.046277, write open start
+Test 0: Iter=0, Task=18, Time=0.068222, write open stop
+Test 0: Iter=0, Task=18, Time=0.068222, write start
+Test 0: Iter=0, Task=18, Time=1.333486, write stop
+Test 0: Iter=0, Task=18, Time=1.333486, write close start
+Test 0: Iter=0, Task=18, Time=1.336824, write close stop
+task 25 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=25, Time=0.046277, write open start
+Test 0: Iter=0, Task=25, Time=0.068155, write open stop
+Test 0: Iter=0, Task=25, Time=0.068155, write start
+Test 0: Iter=0, Task=25, Time=1.333487, write stop
+Test 0: Iter=0, Task=25, Time=1.333487, write close start
+Test 0: Iter=0, Task=25, Time=1.336969, write close stop
+task 22 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=22, Time=0.046277, write open start
+Test 0: Iter=0, Task=22, Time=0.068240, write open stop
+Test 0: Iter=0, Task=22, Time=0.068240, write start
+Test 0: Iter=0, Task=22, Time=1.333486, write stop
+Test 0: Iter=0, Task=22, Time=1.333487, write close start
+Test 0: Iter=0, Task=22, Time=1.337059, write close stop
+task 13 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=13, Time=0.046277, write open start
+Test 0: Iter=0, Task=13, Time=0.068360, write open stop
+Test 0: Iter=0, Task=13, Time=0.068360, write start
+Test 0: Iter=0, Task=13, Time=1.333487, write stop
+Test 0: Iter=0, Task=13, Time=1.333487, write close start
+Test 0: Iter=0, Task=13, Time=1.337003, write close stop
+task 23 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=23, Time=0.046277, write open start
+Test 0: Iter=0, Task=23, Time=0.068399, write open stop
+Test 0: Iter=0, Task=23, Time=0.068399, write start
+Test 0: Iter=0, Task=23, Time=1.333487, write stop
+Test 0: Iter=0, Task=23, Time=1.333487, write close start
+Test 0: Iter=0, Task=23, Time=1.336582, write close stop
+task 24 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=24, Time=0.046277, write open start
+Test 0: Iter=0, Task=24, Time=0.068356, write open stop
+Test 0: Iter=0, Task=24, Time=0.068356, write start
+Test 0: Iter=0, Task=24, Time=1.333487, write stop
+Test 0: Iter=0, Task=24, Time=1.333487, write close start
+Test 0: Iter=0, Task=24, Time=1.336914, write close stop
+task 20 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=20, Time=0.046277, write open start
+Test 0: Iter=0, Task=20, Time=0.068309, write open stop
+Test 0: Iter=0, Task=20, Time=0.068309, write start
+Test 0: Iter=0, Task=20, Time=1.333487, write stop
+Test 0: Iter=0, Task=20, Time=1.333487, write close start
+Test 0: Iter=0, Task=20, Time=1.336100, write close stop
+task 14 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=14, Time=0.046277, write open start
+Test 0: Iter=0, Task=14, Time=0.068326, write open stop
+Test 0: Iter=0, Task=14, Time=0.068326, write start
+Test 0: Iter=0, Task=14, Time=1.333487, write stop
+Test 0: Iter=0, Task=14, Time=1.333487, write close start
+Test 0: Iter=0, Task=14, Time=1.336972, write close stop
+task 16 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=16, Time=0.046277, write open start
+Test 0: Iter=0, Task=16, Time=0.068271, write open stop
+Test 0: Iter=0, Task=16, Time=0.068271, write start
+Test 0: Iter=0, Task=16, Time=1.333485, write stop
+Test 0: Iter=0, Task=16, Time=1.333485, write close start
+Test 0: Iter=0, Task=16, Time=1.336844, write close stop
+task 17 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=17, Time=0.046277, write open start
+Test 0: Iter=0, Task=17, Time=0.068235, write open stop
+Test 0: Iter=0, Task=17, Time=0.068236, write start
+Test 0: Iter=0, Task=17, Time=1.333486, write stop
+Test 0: Iter=0, Task=17, Time=1.333486, write close start
+Test 0: Iter=0, Task=17, Time=1.336874, write close stop
+task 21 writing ior_data/col_1_13_33575k_default_f
+Test 0: Iter=0, Task=21, Time=0.046277, write open start
+Test 0: Iter=0, Task=21, Time=0.068260, write open stop
+Test 0: Iter=0, Task=21, Time=0.068260, write start
+Test 0: Iter=0, Task=21, Time=1.333486, write stop
+Test 0: Iter=0, Task=21, Time=1.333487, write close start
+Test 0: Iter=0, Task=21, Time=1.336501, write close stop
+IOR-3.3.0+dev: MPI Coordinated Test of Parallel I/O
+Began               : Mon Nov  9 10:31:07 2020
+Command line        : /gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior -b 33575k -t 33575k -i 1 -v -v -v -k -a HDF5 -J 16m -c -e -w -o ior_data/col_2_13_33575k_default_f
+Machine             : Linux c27n14 4.14.0-115.21.2.el7a.ppc64le #1 SMP Thu May 7 22:22:31 UTC 2020 ppc64le
+Using synchronized MPI timer
+Start time skew across all tasks: 0.00 sec
+STARTING ENVIRON LOOP
+XDG_SESSION_ID=11475
+HOSTNAME=c27n14
+SHELL=/bin/bash
+HISTSIZE=1000
+SSH_CLIENT=67.187.116.217 60160 22
+LC_ALL=
+USER=bing
+MAIL=/var/spool/mail/bing
+PATH=/opt/ibm/csm/bin:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin:/sw/sources/lsf-tools/2.0/summit/bin:/sw/summit/xalt/1.2.0/bin:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/bin:/sw/sources/hpss/bin:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/bin:/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin:/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibm/flightlog/bin:/opt/ibutils/bin:/opt/ibm/spectrum_mpi/jsm_pmix/bin:/opt/puppetlabs/bin:/usr/lpp/mmfs/bin
+PWD=/autofs/nccs-svm1_home1/bing
+HISTCONTROL=ignoredups
+SHLVL=5
+HOME=/ccs/home/bing
+LOGNAME=bing
+SSH_CONNECTION=67.187.116.217 60160 128.219.134.75 22
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+XDG_RUNTIME_DIR=/run/user/4069
+_=/opt/ibm/spectrum_mpi/jsm_pmix/bin/jsrun
+LD_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:/opt/ibm/spectrum_mpi/jsm_pmix/lib/:/opt/ibm/spectrum_mpi/jsm_pmix/../lib/:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:/opt/ibm/csm/lib/:/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:/sw/summit/xl/16.1.1-5/xlsmp/5.1.1/lib:/sw/summit/xl/16.1.1-5/xlmass/9.1.1/lib:/sw/summit/xl/16.1.1-5/xlC/16.1.1/lib:/sw/summit/xl/16.1.1-5/xlf/16.1.1/lib:/sw/summit/xl/16.1.1-5/lib:/opt/ibm/spectrum_mpi/jsm_pmix/lib
+JSM_ENABLE_CGROUP=1
+PMIX_INSTALL_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+JSM_NUM_THREADS=15
+TMPDIR=/tmp
+JSM_TOP_SESSION_DIR=/tmp/jsm.c27n14.4069
+JSM_LOG_PATH=/tmp/jsm.c27n14.4069/1511558
+PTS_LOG_PATH=/tmp/jsm.c27n14.4069/1511558
+JSM_BATCH_SESSION_DIR=/tmp/jsm.c27n14.4069/1511558
+PMIX_SYSTEM_TMPDIR=/tmp/jsm.c27n14.4069/1511558
+PMIX_SERVER_TMPDIR=/tmp/jsm.c27n14.4069/1511558
+JSM_ENV_VAR_SPINDLE_PORT=/tmp/jsm.c27n14.4069/1511558/JSM_rm_port_4069_1511558-spindle
+JSM_JSRUN_PORT=/tmp/jsm.c27n14.4069/1511558/JSM_rm_port_4069_1511558:65
+CSM_LIB_PATH=/opt/ibm/csm/lib/libcsmi.so
+LSF_PTS_USOCK=@PTS_CLIENT.65214.1
+LSF_PTS_IPSTR=10.134.7.107
+PTS_PARENT_PID=65214
+
+OMPI_MCA_orte_externally_bound=1
+LMOD_FAMILY_COMPILER_VERSION=16.1.1-5
+dl=/gpfs/alpine/stf008/scratch/bing/dl
+MANPATH=/sw/sources/hpss/man:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/share/man:/sw/summit/xl/16.1.1-5/xlC/16.1.1/man/en_US:/sw/summit/xl/16.1.1-5/xlf/16.1.1/man/en_US:/sw/summit/lmod/8.2.10/share/man:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/man:::/opt/puppetlabs/puppet/share/man
+LSB_EXEC_CLUSTER=summit
+XALT_ETC_DIR=/sw/summit/xalt/1.2.0/etc
+hpss=/ccs/sys/adm/rats/hpss_data/
+hdf5=/gpfs/alpine/stf008/scratch/bing/script
+_ModuleTable003_=LH0sWyJsc2YtdG9vbHMiXT17WyJmbiJdPSIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS9Db3JlL2xzZi10b29scy8yLjAubHVhIixbImZ1bGxOYW1lIl09ImxzZi10b29scy8yLjAiLFsibG9hZE9yZGVyIl09NSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJsc2YtdG9vbHMiLH0sWyJzcGVjdHJ1bS1tcGkiXT17WyJmbiJdPSIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS94bC8xNi4xLjEtNS9zcGVjdHJ1bS1tcGkvMTAuMy4xLjItMjAyMDAxMjEubHVhIixbImZ1bGxOYW1lIl09InNwZWN0cnVtLW1waS8xMC4zLjEuMi0yMDIwMDEyMSIs
+LSB_EFFECTIVE_RSRCREQ=1*{select[((LN) && (type == any))] order[r15s:pg] span[hosts=1] cu[type=rack:pref=config]}+168*{select[((CN) && (type == any))] order[r15s:pg] span[ptile=42] cu[type=rack:pref=config]}
+LSF_LIM_API_NTRIES=1
+LSF_LOGDIR=/var/log/lsf
+LSB_BATCH_JID=469277
+__LMOD_REF_COUNT_MODULEPATH=/autofs/nccs-svm1_sw/summit/modulefiles/site/linux-rhel7-ppc64le/spectrum-mpi/10.3.1.2-20200121-p6nrnt6/xl/16.1.1-5:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core:1;/sw/summit/modulefiles/core:1
+LMOD_ROOT=/sw/summit/lmod
+DXT_ENABLE_IO_TRACE=4
+LMOD_SYSTEM_DEFAULT_MODULES=DefApps
+MODULEPATH_ROOT=/sw/summit/modulefiles
+LS_EXECCWD=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+LSB_TRAPSIGS=trap # 15 10 12 2 1
+genarray=/ccs/home/bing/adios1.2/tests/genarray/
+LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib
+ROMIO_PRINT_HINTS=1
+LS_JOBPID=68764
+PAMI_IBV_ADAPTER_AFFINITY=1
+LSB_JOBRES_CALLBACK=48923@batch1
+LSB_MAX_NUM_PROCESSORS=169
+LMOD_PKG=/sw/summit/lmod/8.2.10
+LSB_JOB_EXECUSER=bing
+LSB_JOBID=469277
+PAMI_ENABLE_STRIPING=0
+LSF_SERVERDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc
+OLCF_XL_ROOT=/sw/summit/xl/16.1.1-5
+LSB_JOBRES_PID=68764
+LMOD_VERSION=8.2.10
+OMPI_FC=/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin/xlf2008_r
+LSB_JOBNAME=IOR_4node
+OLCF_DARSHAN_RUNTIME_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43
+OLCF_XLSMP_ROOT=/sw/summit/xl/16.1.1-5/xlsmp/5.1.1
+SSH_TTY=/dev/pts/47
+BSUB_BLOCK_EXEC_HOST=
+__LMOD_REF_COUNT_LOADEDMODULES=xl/16.1.1-5:1;spectrum-mpi/10.3.1.2-20200121:1;hsi/5.0.2.p5:1;xalt/1.2.0:1;lsf-tools/2.0:1;darshan-runtime/3.1.7:1;DefApps:1
+__LMOD_REF_COUNT_CMAKE_PREFIX_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2:1
+LSF_LIBDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib
+LSB_PROJECT_NAME=STF008
+logs=/gpfs/alpine/stf008/scratch/bing/darshan/general
+OPAL_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+LMOD_sys=Linux
+LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+PAMI_IBV_ENABLE_OOO_AR=1
+SBD_KRB5CCNAME_VAL=
+LSB_EEXEC_REAL_UID=
+LMOD_MPI_NAME=spectrum-mpi
+HOSTTYPE=LINUXPPC64LE
+_ModuleTable004_=WyJsb2FkT3JkZXIiXT0yLHByb3BUPXt9LFsic3RhY2tEZXB0aCJdPTEsWyJzdGF0dXMiXT0iYWN0aXZlIixbInVzZXJOYW1lIl09InNwZWN0cnVtLW1waSIsfSx4YWx0PXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUveGFsdC8xLjIuMC5sdWEiLFsiZnVsbE5hbWUiXT0ieGFsdC8xLjIuMCIsWyJsb2FkT3JkZXIiXT00LHByb3BUPXt9LFsic3RhY2tEZXB0aCJdPTEsWyJzdGF0dXMiXT0iYWN0aXZlIixbInVzZXJOYW1lIl09InhhbHQiLH0seGw9e1siZm4iXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZS94bC8xNi4xLjEtNS5sdWEiLFsiZnVsbE5hbWUiXT0ieGwv
+CPATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/include
+LSF_INVOKE_CMD=bsub
+__LMOD_REF_COUNT__LMFILES_=/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xl/16.1.1-5.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5/spectrum-mpi/10.3.1.2-20200121.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/hsi/5.0.2.p5.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xalt/1.2.0.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/lsf-tools/2.0.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/darshan-runtime/3.1.7.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/DefApps.lua:1
+LS_EXEC_T=START
+OLCF_LMOD_ROOT=/sw/summit
+OLCF_XLMASS_ROOT=/sw/summit/xl/16.1.1-5/xlmass/9.1.1
+data=/ccs/home/bing/data
+MPICH_MPIIO_HINTS_DISPLAY=1
+OLCF_FAMILY_MPI_VERSION=10.3.1.2-20200121
+LSB_SUB_RES_REQ=1*{select[LN]span[hosts=1]} + 168*{select[CN]span[ptile=42]}
+LS_SUBCWD=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+PROJWORK=/gpfs/alpine/proj-shared
+LSB_HOSTS=batch1 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17
+LMOD_FAMILY_MPI_VERSION=10.3.1.2-20200121
+LSB_UNIXGROUP_INT=bing
+LSB_JOBFILENAME=/ccs/home/bing/.lsbatch/1604935559.469277
+OLCF_FAMILY_MPI=spectrum-mpi
+NLSPATH=/sw/summit/xl/16.1.1-5/msg/en_US/%N:/sw/summit/xl/16.1.1-5/xlC/16.1.1/msg/en_US/%N:/sw/summit/xl/16.1.1-5/xlf/16.1.1/msg/en_US/%N
+LSB_JOBINDEX=0
+__LMOD_REF_COUNT_NLSPATH=/sw/summit/xl/16.1.1-5/msg/en_US/%N:2;/sw/summit/xl/16.1.1-5/xlC/16.1.1/msg/en_US/%N:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/msg/en_US/%N:1
+_ModuleTable001_=X01vZHVsZVRhYmxlXz17WyJNVHZlcnNpb24iXT0zLFsiY19yZWJ1aWxkVGltZSJdPWZhbHNlLFsiY19zaG9ydFRpbWUiXT1mYWxzZSxkZXB0aFQ9e30sZmFtaWx5PXtbImNvbXBpbGVyIl09InhsIixbIm1waSJdPSJzcGVjdHJ1bS1tcGkiLH0sbVQ9e0RlZkFwcHM9e1siZm4iXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZS9EZWZBcHBzLmx1YSIsWyJmdWxsTmFtZSJdPSJEZWZBcHBzIixbImxvYWRPcmRlciJdPTcscHJvcFQ9e30sWyJzdGFja0RlcHRoIl09MCxbInN0YXR1cyJdPSJhY3RpdmUiLFsidXNlck5hbWUiXT0iRGVmQXBwcyIsfSxbImRhcnNoYW4tcnVudGltZSJdPXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmls
+PAMI_IBV_QP_SERVICE_LEVEL=8
+LSB_EXIT_PRE_ABORT=99
+OLCF_XLC_ROOT=/sw/summit/xl/16.1.1-5/xlC/16.1.1
+OPAL_LIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib
+LSB_JOBEXIT_STAT=0
+hdata=/gpfs/alpine/stf008/scratch/bing/darshan/hdf5
+PAMI_CUDA_AWARE_THRESH=320000
+OMPI_DIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+_LMFILES_=/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xl/16.1.1-5.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5/spectrum-mpi/10.3.1.2-20200121.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/hsi/5.0.2.p5.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xalt/1.2.0.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/lsf-tools/2.0.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/darshan-runtime/3.1.7.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/DefApps.lua
+OLCF_MODULEPATH_ROOT=/sw/summit/modulefiles
+EDITOR=vim
+LSB_RES_GET_FANOUT_INFO=Y
+__LMOD_REF_COUNT_PYTHONPATH=/sw/summit/xalt/1.2.0/site:1;/sw/summit/xalt/1.2.0/libexec:1
+LSB_CHKFILENAME=/ccs/home/bing/.lsbatch/1604935559.469277
+MODULEPATH=/autofs/nccs-svm1_sw/summit/modulefiles/site/linux-rhel7-ppc64le/spectrum-mpi/10.3.1.2-20200121-p6nrnt6/xl/16.1.1-5:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core:/sw/summit/modulefiles/core
+atlas2=/lustre/atlas2/stf008/scratch/bing
+LSB_DJOB_HOSTFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostfile
+LMOD_SYSTEM_NAME=summit
+_ModuleTable_Sz_=6
+OLCF_FAMILY_COMPILER_VERSION=16.1.1-5
+LOADEDMODULES=xl/16.1.1-5:spectrum-mpi/10.3.1.2-20200121:hsi/5.0.2.p5:xalt/1.2.0:lsf-tools/2.0:darshan-runtime/3.1.7:DefApps
+OMPI_LD_PRELOAD_PREPEND=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/libdarshan.so
+OLCF_FAMILY_COMPILER=xl
+LSF_JOB_TIMESTAMP_VALUE=1604935768
+OLCF_XLF_ROOT=/sw/summit/xl/16.1.1-5/xlf/16.1.1
+LSB_AFFINITY_HOSTFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostAffinityFile
+LMOD_CMD=/sw/summit/lmod/8.2.10/libexec/lmod
+_ModuleTable005_=MTYuMS4xLTUiLFsibG9hZE9yZGVyIl09MSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJ4bCIsfSx9LG1wYXRoQT17Ii9hdXRvZnMvbmNjcy1zdm0xX3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvc3BlY3RydW0tbXBpLzEwLjMuMS4yLTIwMjAwMTIxLXA2bnJudDYveGwvMTYuMS4xLTUiLCIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS94bC8xNi4xLjEtNSIsIi9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUiLCIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL2NvcmUiLH0sWyJzeXN0ZW1CYXNlTVBB
+LSB_DJOB_NUMPROC=169
+LSB_EXEC_HOSTTYPE=LINUXPPC64LE
+LSF_BINDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin
+WORLDWORK=/gpfs/alpine/world-shared
+MEMBERWORK=/gpfs/alpine/scratch/bing
+LSB_APPLICATION_NAME=small
+__LMOD_REF_COUNT_PATH=/sw/sources/lsf-tools/2.0/summit/bin:2;/sw/summit/xalt/1.2.0/bin:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/bin:1;/sw/sources/hpss/bin:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/bin:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin:1;/opt/ibm/csm/bin:1;/usr/local/bin:1;/usr/bin:1;/usr/local/sbin:1;/usr/sbin:1;/opt/ibm/flightlog/bin:1;/opt/ibutils/bin:1;/opt/ibm/spectrum_mpi/jsm_pmix/bin:1
+OMPI_CC=/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin/xlc_r
+JOB_TERMINATE_INTERVAL=10
+__LMOD_REF_COUNT_CPATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/include:1
+LSB_ACCT_FILE=/tmp/469277.tmpdir/.1604935559.469277.acct
+CSM_ALLOCATION_ID=1511558
+BINARY_TYPE_HPC=
+_ModuleTable002_=ZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUvZGFyc2hhbi1ydW50aW1lLzMuMS43Lmx1YSIsWyJmdWxsTmFtZSJdPSJkYXJzaGFuLXJ1bnRpbWUvMy4xLjciLFsibG9hZE9yZGVyIl09Nixwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJkYXJzaGFuLXJ1bnRpbWUiLH0saHNpPXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUvaHNpLzUuMC4yLnA1Lmx1YSIsWyJmdWxsTmFtZSJdPSJoc2kvNS4wLjIucDUiLFsibG9hZE9yZGVyIl09Myxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJoc2ki
+LSB_SUB_HOST=login5
+raw_data=/ccs/home/bing/raw_data
+__LSF_JOB_TMPDIR__=/tmp/469277.tmpdir
+LSB_SUB_USER=bing
+LSFUSER=bing
+OLCF_HSI_ROOT=/sw/sources/hpss
+BASH_ENV=/sw/summit/lmod/8.2.10/init/bash
+LSB_OUTDIR=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+LSB_QUEUE=batch
+LSB_MCPU_HOSTS=batch1 1 c27n14 42 c27n15 42 c27n16 42 c27n17 42 
+LSB_OUTPUTFILE=o469277.ior_4node
+PAMI_IBV_ENABLE_DCT=1
+PYTHONPATH=/sw/summit/xalt/1.2.0/site:/sw/summit/xalt/1.2.0/libexec
+MPI_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+CVS_RSH=ssh
+OLCF_SPECTRUM_MPI_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+XLSF_UIDDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib/uid
+LSB_ECHKPNT_RSH_CMD=ssh -o 'PasswordAuthentication no' -o 'StrictHostKeyChecking no'
+JSM_JSRUN_NO_WARN_TOPOLOGY=1
+MODULESHOME=/sw/summit/lmod/8.2.10
+__LMOD_REF_COUNT_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:1
+LSF_CGROUP_TOPDIR_KEY=summit
+LMOD_SETTARG_FULL_SUPPORT=no
+PKG_CONFIG_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/pkgconfig
+__LMOD_REF_COUNT_LD_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:1;/sw/summit/xl/16.1.1-5/xlsmp/5.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlmass/9.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/lib:1;/sw/summit/xl/16.1.1-5/lib:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib:1
+OMPI_CXX=/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin/xlc++_r
+__Init_Default_Modules=1
+OMPI_MCA_io=romio321
+LMOD_MPI_VERSION=10.3.1.2-20200121-p6nrnt6
+gpfs=/gpfs/alpine/stf008/scratch/bing
+LSB_XFER_OP=
+LMOD_FAMILY_COMPILER=xl
+gen_bench=/tmp/work/bing/genarray_benchmark
+MPICH_MPIIO_TIMERS=1
+LSB_EEXEC_REAL_GID=
+XALT_OLCF=1
+XL_LINKER=/sw/summit/xalt/1.2.0/bin/ld
+__LMOD_REF_COUNT_PKG_CONFIG_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/pkgconfig:1
+fast=/gpfs/alpine/stf008/scratch/bing/darshan/fast
+CMAKE_PREFIX_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+DARSHAN_DISABLE_SHARED_REDUCTION=1
+LSF_ENVDIR=/opt/ibm/spectrumcomputing/lsf/conf
+LMOD_DIR=/sw/summit/lmod/8.2.10/libexec
+widow2=/lustre/widow2/scratch/bing
+__LMOD_REF_COUNT_MANPATH=/sw/sources/hpss/man:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/share/man:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/man/en_US:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/man/en_US:1;/sw/summit/lmod/8.2.10/share/man:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/man:1
+_ModuleTable006_=VEgiXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZTovc3cvc3VtbWl0L21vZHVsZWZpbGVzL2NvcmUiLH0=
+MPICH_MPIIO_STATS=1
+__LMOD_Priority_PATH=/sw/sources/lsf-tools/2.0/summit/bin:-9999;/sw/summit/xalt/1.2.0/bin:-9999
+widow3=/lustre/widow3/scratch/bing
+ROMIO_HINTS=result_13_33575k/default
+LSB_DJOB_RANKFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostfile
+LMOD_FAMILY_MPI=spectrum-mpi
+widow1=/lustre/widow1/scratch/bing
+BASH_FUNC_module()=() {  eval $($LMOD_CMD bash "$@") && eval $(${LMOD_SETTARG_CMD:-:} -s sh)
+}
+BASH_FUNC_ml()=() {  eval $($LMOD_DIR/ml_cmd "$@")
+}
+OMPI_MCA_opal_signal=6,7,8,11
+OMPI_MCA_ess_base_forward_signals=6,10,11,12,14,18,21
+OMPI_MCA_backtrace_lwcore_enable=0
+OMPI_MCA_spml=ucx
+OMPI_MCA_spml_ucx_priority=80
+OMPI_MCA_atomic=ucx
+OMPI_MCA_atomic_ucx_priority=80
+OMPI_MCA_mpi_leave_pinned=1
+OMPI_MCA_memory=patcher
+OMPI_MCA_mca_base_component_show_load_errors=0
+OMPI_MCA_btl_openib_allow_ib=true
+OMPI_MCA_btl_openib_warn_default_gid_prefix=0
+IBV_FORK_SAFE=1
+OMPI_MCA_coll_tuned_priority=-1
+PMIX_MCA_gds=ds21,hash
+OMPI_MCA_schizo_ompi_prepend_ld_library_path=pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port
+PAMI_IBV_SKIP_CQOVERFLOW_CHECK=1
+OMPI_MCA_coll_hcoll_priority=-1
+OMPI_MCA_coll_hcoll_enable=0
+HCOLL_ALLREDUCE_ZCOPY_TUNE=static
+HCOLL_EXTERNAL_UCM_EVENTS=1
+UCX_MEM_MMAP_HOOK_MODE=none
+OMPI_MCA_opal_common_ucx_opal_mem_hooks=1
+OMPI_MCA_pml=pami
+OMPI_MCA_osc=pami
+OMPI_MCA_btl=self
+OMPI_MCA_bml=^r2
+OMPI_LD_PRELOAD_POSTPEND_DISTRO=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/libpami_cudahook.so
+OMPI_MCA_ompi_async_mpi_init=f
+OMPI_MCA_opal_pmix_base_async_modex=t
+OMPI_MCA_opal_pmix_base_collect_data=f
+OMPI_LD_LIBRARY_PATH_PREPEND_DISTRO=pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port
+OMPI_MCA_compress=^bzip,gzip
+OMPI_MCA_dfs=^app,orted,test
+OMPI_MCA_errmgr=default_app
+OMPI_MCA_oob=^ud
+OMPI_MCA_pmix=ext3x
+OMPI_MCA_routed=^direct,radix,debruijn,binomial
+OMPI_MCA_schizo=jsm
+OMPI_MCA_state=app
+OMPI_MCA_mca_base_env_list_distro=MPI_ROOT,OPAL_PREFIX,OPAL_LIBDIR,PMIX_INSTALL_PREFIX,IBV_FORK_SAFE,PMIX_MCA_ptl_tcp_handshake_wait_time,PMIX_MCA_ptl_tcp_handshake_max_retries,PMIX_MCA_gds,PAMI_IBV_SKIP_CQOVERFLOW_CHECK,HCOLL_ALLREDUCE_ZCOPY_TUNE,HCOLL_EXTERNAL_UCM_EVENTS,UCX_MEM_MMAP_HOOK_MODE,OMPI_LD_PRELOAD_POSTPEND_DISTRO,OMPI_LD_LIBRARY_PATH_PREPEND_DISTRO,SMPI_INTERNAL_MPIRUN_LAUNCH_JSM
+LD_PRELOAD=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/libdarshan.so /autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/libpami_cudahook.so
+JSM_NAMESPACE_RANK=0
+OMPI_COMM_WORLD_RANK=0
+JSM_NAMESPACE_SIZE=52
+OMPI_COMM_WORLD_SIZE=52
+JSM_NAMESPACE_LOCAL_RANK=0
+OMPI_COMM_WORLD_LOCAL_RANK=0
+JSM_NAMESPACE_LOCAL_SIZE=13
+OMPI_COMM_WORLD_LOCAL_SIZE=13
+JSM_SMPI_SHARP_ID=277217345
+OMP_PROC_BIND=true
+OMP_PLACES={0:4}
+OMP_NUM_THREADS=4
+PMIX_NAMESPACE=65
+PMIX_RANK=0
+PMIX_SERVER_URI3=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SERVER_URI2=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SERVER_URI21=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SECURITY_MODE=native
+PMIX_PTL_MODULE=tcp
+PMIX_BFROP_BUFFER_TYPE=PMIX_BFROP_BUFFER_NON_DESC
+PMIX_GDS_MODULE=ds21,ds12,hash
+PMIX_DSTORE_21_BASE_PATH=/tmp/jsm.c27n14.4069/1511558/pmix_dstor_ds21_65214
+PMIX_DSTORE_ESH_BASE_PATH=/tmp/jsm.c27n14.4069/1511558/pmix_dstor_ds12_65214
+67890-CPU_ASSIGNMENTS=0
+JSM_SMT_ASSIGNMENTS=0-3
+OPAL_EXEC_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+OPAL_BINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../bin
+OPAL_SBINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../sbin
+OPAL_LIBEXECDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../libexec
+OPAL_DATAROOTDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+OPAL_DATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+OPAL_SYSCONFDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc
+OPAL_SHAREDSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../com
+OPAL_LOCALSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../var
+OPAL_INCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include
+OPAL_INFODIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../info
+OPAL_MANDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../man
+OPAL_PKGDATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share/spectrum_mpi
+OPAL_PKGLIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/spectrum_mpi
+OPAL_PKGINCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include/spectrum_mpi
+PMIX_EXEC_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+PMIX_BINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../bin
+PMIX_SBINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../sbin
+PMIX_LIBEXECDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../libexec
+PMIX_DATAROOTDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+PMIX_DATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+PMIX_SYSCONFDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc
+PMIX_SHAREDSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../com
+PMIX_LOCALSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../var
+PMIX_LIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib
+PMIX_INCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include
+PMIX_INFODIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../info
+PMIX_MANDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../man
+PMIX_PKGDATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share/pmix
+PMIX_PKGLIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pmix
+PMIX_PKGINCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include/pmix
+IPATH_NO_BACKTRACE=1
+HFI_NO_BACKTRACE=1
+OMPI_COMMAND=/gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior
+OMPI_ARGV=-b 33575k -t 33575k -i 1 -v -v -v -k -a HDF5 -J 16m -c -e -w -o ior_data/col_2_13_33575k_default_f
+OMPI_MCA_ess=pmi
+ORTE_SCHIZO_DETECTION=JSM
+PMIX_MCA_mca_base_component_show_load_errors=0
+OMPI_MCA_orte_ess_num_procs=52
+OMPI_APP_CTX_NUM_PROCS=52
+OMPI_MCA_orte_precondition_transports=0000ca120000001a-0000572e0000001a
+PAMI_ENABLE_SYS_INTERCEPT=0
+LIBCOLL_COLLSEL_FILE=/tmp/jsm.c27n14.4069/1511558/libcoll_xml_cache//autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc/libcoll_tune_results.xml
+ENDING ENVIRON LOOP
+TestID              : 0
+StartTime           : Mon Nov  9 10:31:07 2020
+Path                : /gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4/ior_data
+FS                  : 225668.2 TiB   Used FS: 25.8%   Inodes: 30000.0 Mi   Used Inodes: 7.1%
+
+Parameters: 
+testID              : 0
+refnum              : 0
+api                 : HDF5
+platform            : c27n(Linux)
+testFileName        : ior_data/col_2_13_33575k_default_f
+hintsFileName       : (null)
+deadlineForStonewall: 0
+stoneWallingWearOut : 0
+maxTimeDuration     : 0
+outlierThreshold    : 0
+options             : (null)
+dryRun              : 0
+nodes               : 4
+memoryPerTask       : 0
+memoryPerNode       : 0
+tasksPerNode        : 13
+repetitions         : 1
+multiFile           : 0
+interTestDelay      : 0
+fsync               : 1
+fsyncperwrite       : 0
+useExistingTestFile : 0
+showHints           : 0
+uniqueDir           : 0
+individualDataSets  : 0
+singleXferAttempt   : 0
+readFile            : 0
+writeFile           : 1
+filePerProc         : 0
+reorderTasks        : 0
+reorderTasksRandom  : 0
+reorderTasksRandomSeed: 0
+randomOffset        : 0
+checkWrite          : 0
+checkRead           : 0
+preallocate         : 0
+useFileView         : 0
+setAlignment        : 16777216
+storeFileOffset     : 0
+useSharedFilePointer: 0
+useStridedDatatype  : 0
+keepFile            : 1
+keepFileWithError   : 0
+quitOnError         : 0
+verbose             : 3
+data packet type    : g
+setTimeStampSignature/incompressibleSeed: 0
+collective          : 1
+segmentCount        : 1
+gpfsHintAccess      : 0
+gpfsReleaseToken    : 0
+transferSize        : 34380800
+blockSize           : 34380800
+Participating tasks: 52
+
+Options: 
+api                 : HDF5
+apiVersion          : 1.10.6 (Parallel)
+test filename       : ior_data/col_2_13_33575k_default_f
+access              : single-shared-file
+type                : collective
+segments            : 1
+ordering in a file  : sequential
+ordering inter file : no tasks offsets
+nodes               : 4
+tasks               : 52
+clients per node    : 13
+repetitions         : 1
+xfersize            : 32.79 MiB
+blocksize           : 32.79 MiB
+aggregate filesize  : 1.67 GiB
+
+Results: 
+Using Time Stamp 1604935867 (0x5fa960bb) for Data Signature
+
+access    bw(MiB/s)  IOPS       Latency(s)  block(KiB) xfer(KiB)  open(s)    wr/rd(s)   close(s)   total(s)   iter
+------    ---------  ----       ----------  ---------- ---------  --------   --------   --------   --------   ----
+task 0 writing ior_data/col_2_13_33575k_default_f
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 1         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0         
+
+HDF5 write 1 datasets
+
+HDF5 collective metadata enabled
+
+HDF5 defer cache flush enabled
+
+HDF5 metadata block size set to 65536
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+Commencing write performance test: Mon Nov  9 10:31:07 2020
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+Test 0: Iter=0, Task=0, Time=0.045081, write open start
+Test 0: Iter=0, Task=0, Time=0.063547, write open stop
+Test 0: Iter=0, Task=0, Time=0.063558, write start
+Test 0: Iter=0, Task=0, Time=1.719598, write stop
+Test 0: Iter=0, Task=0, Time=1.719598, write close start
+Test 0: Iter=0, Task=0, Time=1.722748, write close stop
+write     1015.96    31.40      1.66        33575      33575      0.018602   1.66       0.003680   1.68       0   
+Max Write: 1015.96 MiB/sec (1065.31 MB/sec)
+
+Summary of all tests:
+Operation   Max(MiB)   Min(MiB)  Mean(MiB)     StdDev   Max(OPs)   Min(OPs)  Mean(OPs)     StdDev    Mean(s) Stonewall(s) Stonewall(MiB) Test# #Tasks tPN reps fPP reord reordoff reordrand seed segcnt   blksiz    xsize aggs(MiB)   API RefNum
+write        1015.96    1015.96    1015.96       0.00      30.99      30.99      30.99       0.00    1.67819         NA            NA     0     52  13    1   0     0        1         0    0      1 34380800 34380800    1705.0 HDF5      0
+task 17 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=17, Time=0.045081, write open start
+Test 0: Iter=0, Task=17, Time=0.063482, write open stop
+Test 0: Iter=0, Task=17, Time=0.063482, write start
+Test 0: Iter=0, Task=17, Time=1.719602, write stop
+Test 0: Iter=0, Task=17, Time=1.719602, write close start
+Test 0: Iter=0, Task=17, Time=1.723187, write close stop
+task 13 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=13, Time=0.045081, write open start
+Test 0: Iter=0, Task=13, Time=0.063489, write open stop
+Test 0: Iter=0, Task=13, Time=0.063489, write start
+Test 0: Iter=0, Task=13, Time=1.719601, write stop
+Test 0: Iter=0, Task=13, Time=1.719601, write close start
+Test 0: Iter=0, Task=13, Time=1.723163, write close stop
+task 25 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=25, Time=0.045081, write open start
+Test 0: Iter=0, Task=25, Time=0.063368, write open stop
+Test 0: Iter=0, Task=25, Time=0.063368, write start
+Test 0: Iter=0, Task=25, Time=1.719602, write stop
+Test 0: Iter=0, Task=25, Time=1.719602, write close start
+Test 0: Iter=0, Task=25, Time=1.723172, write close stop
+task 18 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=18, Time=0.045081, write open start
+Test 0: Iter=0, Task=18, Time=0.063493, write open stop
+Test 0: Iter=0, Task=18, Time=0.063494, write start
+Test 0: Iter=0, Task=18, Time=1.719602, write stop
+Test 0: Iter=0, Task=18, Time=1.719602, write close start
+Test 0: Iter=0, Task=18, Time=1.722413, write close stop
+task 22 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=22, Time=0.045081, write open start
+Test 0: Iter=0, Task=22, Time=0.063560, write open stop
+Test 0: Iter=0, Task=22, Time=0.063560, write start
+Test 0: Iter=0, Task=22, Time=1.719601, write stop
+Test 0: Iter=0, Task=22, Time=1.719601, write close start
+Test 0: Iter=0, Task=22, Time=1.723275, write close stop
+task 20 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=20, Time=0.045081, write open start
+Test 0: Iter=0, Task=20, Time=0.063581, write open stop
+Test 0: Iter=0, Task=20, Time=0.063581, write start
+Test 0: Iter=0, Task=20, Time=1.719602, write stop
+Test 0: Iter=0, Task=20, Time=1.719602, write close start
+Test 0: Iter=0, Task=20, Time=1.723018, write close stop
+task 21 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=21, Time=0.045081, write open start
+Test 0: Iter=0, Task=21, Time=0.063562, write open stop
+Test 0: Iter=0, Task=21, Time=0.063562, write start
+Test 0: Iter=0, Task=21, Time=1.719602, write stop
+Test 0: Iter=0, Task=21, Time=1.719602, write close start
+Test 0: Iter=0, Task=21, Time=1.722789, write close stop
+task 14 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=14, Time=0.045081, write open start
+Test 0: Iter=0, Task=14, Time=0.063536, write open stop
+Test 0: Iter=0, Task=14, Time=0.063537, write start
+Test 0: Iter=0, Task=14, Time=1.719601, write stop
+Test 0: Iter=0, Task=14, Time=1.719601, write close start
+Test 0: Iter=0, Task=14, Time=1.723108, write close stop
+task 51 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=51, Time=0.045083, write open start
+Test 0: Iter=0, Task=51, Time=0.063442, write open stop
+Test 0: Iter=0, Task=51, Time=0.063442, write start
+Test 0: Iter=0, Task=51, Time=1.719610, write stop
+Test 0: Iter=0, Task=51, Time=1.719610, write close start
+Test 0: Iter=0, Task=51, Time=1.722897, write close stop
+task 16 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=16, Time=0.045081, write open start
+Test 0: Iter=0, Task=16, Time=0.063579, write open stop
+Test 0: Iter=0, Task=16, Time=0.063579, write start
+Test 0: Iter=0, Task=16, Time=1.719600, write stop
+Test 0: Iter=0, Task=16, Time=1.719601, write close start
+Test 0: Iter=0, Task=16, Time=1.722943, write close stop
+task 49 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=49, Time=0.045083, write open start
+Test 0: Iter=0, Task=49, Time=0.063488, write open stop
+Test 0: Iter=0, Task=49, Time=0.063488, write start
+Test 0: Iter=0, Task=49, Time=1.719598, write stop
+Test 0: Iter=0, Task=49, Time=1.719598, write close start
+Test 0: Iter=0, Task=49, Time=1.722869, write close stop
+task 15 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=15, Time=0.045081, write open start
+Test 0: Iter=0, Task=15, Time=0.063539, write open stop
+Test 0: Iter=0, Task=15, Time=0.063539, write start
+Test 0: Iter=0, Task=15, Time=1.719600, write stop
+Test 0: Iter=0, Task=15, Time=1.719600, write close start
+Test 0: Iter=0, Task=15, Time=1.722919, write close stop
+task 50 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=50, Time=0.045083, write open start
+Test 0: Iter=0, Task=50, Time=0.063547, write open stop
+Test 0: Iter=0, Task=50, Time=0.063548, write start
+Test 0: Iter=0, Task=50, Time=1.719610, write stop
+Test 0: Iter=0, Task=50, Time=1.719610, write close start
+Test 0: Iter=0, Task=50, Time=1.722785, write close stop
+task 19 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=19, Time=0.045081, write open start
+Test 0: Iter=0, Task=19, Time=0.063631, write open stop
+Test 0: Iter=0, Task=19, Time=0.063631, write start
+Test 0: Iter=0, Task=19, Time=1.719602, write stop
+Test 0: Iter=0, Task=19, Time=1.719602, write close start
+Test 0: Iter=0, Task=19, Time=1.723135, write close stop
+task 23 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=23, Time=0.045081, write open start
+Test 0: Iter=0, Task=23, Time=0.063503, write open stop
+Test 0: Iter=0, Task=23, Time=0.063503, write start
+Test 0: Iter=0, Task=23, Time=1.719602, write stop
+Test 0: Iter=0, Task=23, Time=1.719602, write close start
+Test 0: Iter=0, Task=23, Time=1.723015, write close stop
+task 47 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=47, Time=0.045083, write open start
+Test 0: Iter=0, Task=47, Time=0.063682, write open stop
+Test 0: Iter=0, Task=47, Time=0.063683, write start
+Test 0: Iter=0, Task=47, Time=1.719607, write stop
+Test 0: Iter=0, Task=47, Time=1.719607, write close start
+Test 0: Iter=0, Task=47, Time=1.722927, write close stop
+task 24 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=24, Time=0.045081, write open start
+Test 0: Iter=0, Task=24, Time=0.063500, write open stop
+Test 0: Iter=0, Task=24, Time=0.063500, write start
+Test 0: Iter=0, Task=24, Time=1.719602, write stop
+Test 0: Iter=0, Task=24, Time=1.719602, write close start
+Test 0: Iter=0, Task=24, Time=1.723080, write close stop
+task 48 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=48, Time=0.045083, write open start
+Test 0: Iter=0, Task=48, Time=0.063642, write open stop
+Test 0: Iter=0, Task=48, Time=0.063642, write start
+Test 0: Iter=0, Task=48, Time=1.719600, write stop
+Test 0: Iter=0, Task=48, Time=1.719601, write close start
+Test 0: Iter=0, Task=48, Time=1.722822, write close stop
+task 40 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=40, Time=0.045083, write open start
+Test 0: Iter=0, Task=40, Time=0.063625, write open stop
+Test 0: Iter=0, Task=40, Time=0.063625, write start
+Test 0: Iter=0, Task=40, Time=1.719596, write stop
+Test 0: Iter=0, Task=40, Time=1.719596, write close start
+Test 0: Iter=0, Task=40, Time=1.722579, write close stop
+task 42 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=42, Time=0.045083, write open start
+Test 0: Iter=0, Task=42, Time=0.063561, write open stop
+Test 0: Iter=0, Task=42, Time=0.063561, write start
+Test 0: Iter=0, Task=42, Time=1.719597, write stop
+Test 0: Iter=0, Task=42, Time=1.719597, write close start
+Test 0: Iter=0, Task=42, Time=1.722895, write close stop
+task 41 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=41, Time=0.045083, write open start
+Test 0: Iter=0, Task=41, Time=0.063543, write open stop
+Test 0: Iter=0, Task=41, Time=0.063543, write start
+Test 0: Iter=0, Task=41, Time=1.719596, write stop
+Test 0: Iter=0, Task=41, Time=1.719597, write close start
+Test 0: Iter=0, Task=41, Time=1.722644, write close stop
+task 39 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=39, Time=0.045083, write open start
+Test 0: Iter=0, Task=39, Time=0.063615, write open stop
+Test 0: Iter=0, Task=39, Time=0.063615, write start
+Test 0: Iter=0, Task=39, Time=1.719596, write stop
+Test 0: Iter=0, Task=39, Time=1.719596, write close start
+Test 0: Iter=0, Task=39, Time=1.722992, write close stop
+task 45 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=45, Time=0.045083, write open start
+Test 0: Iter=0, Task=45, Time=0.063632, write open stop
+Test 0: Iter=0, Task=45, Time=0.063632, write start
+Test 0: Iter=0, Task=45, Time=1.719598, write stop
+Test 0: Iter=0, Task=45, Time=1.719598, write close start
+Test 0: Iter=0, Task=45, Time=1.722848, write close stop
+task 43 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=43, Time=0.045083, write open start
+Test 0: Iter=0, Task=43, Time=0.063535, write open stop
+Test 0: Iter=0, Task=43, Time=0.063535, write start
+Test 0: Iter=0, Task=43, Time=1.719597, write stop
+Test 0: Iter=0, Task=43, Time=1.719597, write close start
+Test 0: Iter=0, Task=43, Time=1.722812, write close stop
+task 46 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=46, Time=0.045083, write open start
+Test 0: Iter=0, Task=46, Time=0.063631, write open stop
+Test 0: Iter=0, Task=46, Time=0.063631, write start
+Test 0: Iter=0, Task=46, Time=1.719598, write stop
+Test 0: Iter=0, Task=46, Time=1.719598, write close start
+Test 0: Iter=0, Task=46, Time=1.722786, write close stop
+task 44 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=44, Time=0.045083, write open start
+Test 0: Iter=0, Task=44, Time=0.063565, write open stop
+Test 0: Iter=0, Task=44, Time=0.063565, write start
+Test 0: Iter=0, Task=44, Time=1.719597, write stop
+Test 0: Iter=0, Task=44, Time=1.719598, write close start
+Test 0: Iter=0, Task=44, Time=1.722428, write close stop
+task 1 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=1, Time=0.045081, write open start
+Test 0: Iter=0, Task=1, Time=0.063505, write open stop
+Test 0: Iter=0, Task=1, Time=0.063505, write start
+Test 0: Iter=0, Task=1, Time=1.719598, write stop
+Test 0: Iter=0, Task=1, Time=1.719598, write close start
+Test 0: Iter=0, Task=1, Time=1.723053, write close stop
+task 5 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=5, Time=0.045081, write open start
+Test 0: Iter=0, Task=5, Time=0.063657, write open stop
+Test 0: Iter=0, Task=5, Time=0.063657, write start
+Test 0: Iter=0, Task=5, Time=1.719600, write stop
+Test 0: Iter=0, Task=5, Time=1.719601, write close start
+Test 0: Iter=0, Task=5, Time=1.722954, write close stop
+task 6 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=6, Time=0.045081, write open start
+Test 0: Iter=0, Task=6, Time=0.063448, write open stop
+Test 0: Iter=0, Task=6, Time=0.063448, write start
+Test 0: Iter=0, Task=6, Time=1.719601, write stop
+Test 0: Iter=0, Task=6, Time=1.719601, write close start
+Test 0: Iter=0, Task=6, Time=1.723055, write close stop
+task 7 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=7, Time=0.045081, write open start
+Test 0: Iter=0, Task=7, Time=0.063460, write open stop
+Test 0: Iter=0, Task=7, Time=0.063460, write start
+Test 0: Iter=0, Task=7, Time=1.719601, write stop
+Test 0: Iter=0, Task=7, Time=1.719601, write close start
+Test 0: Iter=0, Task=7, Time=1.722677, write close stop
+task 3 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=3, Time=0.045081, write open start
+Test 0: Iter=0, Task=3, Time=0.063538, write open stop
+Test 0: Iter=0, Task=3, Time=0.063538, write start
+Test 0: Iter=0, Task=3, Time=1.719600, write stop
+Test 0: Iter=0, Task=3, Time=1.719600, write close start
+Test 0: Iter=0, Task=3, Time=1.723140, write close stop
+task 8 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=8, Time=0.045081, write open start
+Test 0: Iter=0, Task=8, Time=0.063562, write open stop
+Test 0: Iter=0, Task=8, Time=0.063562, write start
+Test 0: Iter=0, Task=8, Time=1.719601, write stop
+Test 0: Iter=0, Task=8, Time=1.719601, write close start
+Test 0: Iter=0, Task=8, Time=1.722719, write close stop
+task 11 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=11, Time=0.045081, write open start
+Test 0: Iter=0, Task=11, Time=0.063473, write open stop
+Test 0: Iter=0, Task=11, Time=0.063473, write start
+Test 0: Iter=0, Task=11, Time=1.719601, write stop
+Test 0: Iter=0, Task=11, Time=1.719601, write close start
+Test 0: Iter=0, Task=11, Time=1.722868, write close stop
+task 12 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=12, Time=0.045081, write open start
+Test 0: Iter=0, Task=12, Time=0.063428, write open stop
+Test 0: Iter=0, Task=12, Time=0.063428, write start
+Test 0: Iter=0, Task=12, Time=1.719601, write stop
+Test 0: Iter=0, Task=12, Time=1.719602, write close start
+Test 0: Iter=0, Task=12, Time=1.723054, write close stop
+task 10 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=10, Time=0.045081, write open start
+Test 0: Iter=0, Task=10, Time=0.063500, write open stop
+Test 0: Iter=0, Task=10, Time=0.063500, write start
+Test 0: Iter=0, Task=10, Time=1.719601, write stop
+Test 0: Iter=0, Task=10, Time=1.719601, write close start
+Test 0: Iter=0, Task=10, Time=1.722983, write close stop
+task 2 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=2, Time=0.045081, write open start
+Test 0: Iter=0, Task=2, Time=0.063548, write open stop
+Test 0: Iter=0, Task=2, Time=0.063549, write start
+Test 0: Iter=0, Task=2, Time=1.719599, write stop
+Test 0: Iter=0, Task=2, Time=1.719599, write close start
+Test 0: Iter=0, Task=2, Time=1.722826, write close stop
+task 9 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=9, Time=0.045081, write open start
+Test 0: Iter=0, Task=9, Time=0.063565, write open stop
+Test 0: Iter=0, Task=9, Time=0.063565, write start
+Test 0: Iter=0, Task=9, Time=1.719600, write stop
+Test 0: Iter=0, Task=9, Time=1.719601, write close start
+Test 0: Iter=0, Task=9, Time=1.722982, write close stop
+task 28 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=28, Time=0.045082, write open start
+Test 0: Iter=0, Task=28, Time=0.063420, write open stop
+Test 0: Iter=0, Task=28, Time=0.063420, write start
+Test 0: Iter=0, Task=28, Time=1.719603, write stop
+Test 0: Iter=0, Task=28, Time=1.719603, write close start
+Test 0: Iter=0, Task=28, Time=1.722533, write close stop
+task 27 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=27, Time=0.045082, write open start
+Test 0: Iter=0, Task=27, Time=0.063601, write open stop
+Test 0: Iter=0, Task=27, Time=0.063601, write start
+Test 0: Iter=0, Task=27, Time=1.719603, write stop
+Test 0: Iter=0, Task=27, Time=1.719603, write close start
+Test 0: Iter=0, Task=27, Time=1.722645, write close stop
+task 30 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=30, Time=0.045082, write open start
+Test 0: Iter=0, Task=30, Time=0.063491, write open stop
+Test 0: Iter=0, Task=30, Time=0.063491, write start
+Test 0: Iter=0, Task=30, Time=1.719604, write stop
+Test 0: Iter=0, Task=30, Time=1.719605, write close start
+Test 0: Iter=0, Task=30, Time=1.722816, write close stop
+task 33 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=33, Time=0.045082, write open start
+Test 0: Iter=0, Task=33, Time=0.063595, write open stop
+Test 0: Iter=0, Task=33, Time=0.063596, write start
+Test 0: Iter=0, Task=33, Time=1.719605, write stop
+Test 0: Iter=0, Task=33, Time=1.719605, write close start
+Test 0: Iter=0, Task=33, Time=1.722529, write close stop
+task 29 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=29, Time=0.045082, write open start
+Test 0: Iter=0, Task=29, Time=0.063485, write open stop
+Test 0: Iter=0, Task=29, Time=0.063485, write start
+Test 0: Iter=0, Task=29, Time=1.719604, write stop
+Test 0: Iter=0, Task=29, Time=1.719604, write close start
+Test 0: Iter=0, Task=29, Time=1.722731, write close stop
+task 38 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=38, Time=0.045082, write open start
+Test 0: Iter=0, Task=38, Time=0.063493, write open stop
+Test 0: Iter=0, Task=38, Time=0.063493, write start
+Test 0: Iter=0, Task=38, Time=1.719606, write stop
+Test 0: Iter=0, Task=38, Time=1.719606, write close start
+Test 0: Iter=0, Task=38, Time=1.722807, write close stop
+task 26 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=26, Time=0.045082, write open start
+Test 0: Iter=0, Task=26, Time=0.063642, write open stop
+Test 0: Iter=0, Task=26, Time=0.063642, write start
+Test 0: Iter=0, Task=26, Time=1.719609, write stop
+Test 0: Iter=0, Task=26, Time=1.719609, write close start
+Test 0: Iter=0, Task=26, Time=1.722663, write close stop
+task 34 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=34, Time=0.045082, write open start
+Test 0: Iter=0, Task=34, Time=0.063597, write open stop
+Test 0: Iter=0, Task=34, Time=0.063597, write start
+Test 0: Iter=0, Task=34, Time=1.719605, write stop
+Test 0: Iter=0, Task=34, Time=1.719605, write close start
+Test 0: Iter=0, Task=34, Time=1.722713, write close stop
+task 35 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=35, Time=0.045082, write open start
+Test 0: Iter=0, Task=35, Time=0.063479, write open stop
+Test 0: Iter=0, Task=35, Time=0.063480, write start
+Test 0: Iter=0, Task=35, Time=1.719604, write stop
+Test 0: Iter=0, Task=35, Time=1.719605, write close start
+Test 0: Iter=0, Task=35, Time=1.722758, write close stop
+task 36 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=36, Time=0.045082, write open start
+Test 0: Iter=0, Task=36, Time=0.063480, write open stop
+Test 0: Iter=0, Task=36, Time=0.063480, write start
+Test 0: Iter=0, Task=36, Time=1.719614, write stop
+Test 0: Iter=0, Task=36, Time=1.719614, write close start
+Test 0: Iter=0, Task=36, Time=1.722640, write close stop
+task 37 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=37, Time=0.045082, write open start
+Test 0: Iter=0, Task=37, Time=0.063508, write open stop
+Test 0: Iter=0, Task=37, Time=0.063508, write start
+Test 0: Iter=0, Task=37, Time=1.719617, write stop
+Test 0: Iter=0, Task=37, Time=1.719617, write close start
+Test 0: Iter=0, Task=37, Time=1.722720, write close stop
+task 31 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=31, Time=0.045082, write open start
+Test 0: Iter=0, Task=31, Time=0.063565, write open stop
+Test 0: Iter=0, Task=31, Time=0.063566, write start
+Test 0: Iter=0, Task=31, Time=1.719605, write stop
+Test 0: Iter=0, Task=31, Time=1.719605, write close start
+Test 0: Iter=0, Task=31, Time=1.722774, write close stop
+task 32 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=32, Time=0.045082, write open start
+Test 0: Iter=0, Task=32, Time=0.063551, write open stop
+Test 0: Iter=0, Task=32, Time=0.063551, write start
+Test 0: Iter=0, Task=32, Time=1.719605, write stop
+Test 0: Iter=0, Task=32, Time=1.719605, write close start
+Test 0: Iter=0, Task=32, Time=1.722908, write close stop
+Finished            : Mon Nov  9 10:31:09 2020
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = enable    
+key = romio_cb_write            value = enable    
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = true      
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+task 4 writing ior_data/col_2_13_33575k_default_f
+Test 0: Iter=0, Task=4, Time=0.045081, write open start
+Test 0: Iter=0, Task=4, Time=0.063618, write open stop
+Test 0: Iter=0, Task=4, Time=0.063618, write start
+Test 0: Iter=0, Task=4, Time=1.719600, write stop
+Test 0: Iter=0, Task=4, Time=1.719601, write close start
+Test 0: Iter=0, Task=4, Time=1.722954, write close stop
+IOR-3.3.0+dev: MPI Coordinated Test of Parallel I/O
+Began               : Mon Nov  9 10:32:08 2020
+Command line        : /gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior -b 33575k -t 33575k -i 1 -v -v -v -k -a HDF5 -J 16m -c -e -w -o ior_data/col_3_13_33575k_default_f
+Machine             : Linux c27n14 4.14.0-115.21.2.el7a.ppc64le #1 SMP Thu May 7 22:22:31 UTC 2020 ppc64le
+Using synchronized MPI timer
+Start time skew across all tasks: 0.00 sec
+STARTING ENVIRON LOOP
+XDG_SESSION_ID=11475
+HOSTNAME=c27n14
+SHELL=/bin/bash
+HISTSIZE=1000
+SSH_CLIENT=67.187.116.217 60160 22
+LC_ALL=
+USER=bing
+MAIL=/var/spool/mail/bing
+PATH=/opt/ibm/csm/bin:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin:/sw/sources/lsf-tools/2.0/summit/bin:/sw/summit/xalt/1.2.0/bin:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/bin:/sw/sources/hpss/bin:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/bin:/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin:/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/ibm/flightlog/bin:/opt/ibutils/bin:/opt/ibm/spectrum_mpi/jsm_pmix/bin:/opt/puppetlabs/bin:/usr/lpp/mmfs/bin
+PWD=/autofs/nccs-svm1_home1/bing
+HISTCONTROL=ignoredups
+SHLVL=5
+HOME=/ccs/home/bing
+LOGNAME=bing
+SSH_CONNECTION=67.187.116.217 60160 128.219.134.75 22
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+XDG_RUNTIME_DIR=/run/user/4069
+_=/opt/ibm/spectrum_mpi/jsm_pmix/bin/jsrun
+LD_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port:/opt/ibm/spectrum_mpi/jsm_pmix/lib/:/opt/ibm/spectrum_mpi/jsm_pmix/../lib/:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:/opt/ibm/csm/lib/:/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:/sw/summit/xl/16.1.1-5/xlsmp/5.1.1/lib:/sw/summit/xl/16.1.1-5/xlmass/9.1.1/lib:/sw/summit/xl/16.1.1-5/xlC/16.1.1/lib:/sw/summit/xl/16.1.1-5/xlf/16.1.1/lib:/sw/summit/xl/16.1.1-5/lib:/opt/ibm/spectrum_mpi/jsm_pmix/lib
+JSM_ENABLE_CGROUP=1
+PMIX_INSTALL_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+JSM_NUM_THREADS=15
+TMPDIR=/tmp
+JSM_TOP_SESSION_DIR=/tmp/jsm.c27n14.4069
+JSM_LOG_PATH=/tmp/jsm.c27n14.4069/1511558
+PTS_LOG_PATH=/tmp/jsm.c27n14.4069/1511558
+JSM_BATCH_SESSION_DIR=/tmp/jsm.c27n14.4069/1511558
+PMIX_SYSTEM_TMPDIR=/tmp/jsm.c27n14.4069/1511558
+PMIX_SERVER_TMPDIR=/tmp/jsm.c27n14.4069/1511558
+JSM_ENV_VAR_SPINDLE_PORT=/tmp/jsm.c27n14.4069/1511558/JSM_rm_port_4069_1511558-spindle
+JSM_JSRUN_PORT=/tmp/jsm.c27n14.4069/1511558/JSM_rm_port_4069_1511558:114
+CSM_LIB_PATH=/opt/ibm/csm/lib/libcsmi.so
+LSF_PTS_USOCK=@PTS_CLIENT.65214.1
+LSF_PTS_IPSTR=10.134.7.107
+PTS_PARENT_PID=65214
+
+OMPI_MCA_orte_externally_bound=1
+LMOD_FAMILY_COMPILER_VERSION=16.1.1-5
+dl=/gpfs/alpine/stf008/scratch/bing/dl
+MANPATH=/sw/sources/hpss/man:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/share/man:/sw/summit/xl/16.1.1-5/xlC/16.1.1/man/en_US:/sw/summit/xl/16.1.1-5/xlf/16.1.1/man/en_US:/sw/summit/lmod/8.2.10/share/man:/opt/ibm/spectrumcomputing/lsf/10.1.0.9/man:::/opt/puppetlabs/puppet/share/man
+LSB_EXEC_CLUSTER=summit
+XALT_ETC_DIR=/sw/summit/xalt/1.2.0/etc
+hpss=/ccs/sys/adm/rats/hpss_data/
+hdf5=/gpfs/alpine/stf008/scratch/bing/script
+_ModuleTable003_=LH0sWyJsc2YtdG9vbHMiXT17WyJmbiJdPSIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS9Db3JlL2xzZi10b29scy8yLjAubHVhIixbImZ1bGxOYW1lIl09ImxzZi10b29scy8yLjAiLFsibG9hZE9yZGVyIl09NSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJsc2YtdG9vbHMiLH0sWyJzcGVjdHJ1bS1tcGkiXT17WyJmbiJdPSIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS94bC8xNi4xLjEtNS9zcGVjdHJ1bS1tcGkvMTAuMy4xLjItMjAyMDAxMjEubHVhIixbImZ1bGxOYW1lIl09InNwZWN0cnVtLW1waS8xMC4zLjEuMi0yMDIwMDEyMSIs
+LSB_EFFECTIVE_RSRCREQ=1*{select[((LN) && (type == any))] order[r15s:pg] span[hosts=1] cu[type=rack:pref=config]}+168*{select[((CN) && (type == any))] order[r15s:pg] span[ptile=42] cu[type=rack:pref=config]}
+LSF_LIM_API_NTRIES=1
+LSF_LOGDIR=/var/log/lsf
+LSB_BATCH_JID=469277
+__LMOD_REF_COUNT_MODULEPATH=/autofs/nccs-svm1_sw/summit/modulefiles/site/linux-rhel7-ppc64le/spectrum-mpi/10.3.1.2-20200121-p6nrnt6/xl/16.1.1-5:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core:1;/sw/summit/modulefiles/core:1
+LMOD_ROOT=/sw/summit/lmod
+DXT_ENABLE_IO_TRACE=4
+LMOD_SYSTEM_DEFAULT_MODULES=DefApps
+MODULEPATH_ROOT=/sw/summit/modulefiles
+LS_EXECCWD=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+LSB_TRAPSIGS=trap # 15 10 12 2 1
+genarray=/ccs/home/bing/adios1.2/tests/genarray/
+LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib
+ROMIO_PRINT_HINTS=1
+LS_JOBPID=68764
+PAMI_IBV_ADAPTER_AFFINITY=1
+LSB_JOBRES_CALLBACK=48923@batch1
+LSB_MAX_NUM_PROCESSORS=169
+LMOD_PKG=/sw/summit/lmod/8.2.10
+LSB_JOB_EXECUSER=bing
+LSB_JOBID=469277
+PAMI_ENABLE_STRIPING=0
+LSF_SERVERDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc
+OLCF_XL_ROOT=/sw/summit/xl/16.1.1-5
+LSB_JOBRES_PID=68764
+LMOD_VERSION=8.2.10
+OMPI_FC=/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin/xlf2008_r
+LSB_JOBNAME=IOR_4node
+OLCF_DARSHAN_RUNTIME_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43
+OLCF_XLSMP_ROOT=/sw/summit/xl/16.1.1-5/xlsmp/5.1.1
+SSH_TTY=/dev/pts/47
+BSUB_BLOCK_EXEC_HOST=
+__LMOD_REF_COUNT_LOADEDMODULES=xl/16.1.1-5:1;spectrum-mpi/10.3.1.2-20200121:1;hsi/5.0.2.p5:1;xalt/1.2.0:1;lsf-tools/2.0:1;darshan-runtime/3.1.7:1;DefApps:1
+__LMOD_REF_COUNT_CMAKE_PREFIX_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2:1
+LSF_LIBDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib
+LSB_PROJECT_NAME=STF008
+logs=/gpfs/alpine/stf008/scratch/bing/darshan/general
+OPAL_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+LMOD_sys=Linux
+LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+PAMI_IBV_ENABLE_OOO_AR=1
+SBD_KRB5CCNAME_VAL=
+LSB_EEXEC_REAL_UID=
+LMOD_MPI_NAME=spectrum-mpi
+HOSTTYPE=LINUXPPC64LE
+_ModuleTable004_=WyJsb2FkT3JkZXIiXT0yLHByb3BUPXt9LFsic3RhY2tEZXB0aCJdPTEsWyJzdGF0dXMiXT0iYWN0aXZlIixbInVzZXJOYW1lIl09InNwZWN0cnVtLW1waSIsfSx4YWx0PXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUveGFsdC8xLjIuMC5sdWEiLFsiZnVsbE5hbWUiXT0ieGFsdC8xLjIuMCIsWyJsb2FkT3JkZXIiXT00LHByb3BUPXt9LFsic3RhY2tEZXB0aCJdPTEsWyJzdGF0dXMiXT0iYWN0aXZlIixbInVzZXJOYW1lIl09InhhbHQiLH0seGw9e1siZm4iXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZS94bC8xNi4xLjEtNS5sdWEiLFsiZnVsbE5hbWUiXT0ieGwv
+CPATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/include
+LSF_INVOKE_CMD=bsub
+__LMOD_REF_COUNT__LMFILES_=/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xl/16.1.1-5.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5/spectrum-mpi/10.3.1.2-20200121.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/hsi/5.0.2.p5.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xalt/1.2.0.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/lsf-tools/2.0.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/darshan-runtime/3.1.7.lua:1;/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/DefApps.lua:1
+LS_EXEC_T=START
+OLCF_LMOD_ROOT=/sw/summit
+OLCF_XLMASS_ROOT=/sw/summit/xl/16.1.1-5/xlmass/9.1.1
+data=/ccs/home/bing/data
+MPICH_MPIIO_HINTS_DISPLAY=1
+OLCF_FAMILY_MPI_VERSION=10.3.1.2-20200121
+LSB_SUB_RES_REQ=1*{select[LN]span[hosts=1]} + 168*{select[CN]span[ptile=42]}
+LS_SUBCWD=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+PROJWORK=/gpfs/alpine/proj-shared
+LSB_HOSTS=batch1 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n14 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n15 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n16 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17 c27n17
+LMOD_FAMILY_MPI_VERSION=10.3.1.2-20200121
+LSB_UNIXGROUP_INT=bing
+LSB_JOBFILENAME=/ccs/home/bing/.lsbatch/1604935559.469277
+OLCF_FAMILY_MPI=spectrum-mpi
+NLSPATH=/sw/summit/xl/16.1.1-5/msg/en_US/%N:/sw/summit/xl/16.1.1-5/xlC/16.1.1/msg/en_US/%N:/sw/summit/xl/16.1.1-5/xlf/16.1.1/msg/en_US/%N
+LSB_JOBINDEX=0
+__LMOD_REF_COUNT_NLSPATH=/sw/summit/xl/16.1.1-5/msg/en_US/%N:2;/sw/summit/xl/16.1.1-5/xlC/16.1.1/msg/en_US/%N:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/msg/en_US/%N:1
+_ModuleTable001_=X01vZHVsZVRhYmxlXz17WyJNVHZlcnNpb24iXT0zLFsiY19yZWJ1aWxkVGltZSJdPWZhbHNlLFsiY19zaG9ydFRpbWUiXT1mYWxzZSxkZXB0aFQ9e30sZmFtaWx5PXtbImNvbXBpbGVyIl09InhsIixbIm1waSJdPSJzcGVjdHJ1bS1tcGkiLH0sbVQ9e0RlZkFwcHM9e1siZm4iXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZS9EZWZBcHBzLmx1YSIsWyJmdWxsTmFtZSJdPSJEZWZBcHBzIixbImxvYWRPcmRlciJdPTcscHJvcFQ9e30sWyJzdGFja0RlcHRoIl09MCxbInN0YXR1cyJdPSJhY3RpdmUiLFsidXNlck5hbWUiXT0iRGVmQXBwcyIsfSxbImRhcnNoYW4tcnVudGltZSJdPXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmls
+PAMI_IBV_QP_SERVICE_LEVEL=8
+LSB_EXIT_PRE_ABORT=99
+OLCF_XLC_ROOT=/sw/summit/xl/16.1.1-5/xlC/16.1.1
+OPAL_LIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib
+LSB_JOBEXIT_STAT=0
+hdata=/gpfs/alpine/stf008/scratch/bing/darshan/hdf5
+PAMI_CUDA_AWARE_THRESH=320000
+OMPI_DIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+_LMFILES_=/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xl/16.1.1-5.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5/spectrum-mpi/10.3.1.2-20200121.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/hsi/5.0.2.p5.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/xalt/1.2.0.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/lsf-tools/2.0.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/darshan-runtime/3.1.7.lua:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core/DefApps.lua
+OLCF_MODULEPATH_ROOT=/sw/summit/modulefiles
+EDITOR=vim
+LSB_RES_GET_FANOUT_INFO=Y
+__LMOD_REF_COUNT_PYTHONPATH=/sw/summit/xalt/1.2.0/site:1;/sw/summit/xalt/1.2.0/libexec:1
+LSB_CHKFILENAME=/ccs/home/bing/.lsbatch/1604935559.469277
+MODULEPATH=/autofs/nccs-svm1_sw/summit/modulefiles/site/linux-rhel7-ppc64le/spectrum-mpi/10.3.1.2-20200121-p6nrnt6/xl/16.1.1-5:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/xl/16.1.1-5:/sw/summit/modulefiles/site/linux-rhel7-ppc64le/Core:/sw/summit/modulefiles/core
+atlas2=/lustre/atlas2/stf008/scratch/bing
+LSB_DJOB_HOSTFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostfile
+LMOD_SYSTEM_NAME=summit
+_ModuleTable_Sz_=6
+OLCF_FAMILY_COMPILER_VERSION=16.1.1-5
+LOADEDMODULES=xl/16.1.1-5:spectrum-mpi/10.3.1.2-20200121:hsi/5.0.2.p5:xalt/1.2.0:lsf-tools/2.0:darshan-runtime/3.1.7:DefApps
+OMPI_LD_PRELOAD_PREPEND=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/libdarshan.so
+OLCF_FAMILY_COMPILER=xl
+LSF_JOB_TIMESTAMP_VALUE=1604935768
+OLCF_XLF_ROOT=/sw/summit/xl/16.1.1-5/xlf/16.1.1
+LSB_AFFINITY_HOSTFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostAffinityFile
+LMOD_CMD=/sw/summit/lmod/8.2.10/libexec/lmod
+_ModuleTable005_=MTYuMS4xLTUiLFsibG9hZE9yZGVyIl09MSxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJ4bCIsfSx9LG1wYXRoQT17Ii9hdXRvZnMvbmNjcy1zdm0xX3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvc3BlY3RydW0tbXBpLzEwLjMuMS4yLTIwMjAwMTIxLXA2bnJudDYveGwvMTYuMS4xLTUiLCIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL3NpdGUvbGludXgtcmhlbDctcHBjNjRsZS94bC8xNi4xLjEtNSIsIi9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUiLCIvc3cvc3VtbWl0L21vZHVsZWZpbGVzL2NvcmUiLH0sWyJzeXN0ZW1CYXNlTVBB
+LSB_DJOB_NUMPROC=169
+LSB_EXEC_HOSTTYPE=LINUXPPC64LE
+LSF_BINDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin
+WORLDWORK=/gpfs/alpine/world-shared
+MEMBERWORK=/gpfs/alpine/scratch/bing
+LSB_APPLICATION_NAME=small
+__LMOD_REF_COUNT_PATH=/sw/sources/lsf-tools/2.0/summit/bin:2;/sw/summit/xalt/1.2.0/bin:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/bin:1;/sw/sources/hpss/bin:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/bin:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/bin:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/etc:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/bin:1;/opt/ibm/csm/bin:1;/usr/local/bin:1;/usr/bin:1;/usr/local/sbin:1;/usr/sbin:1;/opt/ibm/flightlog/bin:1;/opt/ibutils/bin:1;/opt/ibm/spectrum_mpi/jsm_pmix/bin:1
+OMPI_CC=/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin/xlc_r
+JOB_TERMINATE_INTERVAL=10
+__LMOD_REF_COUNT_CPATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/include:1
+LSB_ACCT_FILE=/tmp/469277.tmpdir/.1604935559.469277.acct
+CSM_ALLOCATION_ID=1511558
+BINARY_TYPE_HPC=
+_ModuleTable002_=ZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUvZGFyc2hhbi1ydW50aW1lLzMuMS43Lmx1YSIsWyJmdWxsTmFtZSJdPSJkYXJzaGFuLXJ1bnRpbWUvMy4xLjciLFsibG9hZE9yZGVyIl09Nixwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJkYXJzaGFuLXJ1bnRpbWUiLH0saHNpPXtbImZuIl09Ii9zdy9zdW1taXQvbW9kdWxlZmlsZXMvc2l0ZS9saW51eC1yaGVsNy1wcGM2NGxlL0NvcmUvaHNpLzUuMC4yLnA1Lmx1YSIsWyJmdWxsTmFtZSJdPSJoc2kvNS4wLjIucDUiLFsibG9hZE9yZGVyIl09Myxwcm9wVD17fSxbInN0YWNrRGVwdGgiXT0xLFsic3RhdHVzIl09ImFjdGl2ZSIsWyJ1c2VyTmFtZSJdPSJoc2ki
+LSB_SUB_HOST=login5
+raw_data=/ccs/home/bing/raw_data
+__LSF_JOB_TMPDIR__=/tmp/469277.tmpdir
+LSB_SUB_USER=bing
+LSFUSER=bing
+OLCF_HSI_ROOT=/sw/sources/hpss
+BASH_ENV=/sw/summit/lmod/8.2.10/init/bash
+LSB_OUTDIR=/gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4
+LSB_QUEUE=batch
+LSB_MCPU_HOSTS=batch1 1 c27n14 42 c27n15 42 c27n16 42 c27n17 42 
+LSB_OUTPUTFILE=o469277.ior_4node
+PAMI_IBV_ENABLE_DCT=1
+PYTHONPATH=/sw/summit/xalt/1.2.0/site:/sw/summit/xalt/1.2.0/libexec
+MPI_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+CVS_RSH=ssh
+OLCF_SPECTRUM_MPI_ROOT=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+XLSF_UIDDIR=/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib/uid
+LSB_ECHKPNT_RSH_CMD=ssh -o 'PasswordAuthentication no' -o 'StrictHostKeyChecking no'
+JSM_JSRUN_NO_WARN_TOPOLOGY=1
+MODULESHOME=/sw/summit/lmod/8.2.10
+__LMOD_REF_COUNT_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:1
+LSF_CGROUP_TOPDIR_KEY=summit
+LMOD_SETTARG_FULL_SUPPORT=no
+PKG_CONFIG_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/pkgconfig
+__LMOD_REF_COUNT_LD_LIBRARY_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/lib:1;/sw/summit/xl/16.1.1-5/xlsmp/5.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlmass/9.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/lib:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/lib:1;/sw/summit/xl/16.1.1-5/lib:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/linux3.10-glibc2.17-ppc64le-csm/lib:1
+OMPI_CXX=/sw/summit/xl/16.1.1-5/xlC/16.1.1/bin/xlc++_r
+__Init_Default_Modules=1
+OMPI_MCA_io=romio321
+LMOD_MPI_VERSION=10.3.1.2-20200121-p6nrnt6
+gpfs=/gpfs/alpine/stf008/scratch/bing
+LSB_XFER_OP=
+LMOD_FAMILY_COMPILER=xl
+gen_bench=/tmp/work/bing/genarray_benchmark
+MPICH_MPIIO_TIMERS=1
+LSB_EEXEC_REAL_GID=
+XALT_OLCF=1
+XL_LINKER=/sw/summit/xalt/1.2.0/bin/ld
+__LMOD_REF_COUNT_PKG_CONFIG_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/pkgconfig:1
+fast=/gpfs/alpine/stf008/scratch/bing/darshan/fast
+CMAKE_PREFIX_PATH=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2
+DARSHAN_DISABLE_SHARED_REDUCTION=1
+LSF_ENVDIR=/opt/ibm/spectrumcomputing/lsf/conf
+LMOD_DIR=/sw/summit/lmod/8.2.10/libexec
+widow2=/lustre/widow2/scratch/bing
+__LMOD_REF_COUNT_MANPATH=/sw/sources/hpss/man:1;/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/share/man:1;/sw/summit/xl/16.1.1-5/xlC/16.1.1/man/en_US:1;/sw/summit/xl/16.1.1-5/xlf/16.1.1/man/en_US:1;/sw/summit/lmod/8.2.10/share/man:1;/opt/ibm/spectrumcomputing/lsf/10.1.0.9/man:1
+_ModuleTable006_=VEgiXT0iL3N3L3N1bW1pdC9tb2R1bGVmaWxlcy9zaXRlL2xpbnV4LXJoZWw3LXBwYzY0bGUvQ29yZTovc3cvc3VtbWl0L21vZHVsZWZpbGVzL2NvcmUiLH0=
+MPICH_MPIIO_STATS=1
+__LMOD_Priority_PATH=/sw/sources/lsf-tools/2.0/summit/bin:-9999;/sw/summit/xalt/1.2.0/bin:-9999
+widow3=/lustre/widow3/scratch/bing
+ROMIO_HINTS=result_13_33575k/default
+LSB_DJOB_RANKFILE=/ccs/home/bing/.lsbatch/1604935559.469277.hostfile
+LMOD_FAMILY_MPI=spectrum-mpi
+widow1=/lustre/widow1/scratch/bing
+BASH_FUNC_module()=() {  eval $($LMOD_CMD bash "$@") && eval $(${LMOD_SETTARG_CMD:-:} -s sh)
+}
+BASH_FUNC_ml()=() {  eval $($LMOD_DIR/ml_cmd "$@")
+}
+OMPI_MCA_opal_signal=6,7,8,11
+OMPI_MCA_ess_base_forward_signals=6,10,11,12,14,18,21
+OMPI_MCA_backtrace_lwcore_enable=0
+OMPI_MCA_spml=ucx
+OMPI_MCA_spml_ucx_priority=80
+OMPI_MCA_atomic=ucx
+OMPI_MCA_atomic_ucx_priority=80
+OMPI_MCA_mpi_leave_pinned=1
+OMPI_MCA_memory=patcher
+OMPI_MCA_mca_base_component_show_load_errors=0
+OMPI_MCA_btl_openib_allow_ib=true
+OMPI_MCA_btl_openib_warn_default_gid_prefix=0
+IBV_FORK_SAFE=1
+OMPI_MCA_coll_tuned_priority=-1
+PMIX_MCA_gds=ds21,hash
+OMPI_MCA_schizo_ompi_prepend_ld_library_path=pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port
+PAMI_IBV_SKIP_CQOVERFLOW_CHECK=1
+OMPI_MCA_coll_hcoll_priority=-1
+OMPI_MCA_coll_hcoll_enable=0
+HCOLL_ALLREDUCE_ZCOPY_TUNE=static
+HCOLL_EXTERNAL_UCM_EVENTS=1
+UCX_MEM_MMAP_HOOK_MODE=none
+OMPI_MCA_opal_common_ucx_opal_mem_hooks=1
+OMPI_MCA_pml=pami
+OMPI_MCA_osc=pami
+OMPI_MCA_btl=self
+OMPI_MCA_bml=^r2
+OMPI_LD_PRELOAD_POSTPEND_DISTRO=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/libpami_cudahook.so
+OMPI_MCA_ompi_async_mpi_init=f
+OMPI_MCA_opal_pmix_base_async_modex=t
+OMPI_MCA_opal_pmix_base_collect_data=f
+OMPI_LD_LIBRARY_PATH_PREPEND_DISTRO=pami_port:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib:/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pami_port
+OMPI_MCA_compress=^bzip,gzip
+OMPI_MCA_dfs=^app,orted,test
+OMPI_MCA_errmgr=default_app
+OMPI_MCA_oob=^ud
+OMPI_MCA_pmix=ext3x
+OMPI_MCA_routed=^direct,radix,debruijn,binomial
+OMPI_MCA_schizo=jsm
+OMPI_MCA_state=app
+OMPI_MCA_mca_base_env_list_distro=MPI_ROOT,OPAL_PREFIX,OPAL_LIBDIR,PMIX_INSTALL_PREFIX,IBV_FORK_SAFE,PMIX_MCA_ptl_tcp_handshake_wait_time,PMIX_MCA_ptl_tcp_handshake_max_retries,PMIX_MCA_gds,PAMI_IBV_SKIP_CQOVERFLOW_CHECK,HCOLL_ALLREDUCE_ZCOPY_TUNE,HCOLL_EXTERNAL_UCM_EVENTS,UCX_MEM_MMAP_HOOK_MODE,OMPI_LD_PRELOAD_POSTPEND_DISTRO,OMPI_LD_LIBRARY_PATH_PREPEND_DISTRO,SMPI_INTERNAL_MPIRUN_LAUNCH_JSM
+LD_PRELOAD=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/gcc-4.8.5/darshan-runtime-3.1.7-cnvxicgf5j4ap64qi6v5gxp67hmrjz43/lib/libdarshan.so /autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/libpami_cudahook.so
+JSM_NAMESPACE_RANK=0
+OMPI_COMM_WORLD_RANK=0
+JSM_NAMESPACE_SIZE=52
+OMPI_COMM_WORLD_SIZE=52
+JSM_NAMESPACE_LOCAL_RANK=0
+OMPI_COMM_WORLD_LOCAL_RANK=0
+JSM_NAMESPACE_LOCAL_SIZE=13
+OMPI_COMM_WORLD_LOCAL_SIZE=13
+JSM_SMPI_SHARP_ID=277217394
+OMP_PROC_BIND=true
+OMP_PLACES={0:4}
+OMP_NUM_THREADS=4
+PMIX_NAMESPACE=114
+PMIX_RANK=0
+PMIX_SERVER_URI3=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SERVER_URI2=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SERVER_URI21=pmix-server.65214;tcp4://127.0.0.1:46869
+PMIX_SECURITY_MODE=native
+PMIX_PTL_MODULE=tcp
+PMIX_BFROP_BUFFER_TYPE=PMIX_BFROP_BUFFER_NON_DESC
+PMIX_GDS_MODULE=ds21,ds12,hash
+PMIX_DSTORE_21_BASE_PATH=/tmp/jsm.c27n14.4069/1511558/pmix_dstor_ds21_65214
+PMIX_DSTORE_ESH_BASE_PATH=/tmp/jsm.c27n14.4069/1511558/pmix_dstor_ds12_65214
+70084-CPU_ASSIGNMENTS=0
+JSM_SMT_ASSIGNMENTS=0-3
+OPAL_EXEC_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+OPAL_BINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../bin
+OPAL_SBINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../sbin
+OPAL_LIBEXECDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../libexec
+OPAL_DATAROOTDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+OPAL_DATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+OPAL_SYSCONFDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc
+OPAL_SHAREDSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../com
+OPAL_LOCALSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../var
+OPAL_INCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include
+OPAL_INFODIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../info
+OPAL_MANDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../man
+OPAL_PKGDATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share/spectrum_mpi
+OPAL_PKGLIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/spectrum_mpi
+OPAL_PKGINCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include/spectrum_mpi
+PMIX_EXEC_PREFIX=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/..
+PMIX_BINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../bin
+PMIX_SBINDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../sbin
+PMIX_LIBEXECDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../libexec
+PMIX_DATAROOTDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+PMIX_DATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share
+PMIX_SYSCONFDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc
+PMIX_SHAREDSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../com
+PMIX_LOCALSTATEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../var
+PMIX_LIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib
+PMIX_INCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include
+PMIX_INFODIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../info
+PMIX_MANDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../man
+PMIX_PKGDATADIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../share/pmix
+PMIX_PKGLIBDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../lib/pmix
+PMIX_PKGINCLUDEDIR=/autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../include/pmix
+IPATH_NO_BACKTRACE=1
+HFI_NO_BACKTRACE=1
+OMPI_COMMAND=/gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior
+OMPI_ARGV=-b 33575k -t 33575k -i 1 -v -v -v -k -a HDF5 -J 16m -c -e -w -o ior_data/col_3_13_33575k_default_f
+OMPI_MCA_ess=pmi
+ORTE_SCHIZO_DETECTION=JSM
+PMIX_MCA_mca_base_component_show_load_errors=0
+OMPI_MCA_orte_ess_num_procs=52
+OMPI_APP_CTX_NUM_PROCS=52
+OMPI_MCA_orte_precondition_transports=0000fae80000001a-00007e350000001a
+PAMI_ENABLE_SYS_INTERCEPT=0
+LIBCOLL_COLLSEL_FILE=/tmp/jsm.c27n14.4069/1511558/libcoll_xml_cache//autofs/nccs-svm1_sw/summit/.swci/1-compute/opt/spack/20180914/linux-rhel7-ppc64le/xl-16.1.1-5/spectrum-mpi-10.3.1.2-20200121-p6nrnt6vtvkn356wqg6f74n6jspnpjd2/container/../etc/libcoll_tune_results.xml
+ENDING ENVIRON LOOP
+TestID              : 0
+StartTime           : Mon Nov  9 10:32:08 2020
+Path                : /gpfs/alpine/stf008/scratch/bing/script/summit-aggregation/node4/ior_data
+FS                  : 225668.2 TiB   Used FS: 25.8%   Inodes: 30000.0 Mi   Used Inodes: 7.1%
+
+Parameters: 
+testID              : 0
+refnum              : 0
+api                 : HDF5
+platform            : c27n(Linux)
+testFileName        : ior_data/col_3_13_33575k_default_f
+hintsFileName       : (null)
+deadlineForStonewall: 0
+stoneWallingWearOut : 0
+maxTimeDuration     : 0
+outlierThreshold    : 0
+options             : (null)
+dryRun              : 0
+nodes               : 4
+memoryPerTask       : 0
+memoryPerNode       : 0
+tasksPerNode        : 13
+repetitions         : 1
+multiFile           : 0
+interTestDelay      : 0
+fsync               : 1
+fsyncperwrite       : 0
+useExistingTestFile : 0
+showHints           : 0
+uniqueDir           : 0
+individualDataSets  : 0
+singleXferAttempt   : 0
+readFile            : 0
+writeFile           : 1
+filePerProc         : 0
+reorderTasks        : 0
+reorderTasksRandom  : 0
+reorderTasksRandomSeed: 0
+randomOffset        : 0
+checkWrite          : 0
+checkRead           : 0
+preallocate         : 0
+useFileView         : 0
+setAlignment        : 16777216
+storeFileOffset     : 0
+useSharedFilePointer: 0
+useStridedDatatype  : 0
+keepFile            : 1
+keepFileWithError   : 0
+quitOnError         : 0
+verbose             : 3
+data packet type    : g
+setTimeStampSignature/incompressibleSeed: 0
+collective          : 1
+segmentCount        : 1
+gpfsHintAccess      : 0
+gpfsReleaseToken    : 0
+transferSize        : 34380800
+blockSize           : 34380800
+Participating tasks: 52
+
+Options: 
+api                 : HDF5
+apiVersion          : 1.10.6 (Parallel)
+test filename       : ior_data/col_3_13_33575k_default_f
+access              : single-shared-file
+type                : collective
+segments            : 1
+ordering in a file  : sequential
+ordering inter file : no tasks offsets
+nodes               : 4
+tasks               : 52
+clients per node    : 13
+repetitions         : 1
+xfersize            : 32.79 MiB
+blocksize           : 32.79 MiB
+aggregate filesize  : 1.67 GiB
+
+Results: 
+Using Time Stamp 1604935928 (0x5fa960f8) for Data Signature
+
+access    bw(MiB/s)  IOPS       Latency(s)  block(KiB) xfer(KiB)  open(s)    wr/rd(s)   close(s)   total(s)   iter
+------    ---------  ----       ----------  ---------- ---------  --------   --------   --------   --------   ----
+task 0 writing ior_data/col_3_13_33575k_default_f
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 1         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0         
+
+HDF5 write 1 datasets
+
+HDF5 collective metadata enabled
+
+HDF5 defer cache flush enabled
+
+HDF5 metadata block size set to 65536
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+Commencing write performance test: Mon Nov  9 10:32:08 2020
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = automatic 
+key = romio_cb_write            value = automatic 
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = false     
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+Test 0: Iter=0, Task=0, Time=0.042696, write open start
+Test 0: Iter=0, Task=0, Time=0.060483, write open stop
+Test 0: Iter=0, Task=0, Time=0.060490, write start
+Test 0: Iter=0, Task=0, Time=1.226388, write stop
+Test 0: Iter=0, Task=0, Time=1.226389, write close start
+Test 0: Iter=0, Task=0, Time=1.229903, write close stop
+write     1436.01    44.59      1.17        33575      33575      0.017880   1.17       0.003636   1.19       0   
+Max Write: 1436.01 MiB/sec (1505.76 MB/sec)
+
+Summary of all tests:
+Operation   Max(MiB)   Min(MiB)  Mean(MiB)     StdDev   Max(OPs)   Min(OPs)  Mean(OPs)     StdDev    Mean(s) Stonewall(s) Stonewall(MiB) Test# #Tasks tPN reps fPP reord reordoff reordrand seed segcnt   blksiz    xsize aggs(MiB)   API RefNum
+write        1436.01    1436.01    1436.01       0.00      43.80      43.80      43.80       0.00    1.18731         NA            NA     0     52  13    1   0     0        1         0    0      1 34380800 34380800    1705.0 HDF5      0
+task 25 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=25, Time=0.042696, write open start
+Test 0: Iter=0, Task=25, Time=0.060277, write open stop
+Test 0: Iter=0, Task=25, Time=0.060277, write start
+Test 0: Iter=0, Task=25, Time=1.226398, write stop
+Test 0: Iter=0, Task=25, Time=1.226398, write close start
+Test 0: Iter=0, Task=25, Time=1.229569, write close stop
+task 21 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=21, Time=0.042697, write open start
+Test 0: Iter=0, Task=21, Time=0.060385, write open stop
+Test 0: Iter=0, Task=21, Time=0.060385, write start
+Test 0: Iter=0, Task=21, Time=1.226398, write stop
+Test 0: Iter=0, Task=21, Time=1.226398, write close start
+Test 0: Iter=0, Task=21, Time=1.229510, write close stop
+task 19 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=19, Time=0.042696, write open start
+Test 0: Iter=0, Task=19, Time=0.060527, write open stop
+Test 0: Iter=0, Task=19, Time=0.060527, write start
+Test 0: Iter=0, Task=19, Time=1.226398, write stop
+Test 0: Iter=0, Task=19, Time=1.226398, write close start
+Test 0: Iter=0, Task=19, Time=1.229282, write close stop
+task 17 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=17, Time=0.042696, write open start
+Test 0: Iter=0, Task=17, Time=0.060363, write open stop
+Test 0: Iter=0, Task=17, Time=0.060363, write start
+Test 0: Iter=0, Task=17, Time=1.226398, write stop
+Test 0: Iter=0, Task=17, Time=1.226398, write close start
+Test 0: Iter=0, Task=17, Time=1.229483, write close stop
+task 18 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=18, Time=0.042697, write open start
+Test 0: Iter=0, Task=18, Time=0.060343, write open stop
+Test 0: Iter=0, Task=18, Time=0.060343, write start
+Test 0: Iter=0, Task=18, Time=1.226398, write stop
+Test 0: Iter=0, Task=18, Time=1.226398, write close start
+Test 0: Iter=0, Task=18, Time=1.229422, write close stop
+task 15 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=15, Time=0.042696, write open start
+Test 0: Iter=0, Task=15, Time=0.060469, write open stop
+Test 0: Iter=0, Task=15, Time=0.060469, write start
+Test 0: Iter=0, Task=15, Time=1.226396, write stop
+Test 0: Iter=0, Task=15, Time=1.226396, write close start
+Test 0: Iter=0, Task=15, Time=1.229388, write close stop
+task 14 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=14, Time=0.042696, write open start
+Test 0: Iter=0, Task=14, Time=0.060435, write open stop
+Test 0: Iter=0, Task=14, Time=0.060435, write start
+Test 0: Iter=0, Task=14, Time=1.226397, write stop
+Test 0: Iter=0, Task=14, Time=1.226397, write close start
+Test 0: Iter=0, Task=14, Time=1.229450, write close stop
+task 24 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=24, Time=0.042696, write open start
+Test 0: Iter=0, Task=24, Time=0.060464, write open stop
+Test 0: Iter=0, Task=24, Time=0.060464, write start
+Test 0: Iter=0, Task=24, Time=1.226398, write stop
+Test 0: Iter=0, Task=24, Time=1.226398, write close start
+Test 0: Iter=0, Task=24, Time=1.229334, write close stop
+task 23 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=23, Time=0.042696, write open start
+Test 0: Iter=0, Task=23, Time=0.060471, write open stop
+Test 0: Iter=0, Task=23, Time=0.060471, write start
+Test 0: Iter=0, Task=23, Time=1.226398, write stop
+Test 0: Iter=0, Task=23, Time=1.226398, write close start
+Test 0: Iter=0, Task=23, Time=1.229228, write close stop
+task 22 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=22, Time=0.042697, write open start
+Test 0: Iter=0, Task=22, Time=0.060417, write open stop
+Test 0: Iter=0, Task=22, Time=0.060417, write start
+Test 0: Iter=0, Task=22, Time=1.226397, write stop
+Test 0: Iter=0, Task=22, Time=1.226398, write close start
+Test 0: Iter=0, Task=22, Time=1.229158, write close stop
+task 16 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=16, Time=0.042696, write open start
+Test 0: Iter=0, Task=16, Time=0.060353, write open stop
+Test 0: Iter=0, Task=16, Time=0.060353, write start
+Test 0: Iter=0, Task=16, Time=1.226397, write stop
+Test 0: Iter=0, Task=16, Time=1.226397, write close start
+Test 0: Iter=0, Task=16, Time=1.229312, write close stop
+task 20 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=20, Time=0.042696, write open start
+Test 0: Iter=0, Task=20, Time=0.060493, write open stop
+Test 0: Iter=0, Task=20, Time=0.060493, write start
+Test 0: Iter=0, Task=20, Time=1.226398, write stop
+Test 0: Iter=0, Task=20, Time=1.226398, write close start
+Test 0: Iter=0, Task=20, Time=1.229273, write close stop
+task 13 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=13, Time=0.042696, write open start
+Test 0: Iter=0, Task=13, Time=0.060432, write open stop
+Test 0: Iter=0, Task=13, Time=0.060432, write start
+Test 0: Iter=0, Task=13, Time=1.226397, write stop
+Test 0: Iter=0, Task=13, Time=1.226397, write close start
+Test 0: Iter=0, Task=13, Time=1.229180, write close stop
+task 50 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=50, Time=0.042697, write open start
+Test 0: Iter=0, Task=50, Time=0.060391, write open stop
+Test 0: Iter=0, Task=50, Time=0.060391, write start
+Test 0: Iter=0, Task=50, Time=1.226376, write stop
+Test 0: Iter=0, Task=50, Time=1.226376, write close start
+Test 0: Iter=0, Task=50, Time=1.229602, write close stop
+task 49 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=49, Time=0.042697, write open start
+Test 0: Iter=0, Task=49, Time=0.060499, write open stop
+Test 0: Iter=0, Task=49, Time=0.060499, write start
+Test 0: Iter=0, Task=49, Time=1.226368, write stop
+Test 0: Iter=0, Task=49, Time=1.226368, write close start
+Test 0: Iter=0, Task=49, Time=1.230003, write close stop
+task 44 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=44, Time=0.042697, write open start
+Test 0: Iter=0, Task=44, Time=0.060504, write open stop
+Test 0: Iter=0, Task=44, Time=0.060504, write start
+Test 0: Iter=0, Task=44, Time=1.226368, write stop
+Test 0: Iter=0, Task=44, Time=1.226368, write close start
+Test 0: Iter=0, Task=44, Time=1.229440, write close stop
+task 45 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=45, Time=0.042696, write open start
+Test 0: Iter=0, Task=45, Time=0.060411, write open stop
+Test 0: Iter=0, Task=45, Time=0.060411, write start
+Test 0: Iter=0, Task=45, Time=1.226368, write stop
+Test 0: Iter=0, Task=45, Time=1.226368, write close start
+Test 0: Iter=0, Task=45, Time=1.229594, write close stop
+task 40 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=40, Time=0.042696, write open start
+Test 0: Iter=0, Task=40, Time=0.060525, write open stop
+Test 0: Iter=0, Task=40, Time=0.060525, write start
+Test 0: Iter=0, Task=40, Time=1.226366, write stop
+Test 0: Iter=0, Task=40, Time=1.226366, write close start
+Test 0: Iter=0, Task=40, Time=1.229469, write close stop
+task 46 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=46, Time=0.042697, write open start
+Test 0: Iter=0, Task=46, Time=0.060413, write open stop
+Test 0: Iter=0, Task=46, Time=0.060413, write start
+Test 0: Iter=0, Task=46, Time=1.226368, write stop
+Test 0: Iter=0, Task=46, Time=1.226368, write close start
+Test 0: Iter=0, Task=46, Time=1.229623, write close stop
+task 48 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=48, Time=0.042696, write open start
+Test 0: Iter=0, Task=48, Time=0.060527, write open stop
+Test 0: Iter=0, Task=48, Time=0.060527, write start
+Test 0: Iter=0, Task=48, Time=1.226368, write stop
+Test 0: Iter=0, Task=48, Time=1.226368, write close start
+Test 0: Iter=0, Task=48, Time=1.229531, write close stop
+task 41 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=41, Time=0.042697, write open start
+Test 0: Iter=0, Task=41, Time=0.060490, write open stop
+Test 0: Iter=0, Task=41, Time=0.060490, write start
+Test 0: Iter=0, Task=41, Time=1.226367, write stop
+Test 0: Iter=0, Task=41, Time=1.226367, write close start
+Test 0: Iter=0, Task=41, Time=1.229574, write close stop
+task 47 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=47, Time=0.042696, write open start
+Test 0: Iter=0, Task=47, Time=0.060536, write open stop
+Test 0: Iter=0, Task=47, Time=0.060536, write start
+Test 0: Iter=0, Task=47, Time=1.226373, write stop
+Test 0: Iter=0, Task=47, Time=1.226374, write close start
+Test 0: Iter=0, Task=47, Time=1.229503, write close stop
+task 39 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=39, Time=0.042696, write open start
+Test 0: Iter=0, Task=39, Time=0.060575, write open stop
+Test 0: Iter=0, Task=39, Time=0.060575, write start
+Test 0: Iter=0, Task=39, Time=1.226367, write stop
+Test 0: Iter=0, Task=39, Time=1.226368, write close start
+Test 0: Iter=0, Task=39, Time=1.229440, write close stop
+task 51 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=51, Time=0.042697, write open start
+Test 0: Iter=0, Task=51, Time=0.060321, write open stop
+Test 0: Iter=0, Task=51, Time=0.060322, write start
+Test 0: Iter=0, Task=51, Time=1.226376, write stop
+Test 0: Iter=0, Task=51, Time=1.226377, write close start
+Test 0: Iter=0, Task=51, Time=1.229421, write close stop
+task 43 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=43, Time=0.042697, write open start
+Test 0: Iter=0, Task=43, Time=0.060426, write open stop
+Test 0: Iter=0, Task=43, Time=0.060426, write start
+Test 0: Iter=0, Task=43, Time=1.226368, write stop
+Test 0: Iter=0, Task=43, Time=1.226368, write close start
+Test 0: Iter=0, Task=43, Time=1.229485, write close stop
+task 42 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=42, Time=0.042697, write open start
+Test 0: Iter=0, Task=42, Time=0.060493, write open stop
+Test 0: Iter=0, Task=42, Time=0.060493, write start
+Test 0: Iter=0, Task=42, Time=1.226368, write stop
+Test 0: Iter=0, Task=42, Time=1.226368, write close start
+Test 0: Iter=0, Task=42, Time=1.229640, write close stop
+task 2 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=2, Time=0.042696, write open start
+Test 0: Iter=0, Task=2, Time=0.060482, write open stop
+Test 0: Iter=0, Task=2, Time=0.060482, write start
+Test 0: Iter=0, Task=2, Time=1.226390, write stop
+Test 0: Iter=0, Task=2, Time=1.226390, write close start
+Test 0: Iter=0, Task=2, Time=1.229860, write close stop
+task 12 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=12, Time=0.042696, write open start
+Test 0: Iter=0, Task=12, Time=0.060408, write open stop
+Test 0: Iter=0, Task=12, Time=0.060408, write start
+Test 0: Iter=0, Task=12, Time=1.226391, write stop
+Test 0: Iter=0, Task=12, Time=1.226391, write close start
+Test 0: Iter=0, Task=12, Time=1.229983, write close stop
+task 10 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=10, Time=0.042696, write open start
+Test 0: Iter=0, Task=10, Time=0.060521, write open stop
+Test 0: Iter=0, Task=10, Time=0.060521, write start
+Test 0: Iter=0, Task=10, Time=1.226391, write stop
+Test 0: Iter=0, Task=10, Time=1.226392, write close start
+Test 0: Iter=0, Task=10, Time=1.229842, write close stop
+task 11 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=11, Time=0.042697, write open start
+Test 0: Iter=0, Task=11, Time=0.060464, write open stop
+Test 0: Iter=0, Task=11, Time=0.060465, write start
+Test 0: Iter=0, Task=11, Time=1.226392, write stop
+Test 0: Iter=0, Task=11, Time=1.226392, write close start
+Test 0: Iter=0, Task=11, Time=1.229766, write close stop
+task 6 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=6, Time=0.042696, write open start
+Test 0: Iter=0, Task=6, Time=0.060489, write open stop
+Test 0: Iter=0, Task=6, Time=0.060489, write start
+Test 0: Iter=0, Task=6, Time=1.226391, write stop
+Test 0: Iter=0, Task=6, Time=1.226392, write close start
+Test 0: Iter=0, Task=6, Time=1.229670, write close stop
+task 9 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=9, Time=0.042696, write open start
+Test 0: Iter=0, Task=9, Time=0.060490, write open stop
+Test 0: Iter=0, Task=9, Time=0.060491, write start
+Test 0: Iter=0, Task=9, Time=1.226391, write stop
+Test 0: Iter=0, Task=9, Time=1.226391, write close start
+Test 0: Iter=0, Task=9, Time=1.229799, write close stop
+task 1 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=1, Time=0.042696, write open start
+Test 0: Iter=0, Task=1, Time=0.060562, write open stop
+Test 0: Iter=0, Task=1, Time=0.060562, write start
+Test 0: Iter=0, Task=1, Time=1.226389, write stop
+Test 0: Iter=0, Task=1, Time=1.226389, write close start
+Test 0: Iter=0, Task=1, Time=1.229588, write close stop
+task 7 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=7, Time=0.042696, write open start
+Test 0: Iter=0, Task=7, Time=0.060417, write open stop
+Test 0: Iter=0, Task=7, Time=0.060417, write start
+Test 0: Iter=0, Task=7, Time=1.226392, write stop
+Test 0: Iter=0, Task=7, Time=1.226392, write close start
+Test 0: Iter=0, Task=7, Time=1.229732, write close stop
+task 8 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=8, Time=0.042696, write open start
+Test 0: Iter=0, Task=8, Time=0.060481, write open stop
+Test 0: Iter=0, Task=8, Time=0.060481, write start
+Test 0: Iter=0, Task=8, Time=1.226391, write stop
+Test 0: Iter=0, Task=8, Time=1.226391, write close start
+Test 0: Iter=0, Task=8, Time=1.229789, write close stop
+Finished            : Mon Nov  9 10:32:10 2020
+key = cb_buffer_size            value = 16777216  
+key = romio_cb_read             value = enable    
+key = romio_cb_write            value = enable    
+key = cb_nodes                  value = 4         
+key = romio_no_indep_rw         value = true      
+key = romio_cb_pfr              value = disable   
+key = romio_cb_fr_types         value = aar       
+key = romio_cb_fr_alignment     value = 1         
+key = romio_cb_ds_threshold     value = 0         
+key = romio_cb_alltoall         value = automatic 
+key = ind_rd_buffer_size        value = 4194304   
+key = ind_wr_buffer_size        value = 524288    
+key = romio_ds_read             value = automatic 
+key = romio_ds_write            value = automatic 
+key = cb_config_list            value = *:1       
+key = romio_filesystem_type     value = GPFS: IBM GPFS
+key = romio_aggregator_list     value = 0 13 26 39 
+task 5 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=5, Time=0.042696, write open start
+Test 0: Iter=0, Task=5, Time=0.060525, write open stop
+Test 0: Iter=0, Task=5, Time=0.060525, write start
+Test 0: Iter=0, Task=5, Time=1.226392, write stop
+Test 0: Iter=0, Task=5, Time=1.226392, write close start
+Test 0: Iter=0, Task=5, Time=1.229670, write close stop
+task 4 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=4, Time=0.042696, write open start
+Test 0: Iter=0, Task=4, Time=0.060518, write open stop
+Test 0: Iter=0, Task=4, Time=0.060518, write start
+Test 0: Iter=0, Task=4, Time=1.226391, write stop
+Test 0: Iter=0, Task=4, Time=1.226392, write close start
+Test 0: Iter=0, Task=4, Time=1.229901, write close stop
+task 28 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=28, Time=0.042696, write open start
+Test 0: Iter=0, Task=28, Time=0.060304, write open stop
+Test 0: Iter=0, Task=28, Time=0.060304, write start
+Test 0: Iter=0, Task=28, Time=1.226393, write stop
+Test 0: Iter=0, Task=28, Time=1.226394, write close start
+Test 0: Iter=0, Task=28, Time=1.229676, write close stop
+task 36 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=36, Time=0.042696, write open start
+Test 0: Iter=0, Task=36, Time=0.060403, write open stop
+Test 0: Iter=0, Task=36, Time=0.060403, write start
+Test 0: Iter=0, Task=36, Time=1.226403, write stop
+Test 0: Iter=0, Task=36, Time=1.226403, write close start
+Test 0: Iter=0, Task=36, Time=1.229770, write close stop
+task 37 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=37, Time=0.042696, write open start
+Test 0: Iter=0, Task=37, Time=0.060416, write open stop
+Test 0: Iter=0, Task=37, Time=0.060416, write start
+Test 0: Iter=0, Task=37, Time=1.226405, write stop
+Test 0: Iter=0, Task=37, Time=1.226405, write close start
+Test 0: Iter=0, Task=37, Time=1.229283, write close stop
+task 32 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=32, Time=0.042696, write open start
+Test 0: Iter=0, Task=32, Time=0.060369, write open stop
+Test 0: Iter=0, Task=32, Time=0.060369, write start
+Test 0: Iter=0, Task=32, Time=1.226395, write stop
+Test 0: Iter=0, Task=32, Time=1.226396, write close start
+Test 0: Iter=0, Task=32, Time=1.229456, write close stop
+task 35 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=35, Time=0.042696, write open start
+Test 0: Iter=0, Task=35, Time=0.060409, write open stop
+Test 0: Iter=0, Task=35, Time=0.060409, write start
+Test 0: Iter=0, Task=35, Time=1.226395, write stop
+Test 0: Iter=0, Task=35, Time=1.226395, write close start
+Test 0: Iter=0, Task=35, Time=1.229477, write close stop
+task 34 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=34, Time=0.042696, write open start
+Test 0: Iter=0, Task=34, Time=0.060407, write open stop
+Test 0: Iter=0, Task=34, Time=0.060407, write start
+Test 0: Iter=0, Task=34, Time=1.226395, write stop
+Test 0: Iter=0, Task=34, Time=1.226395, write close start
+Test 0: Iter=0, Task=34, Time=1.229617, write close stop
+task 29 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=29, Time=0.042696, write open start
+Test 0: Iter=0, Task=29, Time=0.060474, write open stop
+Test 0: Iter=0, Task=29, Time=0.060474, write start
+Test 0: Iter=0, Task=29, Time=1.226395, write stop
+Test 0: Iter=0, Task=29, Time=1.226395, write close start
+Test 0: Iter=0, Task=29, Time=1.229583, write close stop
+task 26 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=26, Time=0.042697, write open start
+Test 0: Iter=0, Task=26, Time=0.060542, write open stop
+Test 0: Iter=0, Task=26, Time=0.060543, write start
+Test 0: Iter=0, Task=26, Time=1.226397, write stop
+Test 0: Iter=0, Task=26, Time=1.226397, write close start
+Test 0: Iter=0, Task=26, Time=1.229549, write close stop
+task 31 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=31, Time=0.042696, write open start
+Test 0: Iter=0, Task=31, Time=0.060470, write open stop
+Test 0: Iter=0, Task=31, Time=0.060470, write start
+Test 0: Iter=0, Task=31, Time=1.226395, write stop
+Test 0: Iter=0, Task=31, Time=1.226395, write close start
+Test 0: Iter=0, Task=31, Time=1.229043, write close stop
+task 33 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=33, Time=0.042696, write open start
+Test 0: Iter=0, Task=33, Time=0.060406, write open stop
+Test 0: Iter=0, Task=33, Time=0.060406, write start
+Test 0: Iter=0, Task=33, Time=1.226395, write stop
+Test 0: Iter=0, Task=33, Time=1.226395, write close start
+Test 0: Iter=0, Task=33, Time=1.229618, write close stop
+task 38 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=38, Time=0.042696, write open start
+Test 0: Iter=0, Task=38, Time=0.060462, write open stop
+Test 0: Iter=0, Task=38, Time=0.060462, write start
+Test 0: Iter=0, Task=38, Time=1.226396, write stop
+Test 0: Iter=0, Task=38, Time=1.226396, write close start
+Test 0: Iter=0, Task=38, Time=1.229301, write close stop
+task 30 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=30, Time=0.042696, write open start
+Test 0: Iter=0, Task=30, Time=0.060476, write open stop
+Test 0: Iter=0, Task=30, Time=0.060476, write start
+Test 0: Iter=0, Task=30, Time=1.226395, write stop
+Test 0: Iter=0, Task=30, Time=1.226395, write close start
+Test 0: Iter=0, Task=30, Time=1.229632, write close stop
+task 3 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=3, Time=0.042696, write open start
+Test 0: Iter=0, Task=3, Time=0.060387, write open stop
+Test 0: Iter=0, Task=3, Time=0.060387, write start
+Test 0: Iter=0, Task=3, Time=1.226390, write stop
+Test 0: Iter=0, Task=3, Time=1.226391, write close start
+Test 0: Iter=0, Task=3, Time=1.229552, write close stop
+task 27 writing ior_data/col_3_13_33575k_default_f
+Test 0: Iter=0, Task=27, Time=0.042697, write open start
+Test 0: Iter=0, Task=27, Time=0.060500, write open stop
+Test 0: Iter=0, Task=27, Time=0.060500, write start
+Test 0: Iter=0, Task=27, Time=1.226393, write stop
+Test 0: Iter=0, Task=27, Time=1.226393, write close start
+Test 0: Iter=0, Task=27, Time=1.229540, write close stop
