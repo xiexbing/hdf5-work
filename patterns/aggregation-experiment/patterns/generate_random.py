@@ -28,7 +28,7 @@ def generate_pattern():
                             core = np.random.randint(1, 32, 1)[0]
 
                         #data size per core
-                        per_size = math.ceil(size/core)
+                        per_size = int(math.ceil(size/core))
                         node_size = per_size *core
                         if node_size >= sizeMin and node_size <= sizeMax and node_size not in nodeSizes and per_size < 1024*1024:
                             nodeSizes.append(node_size)
@@ -50,7 +50,7 @@ def generate_hints(machine, node):
     for n in naggrs:
         for size in buffSizes:
             aggr = str(n)
-            bsize = str(size * unit)
+            bsize = str(int(size * unit))
             aggrLine = 'cb_nodes ' + aggr + '\n'
             sizeLine = 'cb_buffer_size ' + bsize + '\n'
             wLine = 'romio_cb_write enable' + '\n'

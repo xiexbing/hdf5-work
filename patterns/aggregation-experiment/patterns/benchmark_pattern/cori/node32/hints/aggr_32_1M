@@ -1,4 +1,0 @@
-cb_nodes 32
-cb_buffer_size 1048576
-romio_cb_write enable
-romio_cb_read enable
