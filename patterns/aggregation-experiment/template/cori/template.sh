@@ -1,10 +1,10 @@
 #!/bin/bash -l
 #SBATCH -N NNODE
-#SBATCH -p regular
+# #SBATCH -p regular
 # #SBATCH --qos=premium
-# #SBATCH -p debug
+#SBATCH -p debug
 #SBATCH -A m1248
-#SBATCH -t 02:00:00
+#SBATCH -t 00:20:00
 #SBATCH -C haswell
 #SBATCH -L SCRATCH # needs the parallel file system
 #SBATCH -J IOR_NNODEnode
@@ -45,8 +45,7 @@ ior(){
     local stripe_size=$4
  
     #check file size to determine alignment setting
-    tmpsize="${burst//k}"
-    size=${tmpsize%.*}
+    size="${burst//k}"
     fileSize=$(($size*$ncore*NNODE/1024))
 
     if [[ $fileSize -ge 16 ]]; then
