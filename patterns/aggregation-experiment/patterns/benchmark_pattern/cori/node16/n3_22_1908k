@@ -1,0 +1,11 @@
+
+for i in $(seq 1 1 3); do
+for ncore in '22'; do
+for burst in '1908k'; do
+for stripe_size in $stripe_sizes; do
+ior $i $ncore $burst $stripe_size
+done
+done
+done
+done
+echo n3_22_1908k done

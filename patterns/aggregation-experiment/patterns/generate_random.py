@@ -51,10 +51,19 @@ def generate_hints(machine, node):
         for size in buffSizes:
             aggr = str(n)
             bsize = str(int(size * unit))
-            aggrLine = 'cb_nodes ' + aggr + '\n'
-            sizeLine = 'cb_buffer_size ' + bsize + '\n'
-            wLine = 'romio_cb_write enable' + '\n'
-            rLine = 'romio_cb_read enable' + '\n'
+            if machine == 'summit':
+                aggrLine = 'cb_nodes ' + aggr + '\n'
+                sizeLine = 'cb_buffer_size ' + bsize + '\n'
+                wLine = 'romio_cb_write enable' + '\n'
+                rLine = 'romio_cb_read enable' + '\n'
+            else:
+                aggrLine = 'cb_nodes=' + aggr + ':'
+                sizeLine = 'cb_buffer_size=' + bsize + ':'
+                wLine = 'romio_cb_write=enable' + ':'
+                rLine = 'romio_cb_read=enable'
+
+
+
             name = 'aggr_' + aggr + '_' + str(size) + 'M'
             f = os.path.join(hdir, name)
             hf = open(f, 'a')
@@ -64,20 +73,6 @@ def generate_hints(machine, node):
             hf.write(rLine)
             hf.truncate()
             hf.close() 
-
-    aggrLine = 'cb_nodes ' + str(node) + '\n'
-    sizeLine = 'cb_buffer_size 16777216' + '\n'
-    wLine = 'romio_cb_write automatic' + '\n'
-    rLine = 'romio_cb_read automatic' + '\n'
-    name = 'default' 
-    f = os.path.join(hdir, name)
-    hf = open(f, 'a')
-    hf.write(aggrLine)
-    hf.write(sizeLine)
-    hf.write(wLine)
-    hf.write(rLine)
-    hf.truncate()
-    hf.close()
 
                         
 def generate_sizes():

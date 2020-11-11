@@ -1,0 +1,9 @@
+
+for i in $(seq 1 1 3); do
+for ncore in '38'; do
+for burst in '5626k'; do
+ior $i $ncore $burst
+done
+done
+done
+echo n4_38_5626k done
