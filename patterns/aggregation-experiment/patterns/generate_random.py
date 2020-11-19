@@ -50,18 +50,25 @@ def generate_hints(machine, node):
     for n in naggrs:
         for size in buffSizes:
             aggr = str(n)
-            bsize = str(int(size * unit))
+            bsize = str(size * unit)
+            if n > node:
+                per = int(n/node)
+            else:
+                per = 1
+
             if machine == 'summit':
                 aggrLine = 'cb_nodes ' + aggr + '\n'
                 sizeLine = 'cb_buffer_size ' + bsize + '\n'
                 wLine = 'romio_cb_write enable' + '\n'
                 rLine = 'romio_cb_read enable' + '\n'
+                listLine = 'cb_config_list ' + '*:' + str(per) + '\n'
             else:
                 aggrLine = 'cb_nodes=' + aggr + ':'
                 sizeLine = 'cb_buffer_size=' + bsize + ':'
                 wLine = 'romio_cb_write=enable' + ':'
-                rLine = 'romio_cb_read=enable'
-
+                rLine = 'romio_cb_read=enable' + ':'
+                listLine = 'cb_config_list=' + '*:' + str(per) + '\n'
+ 
 
 
             name = 'aggr_' + aggr + '_' + str(size) + 'M'
@@ -71,8 +78,24 @@ def generate_hints(machine, node):
             hf.write(sizeLine)
             hf.write(wLine)
             hf.write(rLine)
+            hf.write(listLine)
             hf.truncate()
             hf.close() 
+
+
+    aggrLine = 'cb_nodes ' + str(node) + '\n'
+    sizeLine = 'cb_buffer_size 16777216' + '\n'
+    wLine = 'romio_cb_write automatic' + '\n'
+    rLine = 'romio_cb_read automatic' + '\n'
+    name = 'default' 
+    f = os.path.join(hdir, name)
+    hf = open(f, 'a')
+    hf.write(aggrLine)
+    hf.write(sizeLine)
+    hf.write(wLine)
+    hf.write(rLine)
+    hf.truncate()
+    hf.close()
 
                         
 def generate_sizes():
@@ -102,7 +125,7 @@ def generate_sizes():
 
 def per_pattern(machine, sizeName, node, core, per_size):
 
-    name = sizeName + "_" + str(int(core)) + "_" + str(int(per_size)) + "k"
+    name = sizeName + "_" + str(core) + "_" + str(per_size) + "k"
     ndir = rdir + '/' + machine + '/node' + str(node) 
     
     if not os.path.isdir(ndir):

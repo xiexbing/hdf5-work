@@ -1,9 +1,0 @@
-
-for i in $(seq 1 1 3); do
-for ncore in '22'; do
-for burst in '4301k'; do
-ior $i $ncore $burst
-done
-done
-done
-echo n4_22_4301k done
