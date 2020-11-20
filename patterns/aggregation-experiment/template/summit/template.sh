@@ -26,8 +26,11 @@ export ROMIO_PRINT_HINTS=1
 half_aggr=$((NNODE/2))
 quat_aggr=$((NNODE/4))
 eqal_aggr=NNODE
+doul_aggr=$((NNODE*2))
+qudr_aggr=$((NNODE*4))
 
-naggrs="$eqal_aggr $half_aggr $quat_aggr"
+
+naggrs="$doul_aggr $qudr_aggr $eqal_aggr $half_aggr $quat_aggr"
 buff_sizes="1M 4M 16M 64M 256M"
 
 ior(){
@@ -53,62 +56,29 @@ ior(){
         ind_write(){
             #independent write
             #flush data in data transfer, before file close
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>$rdir/ind_${ncore}_${burst}_f --hdf5.collectiveMetadata 
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>$rdir/ind_${ncore}_${burst}_f 
         }
 
         col_write(){
             local naggr=$1
             local buffer=$2  
 
-            hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
-            if [[ ! -f $hfile ]]; then
-                cp hints/aggr_${naggr}_${buffer} $hfile  
-                list="cb_config_list "
-                if [[ $naggr -le NNODE ]]; then
-                    ag(){
-                        local na=$1
-                        rank=$((($na-1)*$ncore))
-                        list=$list" $rank"
-                    }
-                    for na in $(seq 1 1 $naggr); do
-                        ag $na
-                    done
-                else
-                    daggr=NNODE
-                    dg(){
-                        local na=$1
-                        inNode=$(($naggr/NNODE))
-                        per(){
-                            local p=$1
-                            n=$((($na-1)*$ncore))
-                            rank=$(($n+$p-1))
-                            list=$list" $rank"
-                        }
-                        for p in $(seq 1 1 $inNode); do
-                            per $p
-                        done
-                   }
-                   for na in $(seq 1 1 NNODE); do
-                       dg $na
-                   done
-                fi
-                echo $list>>$hfile
-            fi
+            hfile=$rdir/aggr_${naggr}_${buffer}
+            cp hints/aggr_${naggr}_${buffer} $hfile  
 
             #load romio hints
             export ROMIO_HINTS=$hfile
 
             #flush data in data transfer, before file close 
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_f --hdf5.collectiveMetadata
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_f
         }
 
         default_write(){
             #load romio hints
-            cp hints/default $rdir/.
-            export ROMIO_HINTS=$rdir/default
+            export ROMIO_HINTS=" "
 
             #flush data in data transfer, before file close 
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_f --hdf5.collectiveMetadata
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_f
         }
 
 
@@ -126,17 +96,16 @@ ior(){
     read(){
         ind_read(){
             #independent read
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>ind_${ncore}_${burst}_r --hdf5.collectiveMetadata     
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>ind_${ncore}_${burst}_r   
         }
 
         col_read(){ 
             local naggr=$1
             local buffer=$2  
 
-            hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
             #load romio hints
             export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_r --hdf5.collectiveMetadata      
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_r   
         }
         for naggr in $naggrs; do
             for buffer in $buff_sizes; do
@@ -146,8 +115,8 @@ ior(){
  
         default_read(){ 
             #load romio hints
-            export ROMIO_HINTS=$rdir/default
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_r --hdf5.collectiveMetadata       
+            export ROMIO_HINTS=" "
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_r     
         }
  
         for naggr in $naggrs; do
