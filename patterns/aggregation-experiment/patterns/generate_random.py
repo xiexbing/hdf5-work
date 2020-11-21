@@ -145,7 +145,7 @@ def per_pattern(machine, sizeName, node, core, per_size):
 
 
     doneline = "done" + '\n'
-    recordline = "echo " + name + " done" + '\n'
+    recordline = "echo " + name +">>complete" + '\n'
     ffile.write(iline)
     ffile.write(coreline)
     ffile.write(sizeline)

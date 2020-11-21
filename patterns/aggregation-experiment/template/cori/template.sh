@@ -122,8 +122,7 @@ ior(){
 
         default_write(){
             #load romio hints
-            cp hints/default $rdir/.
-            export ROMIO_HINTS=$rdir/default
+            export ROMIO_HINTS=""
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
@@ -173,7 +172,7 @@ ior(){
  
         default_read(){ 
             #load romio hints
-            export ROMIO_HINTS=$rdir/default
+            export ROMIO_HINTS=""
             let NPROC=NNODE*$ncore
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_r --hdf5.collectiveMetadata       
