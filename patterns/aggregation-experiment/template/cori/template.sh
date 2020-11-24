@@ -14,7 +14,7 @@
 module swap PrgEnv-gnu PrgEnv-intel
 
 CDIR=${SCRATCH}/ior_data
-EXEC=${HOME}/hdf5-work/ior/src/ior
+EXEC=${HOME}/hdf5-work/ior_mod/src/ior
 
 #enable darshan dxt trace 
 export MPICH_MPIIO_STATS=1
@@ -35,8 +35,6 @@ naggrs="$eqal_aggr $half_aggr $quat_aggr"
 buff_sizes="1M 4M 16M 64M 256M"
 stripe_sizes="1m 4m 16m 32m 64m"
 
-
-run_cmd="srun -N NNODE -n $ncore"
 
 ior(){
     local i=$1
@@ -66,8 +64,11 @@ ior(){
             #independent write
             #flush data in data transfer, before file close
             let NPROC=NNODE*$ncore
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata"
+            echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata 
+            # $cmd
+            $cmd &>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f
             export LD_PRELOAD=""
         }
 
@@ -78,7 +79,7 @@ ior(){
             hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
             if [[ ! -f $hfile ]]; then
                 cp hints/aggr_${naggr}_${buffer} $hfile  
-                list="cb_config_list "
+                list=":cb_config_list="
                 if [[ $naggr -le NNODE ]]; then
                     ag(){
                         local na=$1
@@ -107,27 +108,43 @@ ior(){
                        dg $na
                    done
                 fi
-                echo $list>>$hfile
+                # Tang commented out for Cori
+                # echo $list>>$hfile
             fi
 
             #load romio hints
-            export ROMIO_HINTS=$hfile
+            # export ROMIO_HINTS=$hfile
+            hvalue=`cat $hfile`
+            echo "$hvalue"
+            export MPICH_MPIIO_HINTS="*:$hvalue"
+            echo $MPICH_MPIIO_HINTS
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata"
+            echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata
+            # $cmd
+            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f
             export LD_PRELOAD=""
         }
 
         default_write(){
             #load romio hints
-            export ROMIO_HINTS=""
+            # cp hints/default $rdir/.
+            # export ROMIO_HINTS=$rdir/default
+            # hvalue=`cat $rdir/default`
+            # echo "$hvalue"
+            export MPICH_MPIIO_HINTS="*:"
+            echo $MPICH_MPIIO_HINTS
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata"
+            echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata
+            # $cmd
+            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_f
             export LD_PRELOAD=""
         }
 
@@ -147,8 +164,11 @@ ior(){
         ind_read(){
             #independent read
             let NPROC=NNODE*$ncore
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata"
+            echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>ind_${ncore}_${burst}_${stripe_size}_r --hdf5.collectiveMetadata     
+            # $cmd
+            $cmd &>>ind_${ncore}_${burst}_${stripe_size}_r
             export LD_PRELOAD=""
         }
 
@@ -158,10 +178,18 @@ ior(){
 
             hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
             #load romio hints
-            export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
+            # export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
+            hvalue=`cat $rdir/aggr_${naggr}_${buffer}`
+            echo "$hvalue"
+            export MPICH_MPIIO_HINTS="*:$hvalue"
+            echo $MPICH_MPIIO_HINTS
+
             let NPROC=NNODE*$ncore
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata"
+            echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_r --hdf5.collectiveMetadata      
+            # $cmd
+            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_r
             export LD_PRELOAD=""
         }
         for naggr in $naggrs; do
@@ -172,10 +200,18 @@ ior(){
  
         default_read(){ 
             #load romio hints
-            export ROMIO_HINTS=""
+            # export ROMIO_HINTS=$rdir/default
+            hvalue=`cat $rdir/default`
+            echo "$hvalue"
+            export MPICH_MPIIO_HINTS="*:$hvalue"
+            echo $MPICH_MPIIO_HINTS
+
             let NPROC=NNODE*$ncore
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata"
+            echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f&>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_r --hdf5.collectiveMetadata       
+            # $cmd
+            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_r
             export LD_PRELOAD=""
         }
  

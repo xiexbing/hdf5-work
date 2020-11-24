@@ -67,7 +67,7 @@ def generate_hints(machine, node):
                 sizeLine = 'cb_buffer_size=' + bsize + ':'
                 wLine = 'romio_cb_write=enable' + ':'
                 rLine = 'romio_cb_read=enable' + ':'
-                listLine = 'cb_config_list=' + '*:' + str(per) + '\n'
+                listLine = 'cb_config_list=' + '#*:' + str(per) + '\n'
  
 
 
