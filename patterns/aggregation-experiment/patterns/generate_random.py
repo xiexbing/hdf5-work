@@ -48,13 +48,13 @@ def generate_hints(machine, node):
     if not os.path.isdir(hdir):
         os.makedirs(hdir)
     for n in naggrs:
+        aggr = str(n)
+        if n > node:
+            per = int(n/node)
+        else:
+            per = 1
         for size in buffSizes:
-            aggr = str(n)
             bsize = str(size * unit)
-            if n > node:
-                per = int(n/node)
-            else:
-                per = 1
 
             if machine == 'summit':
                 aggrLine = 'cb_nodes ' + aggr + '\n'
@@ -62,20 +62,29 @@ def generate_hints(machine, node):
                 wLine = 'romio_cb_write enable' + '\n'
                 rLine = 'romio_cb_read enable' + '\n'
                 listLine = 'cb_config_list ' + '*:' + str(per) + '\n'
-            else:
-                aggrLine = 'cb_nodes=' + aggr + ':'
-                sizeLine = 'cb_buffer_size=' + bsize + ':'
-                wLine = 'romio_cb_write=enable' + ':'
-                rLine = 'romio_cb_read=enable' + ':'
-                listLine = 'cb_config_list=' + '#*:' + str(per) + '\n'
+                name = 'aggr_' + aggr + '_' + str(size) + 'M'
+                f = os.path.join(hdir, name)
+                hf = open(f, 'a')
+                hf.write(aggrLine)
+                hf.write(sizeLine)
+                hf.write(wLine)
+                hf.write(rLine)
+                hf.write(listLine)
+                hf.truncate()
+                hf.close() 
+
+        if machine == 'cori':
+            aggrLine = 'cb_nodes=' + aggr + ':'
+#           sizeLine = 'cb_buffer_size=' + bsize + ':'
+            wLine = 'romio_cb_write=enable' + ':'
+            rLine = 'romio_cb_read=enable' + ':'
+            listLine = 'cb_config_list=' + '#*:' + str(per) + '\n'
  
-
-
-            name = 'aggr_' + aggr + '_' + str(size) + 'M'
+            name = 'aggr_' + aggr 
             f = os.path.join(hdir, name)
             hf = open(f, 'a')
             hf.write(aggrLine)
-            hf.write(sizeLine)
+#           hf.write(sizeLine)
             hf.write(wLine)
             hf.write(rLine)
             hf.write(listLine)

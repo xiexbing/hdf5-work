@@ -30,10 +30,11 @@ export ROMIO_PRINT_HINTS=1
 half_aggr=$((NNODE/2))
 quat_aggr=$((NNODE/4))
 eqal_aggr=NNODE
+doul_aggr=$((NNODE*2))
+qudr_aggr=$((NNODE*4)
 
-naggrs="$eqal_aggr $half_aggr $quat_aggr"
-buff_sizes="1M 4M 16M 64M 256M"
-stripe_sizes="1m 4m 16m 32m 64m"
+naggrs="$doul_aggr $qudr_aggr $eqal_aggr $half_aggr $quat_aggr"
+stripe_sizes="1m 2m 4m 8m 16m 32m 64m 128m"
 
 
 ior(){
@@ -74,43 +75,9 @@ ior(){
 
         col_write(){
             local naggr=$1
-            local buffer=$2  
 
-            hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
-            if [[ ! -f $hfile ]]; then
-                cp hints/aggr_${naggr}_${buffer} $hfile  
-                list=":cb_config_list="
-                if [[ $naggr -le NNODE ]]; then
-                    ag(){
-                        local na=$1
-                        rank=$((($na-1)*$ncore))
-                        list=$list" $rank"
-                    }
-                    for na in $(seq 1 1 $naggr); do
-                        ag $na
-                    done
-                else
-                    daggr=NNODE
-                    dg(){
-                        local na=$1
-                        inNode=$(($naggr/NNODE))
-                        per(){
-                            local p=$1
-                            n=$((($na-1)*$ncore))
-                            rank=$(($n+$p-1))
-                            list=$list" $rank"
-                        }
-                        for p in $(seq 1 1 $inNode); do
-                            per $p
-                        done
-                   }
-                   for na in $(seq 1 1 NNODE); do
-                       dg $na
-                   done
-                fi
-                # Tang commented out for Cori
-                # echo $list>>$hfile
-            fi
+            hfile=$rdir/aggr_${naggr}
+            cp hints/aggr_${naggr} $hfile  
 
             #load romio hints
             # export ROMIO_HINTS=$hfile
@@ -121,11 +88,11 @@ ior(){
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata"
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_f --hdf5.collectiveMetadata"
             echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
-            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f
+            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_f
             export LD_PRELOAD=""
         }
 
@@ -150,9 +117,7 @@ ior(){
 
 
         for naggr in $naggrs; do
-            for buffer in $buff_sizes; do
-                col_write $naggr $buffer
-            done
+            col_write $naggr
         done
 
         default_write
@@ -174,36 +139,33 @@ ior(){
 
         col_read(){ 
             local naggr=$1
-            local buffer=$2  
+            local buffer=$stripe_size 
 
-            hfile=$rdir/aggr_${naggr}_${buffer}_${ncore}
+            hfile=$rdir/aggr_${naggr}
             #load romio hints
             # export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
-            hvalue=`cat $rdir/aggr_${naggr}_${buffer}`
+            hvalue=`cat $rdir/aggr_${naggr}`
             echo "$hvalue"
             export MPICH_MPIIO_HINTS="*:$hvalue"
             echo $MPICH_MPIIO_HINTS
 
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_f --hdf5.collectiveMetadata"
+            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_f --hdf5.collectiveMetadata"
             echo $cmd
             export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
-            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_${buffer}_r
+            $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_r
             export LD_PRELOAD=""
         }
         for naggr in $naggrs; do
-            for buffer in $buff_sizes; do
-                col_read $naggr $buffer
-            done
+            col_read $naggr
         done
  
         default_read(){ 
             #load romio hints
             # export ROMIO_HINTS=$rdir/default
-            hvalue=`cat $rdir/default`
-            echo "$hvalue"
-            export MPICH_MPIIO_HINTS="*:$hvalue"
+
+            export MPICH_MPIIO_HINTS="*:"
             echo $MPICH_MPIIO_HINTS
 
             let NPROC=NNODE*$ncore
@@ -216,9 +178,7 @@ ior(){
         }
  
         for naggr in $naggrs; do
-            for buffer in $buff_sizes; do
-                col_read $naggr $buffer
-            done
+            col_read $naggr
         done
     
         default_read
