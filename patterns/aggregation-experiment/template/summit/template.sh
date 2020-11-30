@@ -107,11 +107,6 @@ ior(){
             export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
             jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_r   
         }
-        for naggr in $naggrs; do
-            for buffer in $buff_sizes; do
-                col_read $naggr $buffer
-            done
-        done
  
         default_read(){ 
             #load romio hints

@@ -157,9 +157,6 @@ ior(){
             $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_r
             export LD_PRELOAD=""
         }
-        for naggr in $naggrs; do
-            col_read $naggr
-        done
  
         default_read(){ 
             #load romio hints
