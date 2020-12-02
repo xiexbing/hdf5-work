@@ -1,10 +1,11 @@
 #!/bin/bash -l
 #SBATCH -N NNODE
-# #SBATCH -p regular
 # #SBATCH --qos=premium
-#SBATCH -p debug
 #SBATCH -A m1248
-#SBATCH -t 00:20:00
+# #SBATCH -p debug
+# #SBATCH -t 00:30:00
+#SBATCH -p regular
+#SBATCH -t 01:00:00
 #SBATCH -C haswell
 #SBATCH -L SCRATCH # needs the parallel file system
 #SBATCH -J IOR_NNODEnode
@@ -31,11 +32,12 @@ half_aggr=$((NNODE/2))
 quat_aggr=$((NNODE/4))
 eqal_aggr=NNODE
 doul_aggr=$((NNODE*2))
-qudr_aggr=$((NNODE*4)
+qudr_aggr=$((NNODE*4))
 
 naggrs="$doul_aggr $qudr_aggr $eqal_aggr $half_aggr $quat_aggr"
 stripe_sizes="1m 2m 4m 8m 16m 32m 64m 128m"
 
+date
 
 ior(){
     local i=$1
