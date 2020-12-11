@@ -4,7 +4,7 @@ import shutil
 import math
 
 
-machines = ['summit', 'cori']
+machines = ['summit', 'cori', 'theta']
 nodes = [4, 8, 16, 32]
 per_set = 20
 rdir = "benchmark_pattern"
@@ -26,6 +26,8 @@ def generate_pattern():
                             core = np.random.randint(1, 42, 1)[0]
                         elif machine == 'cori':                    
                             core = np.random.randint(1, 32, 1)[0]
+                        elif machine == 'theta':                    
+                            core = np.random.randint(1, 64, 1)[0]
 
                         #data size per core
                         per_size = int(math.ceil(size/core))
@@ -73,7 +75,7 @@ def generate_hints(machine, node):
                 hf.truncate()
                 hf.close() 
 
-        if machine == 'cori':
+        if machine == 'cori' or machine == 'theta':
             aggrLine = 'cb_nodes=' + aggr + ':'
 #           sizeLine = 'cb_buffer_size=' + bsize + ':'
             wLine = 'romio_cb_write=enable' + ':'
@@ -158,7 +160,7 @@ def per_pattern(machine, sizeName, node, core, per_size):
     ffile.write(iline)
     ffile.write(coreline)
     ffile.write(sizeline)
-    if machine == 'cori':
+    if machine == 'cori' or machine == 'theta':
         ffile.write(stripeLine)
     if machine == 'summit':
         ffile.write(iorline)
@@ -167,7 +169,7 @@ def per_pattern(machine, sizeName, node, core, per_size):
     ffile.write(doneline)
     ffile.write(doneline)
     ffile.write(doneline)
-    if machine == 'cori':
+    if machine == 'cori' or machine == 'theta':
         ffile.write(doneline)
     ffile.write(recordline)
 
