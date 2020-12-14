@@ -4,7 +4,7 @@ import shutil
 import math
 
 
-machines = ['summit', 'cori']
+machines = ['summit', 'cori', 'theta']
 nodes = [4, 8, 16, 32]
 per_set = 20
 rdir = "benchmark_pattern"
@@ -13,12 +13,13 @@ def generate_pattern():
 
     for machine in machines:
         for node in nodes:
-            sizeGroups = generate_sizes() 
+            sizeGroups = generate_sizes(machine) 
             nodeSizes = []
 
-            for sizeSum in sizeGroups:
+            for p, sizeSum in enumerate(sizeGroups):
                 [sizeGroup, sizeRange, sizeName] = sizeSum
                 [sizeMin, sizeMax] = sizeRange 
+                print (machine, node, sizeName)
                 for i, size in enumerate(sizeGroup):
                     confirm = 0
                     while confirm == 0:
@@ -26,14 +27,24 @@ def generate_pattern():
                             core = np.random.randint(1, 42, 1)[0]
                         elif machine == 'cori':                    
                             core = np.random.randint(1, 32, 1)[0]
+                        elif machine == 'theta':                    
+                            core = np.random.randint(1, 64, 1)[0]
+
 
                         #data size per core
                         per_size = int(math.ceil(size/core))
                         node_size = per_size *core
-                        if node_size >= sizeMin and node_size <= sizeMax and node_size not in nodeSizes and per_size < 1024*1024:
-                            nodeSizes.append(node_size)
-                            per_pattern(machine, sizeName, node, core, per_size)
-                            confirm = 1
+                        if p <6: 
+                            if node_size >= sizeMin and node_size <= sizeMax and node_size not in nodeSizes and per_size < 1024*1024:
+                                nodeSizes.append(node_size)
+                                per_pattern(machine, sizeName, node, core, per_size)
+                                confirm = 1
+                        else:
+                            if node_size >= sizeMin and node_size <= sizeMax and node_size not in nodeSizes:
+                                nodeSizes.append(node_size)
+                                per_pattern(machine, sizeName, node, core, per_size)
+                                confirm = 1
+ 
 
             generate_hints(machine, node)    
 
@@ -73,7 +84,7 @@ def generate_hints(machine, node):
                 hf.truncate()
                 hf.close() 
 
-        if machine == 'cori':
+        if machine == 'cori' or machine == 'theta':
             aggrLine = 'cb_nodes=' + aggr + ':'
 #           sizeLine = 'cb_buffer_size=' + bsize + ':'
             wLine = 'romio_cb_write=enable' + ':'
@@ -107,7 +118,7 @@ def generate_hints(machine, node):
     hf.close()
 
                         
-def generate_sizes():
+def generate_sizes(machine):
 
     #aggregate size per node 1KB --- 4MB (4096KB) 
     n1 = np.random.randint(1, 4*1024, per_set)
@@ -127,8 +138,28 @@ def generate_sizes():
     #aggregate size per node 1024*1024+1 KB --- 4GB (4*1024*1024KB) 
     n6 = np.random.randint(1024*1024+1, 4*1024*1024, per_set)
 
+    #aggregate size per node 1024*1024+1 KB --- 4GB (4*1024*1024KB) 
+    n6 = np.random.randint(1024*1024+1, 4*1024*1024, per_set)
 
-    node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'] ]
+    #aggregate size per node 4*1024*1024+1 KB --- 60GB (60*1024*1024KB) 
+    if machine == 'summit':
+        n7 = np.random.randint(4*1024*1024+1, 60*1024*1024, per_set)
+    elif machine == 'theta':
+        n7 = np.random.randint(4*1024*1024+1, 20*1024*1024, per_set)
+    elif machine == 'cori':
+        n7 = np.random.randint(4*1024*1024+1, 13*1024*1024, per_set)
+
+
+
+
+    if machine == 'summit':
+        node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 60*1024*1024], 'n7']]
+    elif machine == 'theta':
+        node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 20*1024*1024], 'n7']]
+    elif machine == 'cori':
+        node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 13*1024*1024], 'n7']]
+
+
 
     return node_sizes
 
@@ -158,7 +189,7 @@ def per_pattern(machine, sizeName, node, core, per_size):
     ffile.write(iline)
     ffile.write(coreline)
     ffile.write(sizeline)
-    if machine == 'cori':
+    if machine == 'cori' or machine == 'theta':
         ffile.write(stripeLine)
     if machine == 'summit':
         ffile.write(iorline)

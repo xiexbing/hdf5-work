@@ -1,0 +1,1 @@
+cb_nodes=4:romio_cb_write=enable:romio_cb_read=enable:cb_config_list=#*:1

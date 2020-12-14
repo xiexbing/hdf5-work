@@ -1,0 +1,9 @@
+
+for i in $(seq 1 1 3); do
+for ncore in '12'; do
+for burst in '254104k'; do
+ior $i $ncore $burst
+done
+done
+done
+echo n6_12_254104k>>complete
