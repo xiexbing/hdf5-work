@@ -1,21 +1,19 @@
 #!/bin/bash -l
-#SBATCH -N NNODE
-# #SBATCH --qos=premium
-#SBATCH -A m1248
-# #SBATCH -p debug
-# #SBATCH -t 00:30:00
-#SBATCH -p regular
-#SBATCH -t 01:00:00
-#SBATCH -C haswell
-#SBATCH -L SCRATCH # needs the parallel file system
-#SBATCH -J IOR_NNODEnode
-#SBATCH -o o%j.ior_NNODEnode
-#SBATCH -e o%j.ior_NNODEnode
+#COBALT -n ALLOCNODE
+#COBALT -q MYQUEUE
+#COBALT -t 1:00:00
+#COBALT --attrs mcdram=cache:numa=quad 
+#COBALT -A CSC250STDM10
+#COBALT -O o$COBALT_JOBID.ior_NNODEnode
 
-module swap PrgEnv-gnu PrgEnv-intel
 
-CDIR=${SCRATCH}/ior_data
-EXEC=${HOME}/hdf5-work/ior_mod/src/ior
+module load cray-hdf5-parallel
+module load darshan
+
+# DARSHAN_PRELOAD=/lus/theta-fs0/software/perftools/darshan/darshan-3.2.1/lib/libdarshan.so
+
+CDIR=/projects/CSC250STDM10/tang/ior_data
+EXEC=/gpfs/mira-home/houjun/hdf5-work/ior_mod/src/ior
 
 #enable darshan dxt trace 
 export MPICH_MPIIO_STATS=1
@@ -67,12 +65,10 @@ ior(){
             #independent write
             #flush data in data transfer, before file close
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata"
+            cmd="aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata"
             echo $cmd
-            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
             $cmd &>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f
-            export LD_PRELOAD=""
         }
 
         col_write(){
@@ -90,12 +86,10 @@ ior(){
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_f --hdf5.collectiveMetadata"
+            cmd="aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_f --hdf5.collectiveMetadata"
             echo $cmd
-            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
             $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_f
-            export LD_PRELOAD=""
         }
 
         default_write(){
@@ -109,12 +103,10 @@ ior(){
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata"
+            cmd="aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata"
             echo $cmd
-            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
             $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_f
-            export LD_PRELOAD=""
         }
 
 
@@ -131,12 +123,10 @@ ior(){
         ind_read(){
             #independent read
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata"
+            cmd="aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f --hdf5.collectiveMetadata"
             echo $cmd
-            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
             $cmd &>>ind_${ncore}_${burst}_${stripe_size}_r
-            export LD_PRELOAD=""
         }
 
         col_read(){ 
@@ -152,12 +142,10 @@ ior(){
             echo $MPICH_MPIIO_HINTS
 
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_f --hdf5.collectiveMetadata"
+            cmd="aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_${naggr}_f --hdf5.collectiveMetadata"
             echo $cmd
-            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
             $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_${naggr}_r
-            export LD_PRELOAD=""
         }
  
         default_read(){ 
@@ -168,12 +156,10 @@ ior(){
             echo $MPICH_MPIIO_HINTS
 
             let NPROC=NNODE*$ncore
-            cmd="srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata"
+            cmd="aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${stripe_size}_default_f --hdf5.collectiveMetadata"
             echo $cmd
-            export LD_PRELOAD=/global/common/cori_cle7/software/darshan/3.1.7/lib/libdarshan.so
             # $cmd
             $cmd &>>$rdir/col_${ncore}_${burst}_${stripe_size}_default_r
-            export LD_PRELOAD=""
         }
  
         for naggr in $naggrs; do

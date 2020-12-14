@@ -29,7 +29,10 @@ def generate_pattern():
                             core = np.random.randint(1, 32, 1)[0]
                         elif machine == 'theta':                    
                             core = np.random.randint(1, 64, 1)[0]
+<<<<<<< HEAD
 
+=======
+>>>>>>> 99fee8aefe3d06ce22cd09689d44e9da590d505a
 
                         #data size per core
                         per_size = int(math.ceil(size/core))
@@ -198,7 +201,7 @@ def per_pattern(machine, sizeName, node, core, per_size):
     ffile.write(doneline)
     ffile.write(doneline)
     ffile.write(doneline)
-    if machine == 'cori':
+    if machine == 'cori' or machine == 'theta':
         ffile.write(doneline)
     ffile.write(recordline)
 

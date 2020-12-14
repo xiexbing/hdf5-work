@@ -2,17 +2,14 @@
 
 
 nodes="4"
-user=houhun
-num_running_jobs=30
-
-
-
+user=$USER
+num_running_jobs=1
 
 cdir=~/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern/
-machine=cori
+machine=theta
 idir=$cdir/$machine
 #determine how many jobs in the queue
-count=`sqs|grep $USER|wc -l`
+count=`qstat|grep $USER|wc -l`
 curr_dir=`pwd`
 
 first_submit=1
@@ -48,6 +45,20 @@ node(){
             local name=${per}_${timestamp}.sh
 
             cp template.sh $name
+
+	    if [ "$node" -gt "16" ]
+	    then 
+		sed -i "s/ALLOCNODE/128/g" $name 
+		sed -i "s/NNODE/$node/g" $name 
+		sed -i "s/MYQUEUE/default/g" $name 
+	    else
+		sed -i "s/ALLOCNODE/$node/g" $name 
+		sed -i "s/NNODE/$node/g" $name 
+		sed -i "s/MYQUEUE/debug-cache-quad/g" $name 
+	    fi
+
+
+
             cat $pdir/$per>>$name
             sed -i -e "s/NNODE/$node/g" ${name}
             echo "echo \"====Done====\"" >> $name
@@ -57,10 +68,10 @@ node(){
                 # Submit first job w/o dependency
                 echo "Submitting $name"
                 first_submit=0
-                job=`sbatch $name`
+                job=`qsub $name`
             elif [[ $count -lt $num_running_jobs ]]; then
-                echo "Submitting $name after ${job: -8}"
-                job=`sbatch -d afterany:${job: -8} $name`
+                echo "Submitting $name after ${job: -6}"
+                job=`qsub --dependencies ${job: -6} $name`
             fi
             count=$(($count+1))
  

@@ -1,9 +1,0 @@
-
-for i in $(seq 1 1 3); do
-for ncore in '8'; do
-for burst in '627k'; do
-ior $i $ncore $burst
-done
-done
-done
-echo n2_8_627k>>complete
