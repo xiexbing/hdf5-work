@@ -8,9 +8,10 @@
 #BSUB -o o%J.ior_NNODEnode
 #BSUB -e o%J.ior_NNODEnode
 
-CDIR=ior_data
 EXEC=/gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior
 LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:$LD_LIBRARY_PATH
+module load darshan-runtime/3.2.1
+
 
 #enable darshan dxt trace 
 export MPICH_MPIIO_STATS=1
@@ -33,6 +34,12 @@ qudr_aggr=$((NNODE*4))
 naggrs="$doul_aggr $qudr_aggr $eqal_aggr $half_aggr $quat_aggr"
 buff_sizes="1M 4M 16M 64M 256M"
 
+#target repetitions
+target_repetitions=9
+per_write=3
+total_write=0
+check=0
+
 ior(){
     local i=$1
     local ncore=$2
@@ -41,6 +48,11 @@ ior(){
     #check file size to determine alignment setting
     size="${burst//k}"
     fileSize=$(($size*$ncore*NNODE/1024))
+    CDIR=ior_data/ior_${ncore}_${burst}
+
+    if [[ ! -d $CDIR ]]; then
+        mkdir -p $CDIR
+    fi
 
     if [[ $fileSize -ge 16 ]]; then
         align=16m
@@ -48,17 +60,26 @@ ior(){
         align=1m
     fi
 
+    #check read/write repetitions, target: 9 repetitions
+    read_line="${ncore}_${burst} r"
+    total_line=${ncore}_${burst}
+    total_count=0
+    read_count=0
+
+    read_count=`cat complete|grep "$read_line"|wc -l`
+    total_count=`cat complete|grep "$total_line"|wc -l`
+    
+
     rdir=result_${ncore}_${burst}
-    mkdir -p $rdir 
-    mkdir -p $CDIR
- 
-    write(){
+    mkdir -p $rdir
+    write_count=$((($total_count-$read_count)*$per_write+${total_write}))
+
+    ior_write(){
         ind_write(){
             #independent write
             #flush data in data transfer, before file close
             jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>$rdir/ind_${ncore}_${burst}_f 
         }
-
         col_write(){
             local naggr=$1
             local buffer=$2  
@@ -80,8 +101,6 @@ ior(){
             #flush data in data transfer, before file close 
             jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_f
         }
-
-
         for naggr in $naggrs; do
             for buffer in $buff_sizes; do
                 col_write $naggr $buffer
@@ -92,43 +111,70 @@ ior(){
         ind_write
     }
     
-
-    read(){
+    ior_read(){
         ind_read(){
             #independent read
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -Z -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>ind_${ncore}_${burst}_r   
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -o $CDIR/ind_${i}_${ncore}_${burst}_f&>>$rdir/ind_${ncore}_${burst}_r   
         }
-
         col_read(){ 
             local naggr=$1
             local buffer=$2  
 
             #load romio hints
             export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_r   
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_r   
         }
  
         default_read(){ 
             #load romio hints
             export ROMIO_HINTS=" "
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -Z -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_r     
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $CDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_r     
         }
- 
+
+
         for naggr in $naggrs; do
             for buffer in $buff_sizes; do
                 col_read $naggr $buffer
             done
         done
-    
+
         default_read
         ind_read
-  
     }
+    
+    if [[ $read_count -lt $target_repetitions ]]; then
+        if [[ -f $CDIR/ind_${i}_${ncore}_${burst}_f && $check -ne 2 ]]; then
+            ior_read 
+            echo $read_line>>complete
+            read_count=$(($read_count+1))
+            check=1
+        fi 
+    fi
 
-    write
-    read
+ 
+    if [[ $check -eq 0 || $check -eq 2 ]]; then
+        if [[ $write_count -lt $target_repetitions ]]; then
+           ior_write
+           write_count=$(($write_count+1))
+           total_write=$(($total_write+1))
+           check=2
+        elif [[ $read_count -lt $target_repetitions && $i -eq 1 ]]; then
+            ior_write
+            write_count=$(($write_count+1))
+            total_write=$(($total_write+1))
+            check=2 
+        fi
+    fi
 
-    #clean the run
-    rm -rf $CDIR
+    if [[ $total_write -eq $per_write ]]; then
+        echo $total_line>>complete
+    fi 
+
+    if [[ $read_count -ge $target_repetitions ]]; then
+        rm -rf $CDIR
+    fi
+   
+    echo "bing, read count, $read_count, write count, $write_count, total write, $total_write" 
+
 }
 
