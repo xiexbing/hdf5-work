@@ -1,19 +1,19 @@
 #!/bin/bash
 
 
-nodes="4"
-user=bing
+nodes="8"
+user=$USER
 
 repetitions=9
 per_write=3
 
-cdir=/ccs/home/bing/hdf5/ior-aggregation/patterns/benchmark_pattern
+cdir=/gpfs/alpine/csc300/world-shared/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern
 machine=summit
 idir=$cdir/$machine
 #determine how many jobs in the queue
 count=`bjobs|grep $user|grep IOR|wc -l`
 curr_dir=`pwd`
-num_running_jobs=7
+num_running_jobs=20
 
 
 

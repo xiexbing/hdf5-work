@@ -1,5 +1,5 @@
 #!/bin/bash -l
-#BSUB -P stf008 
+#BSUB -P CSC300
 #BSUB -W 2:00
 #BSUB -nnodes NNODE
 ##BSUB -w ended(PREVJOBID)
@@ -8,7 +8,7 @@
 #BSUB -o o%J.ior_NNODEnode
 #BSUB -e o%J.ior_NNODEnode
 
-EXEC=/gpfs/alpine/stf008/scratch/bing/ior_mod/src/ior
+EXEC=/gpfs/alpine/csc300/world-shared/hdf5-work/ior_mod/src/ior
 LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:$LD_LIBRARY_PATH
 module load darshan-runtime/3.2.1
 
@@ -48,7 +48,7 @@ ior(){
     #check file size to determine alignment setting
     size="${burst//k}"
     fileSize=$(($size*$ncore*NNODE/1024))
-    CDIR=ior_data/ior_${ncore}_${burst}
+    CDIR=/gpfs/alpine/scratch/houjun/csc300/ior_data/ior_${ncore}_${burst}
 
     if [[ ! -d $CDIR ]]; then
         mkdir -p $CDIR
