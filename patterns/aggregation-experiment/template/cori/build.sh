@@ -1,69 +1,106 @@
 #!/bin/bash
 
-
 nodes="4"
-user=houhun
-num_running_jobs=30
+user=$USER
 
+repetitions=9
+per_write=3
 
-
-
-cdir=~/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern/
+cdir=$CFS/m1248/tang/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern/
 machine=cori
 idir=$cdir/$machine
 #determine how many jobs in the queue
-count=`sqs|grep $USER|wc -l`
+count=`sqs|grep $user|grep IOR|wc -l`
 curr_dir=`pwd`
+num_running_jobs=20
 
-first_submit=1
 node(){
     local node=$1
     ndir=node${node}
     pdir=$idir/$ndir
+    
+    #delete the echo line in template script
+    delete(){
+        local t=$1
+        if [[ -f $pdir/$t ]]; then
+            sed -i "/echo/d" $pdir/$t
+        fi
+    }
+    for t in `ls $pdir`; do
+        delete $t
+    done
+
+
     mkdir -p $ndir
     cp -rf $pdir/hints $ndir/.
     cp template.sh $ndir/.
+    touch $ndir/complete
 
     patterns=`ls $pdir|sed "s/hints//"`   
     cd $ndir
 
     #check completed pattern
-    complete=`cat complete`
+    complete=`cat complete|wc -l`
 
     pattern(){
         local per=$1
-        local num=0
-        check_complete(){
-            local record=$1
-            if [[ "$record" == "$per" ]]; then
-                num=$(($num + 1)) 
-            fi
-        }
-        for record in $complete; do
-            check_complete $record
-        done
-
-        if [[ $num -lt 3 ]]; then
-            local timestamp=`date +%s`
-            local name=${per}_${timestamp}.sh
-
-            cp template.sh $name
-            cat $pdir/$per>>$name
-            sed -i -e "s/NNODE/$node/g" ${name}
-            echo "echo \"====Done====\"" >> $name
-            echo "date" >> $name
-
-            if [[ $first_submit == 1 ]]; then
-                # Submit first job w/o dependency
-                echo "Submitting $name"
-                first_submit=0
-                job=`sbatch $name`
-            elif [[ $count -lt $num_running_jobs ]]; then
-                echo "Submitting $name after ${job: -8}"
-                job=`sbatch -d afterany:${job: -8} $name`
-            fi
-            count=$(($count+1))
+        core=`echo $per | cut -d'_' -f 2`
+        size=`echo $per | cut -d'_' -f 3`
+        CDIR=ior_data/ior_${core}_${size}
  
+        if [[ $count -lt $num_running_jobs ]]; then
+            local total_count=0
+            local read_count=0
+            check_complete(){
+                local i=$1
+                local record=`sed -n ${i}p complete`
+                setting="${core}_${size}"
+                total_line=$setting
+                read_line="${setting} r"
+                echo "$total_line, $record"
+                if [[ $record == *"$total_line"* ]]; then
+                    total_count=$(($total_count+1)) 
+                fi
+
+                if [[ $record == *"$read_line"* ]]; then
+                    read_count=$(($read_count+1)) 
+                fi
+            }
+            for i in $(seq 1 1 $complete); do
+                check_complete $i
+            done
+
+            write_count=$((($total_count-$read_count)*$per_write))
+            echo "write count $write_count; read count $read_count"
+
+            if [[ $write_count -lt $repetitions || $read_count -lt $repetitions ]]; then
+                local timestamp=`date +%s`
+                local name=${per}_${timestamp}.sh
+
+                cp template.sh $name
+                cat $pdir/$per>>$name
+                # echo "rm -rf /tmp/jsm.login1.4069">>${name}
+                sed -i -e "s/NNODE/$node/g" ${name}
+
+                last=`sqs|grep $user|grep "IOR"|tail -1|awk '{print $1}'`
+                if [[ -z $last ]]; then
+                    echo "Submitting $per in node${node}"
+                    # bsub ${name}
+                    job=`sbatch $name`
+                    count=$(($count+1))
+                else
+                    echo "Submitting $per in node${node}"
+                    # bsub ${name}
+                    job=`sbatch -d afterany:${job: -8} $name`
+                    count=$(($count+1))
+                fi
+            fi
+
+            if [[ $write_count -ge $repetitions && $read_count -ge $repetitions ]]; then
+                if [[ -d $CDIR ]]; then
+                    rm -rf $CDIR
+                fi
+            fi
         fi
     }   
     for per in $patterns; do
