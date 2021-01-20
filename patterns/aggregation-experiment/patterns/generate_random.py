@@ -29,10 +29,7 @@ def generate_pattern():
                             core = np.random.randint(1, 32, 1)[0]
                         elif machine == 'theta':                    
                             core = np.random.randint(1, 64, 1)[0]
-<<<<<<< HEAD
 
-=======
->>>>>>> 99fee8aefe3d06ce22cd09689d44e9da590d505a
 
                         #data size per core
                         per_size = int(math.ceil(size/core))
@@ -176,24 +173,24 @@ def per_pattern(machine, sizeName, node, core, per_size):
     fname = os.path.join(ndir, name) 
     ffile = open(fname, 'a')
 
-    iline = '\n' + "for i in $(seq 1 1 3); do" + '\n'
+    iline = '\n' + "for i in $(seq 1 1 1); do" + '\n'
     score = "'" + str(core) + "'"
     coreline = "for ncore in " + score + "; do" + '\n'
     ssize = "'" + str(per_size) + "k" + "'"
     sizeline = "for burst in " + ssize + "; do" + '\n'
-    stripeLine = "for stripe_size in $stripe_sizes; do" + '\n'
+#    stripeLine = "for stripe_size in $stripe_sizes; do" + '\n'
 
     iorline = "ior $i $ncore $burst" + '\n'
-    coriline = "ior $i $ncore $burst $stripe_size" + '\n'
+    coriline = "ior $i $ncore $burst" + '\n'
 
 
     doneline = "done" + '\n'
-    recordline = "echo " + name +">>complete" + '\n'
+#    recordline = "echo " + name +">>complete" + '\n'
     ffile.write(iline)
     ffile.write(coreline)
     ffile.write(sizeline)
-    if machine == 'cori' or machine == 'theta':
-        ffile.write(stripeLine)
+#    if machine == 'cori' or machine == 'theta':
+#        ffile.write(stripeLine)
     if machine == 'summit':
         ffile.write(iorline)
     else:
@@ -201,9 +198,9 @@ def per_pattern(machine, sizeName, node, core, per_size):
     ffile.write(doneline)
     ffile.write(doneline)
     ffile.write(doneline)
-    if machine == 'cori' or machine == 'theta':
-        ffile.write(doneline)
-    ffile.write(recordline)
+#    if machine == 'cori' or machine == 'theta':
+#        ffile.write(doneline)
+#    ffile.write(recordline)
 
          
 

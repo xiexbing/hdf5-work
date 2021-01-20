@@ -19,18 +19,6 @@ node(){
     ndir=node${node}
     pdir=$idir/$ndir
     
-    #delete the echo line in template script
-    delete(){
-        local t=$1
-        if [[ -f $pdir/$t ]]; then
-            sed -i "/echo/d" $pdir/$t
-        fi
-    }
-    for t in `ls $pdir`; do
-        delete $t
-    done
-
-
     mkdir -p $ndir
     cp -rf $pdir/hints $ndir/.
     cp template.sh $ndir/.
@@ -40,37 +28,17 @@ node(){
     cd $ndir
 
     #check completed pattern
-    complete=`cat complete|wc -l`
-
     pattern(){
         local per=$1
         core=`echo $per | cut -d'_' -f 2`
         size=`echo $per | cut -d'_' -f 3`
-        CDIR=ior_data/ior_${core}_${size}
  
         if [[ $count -lt $num_running_jobs ]]; then
-            local total_count=0
-            local read_count=0
-            check_complete(){
-                local i=$1
-                local record=`sed -n ${i}p complete`
-                setting="${core}_${size}"
-                total_line=$setting
-                read_line="${setting} r"
-                echo "$total_line, $record"
-                if [[ $record == *"$total_line"* ]]; then
-                    total_count=$(($total_count+1)) 
-                fi
+            read_line="${core}_${size} r"
+            write_line="${core}_${size} w"
+	    read_count=`cat complete|grep "$read_line"|wc -l`
+	    write_count=`cat complete|grep "$write_line"|wc -l`
 
-                if [[ $record == *"$read_line"* ]]; then
-                    read_count=$(($read_count+1)) 
-                fi
-            }
-            for i in $(seq 1 1 $complete); do
-                check_complete $i
-            done
-
-            write_count=$((($total_count-$read_count)*$per_write))
             echo "write count $write_count; read count $read_count"
 
             if [[ $write_count -lt $repetitions || $read_count -lt $repetitions ]]; then
@@ -89,18 +57,13 @@ node(){
                     job=`sbatch $name`
                     count=$(($count+1))
                 else
-                    echo "Submitting $per in node${node}"
+                    echo "Submitting $per in node${node} after $job"
                     # bsub ${name}
                     job=`sbatch -d afterany:${job: -8} $name`
                     count=$(($count+1))
                 fi
             fi
 
-            if [[ $write_count -ge $repetitions && $read_count -ge $repetitions ]]; then
-                if [[ -d $CDIR ]]; then
-                    rm -rf $CDIR
-                fi
-            fi
         fi
     }   
     for per in $patterns; do
