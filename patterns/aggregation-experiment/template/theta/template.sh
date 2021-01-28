@@ -8,7 +8,6 @@
 
 
 # LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:$LD_LIBRARY_PATH
-module load cray-hdf5-parallel
 module load darshan
 
 EXEC=/gpfs/mira-home/houjun/hdf5-work/ior_mod/src/ior
@@ -95,9 +94,7 @@ ior(){
 	    fi
 
 	    let NPROC=NNODE*$ncore
-            export LD_PRELOAD=/usr/common/software/darshan/3.2.1/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f 
-            export LD_PRELOAD=""
+            aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -e -w -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_f 
         }
 
         col_write(){
@@ -117,9 +114,7 @@ ior(){
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
-            export LD_PRELOAD=/usr/common/software/darshan/3.2.1/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${stripe_size}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${stripe_size}_f
-            export LD_PRELOAD=""
+            aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${stripe_size}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${stripe_size}_f
         }
 
         default_write(){
@@ -130,9 +125,7 @@ ior(){
 
             #flush data in data transfer, before file close 
             let NPROC=NNODE*$ncore
-            export LD_PRELOAD=/usr/common/software/darshan/3.2.1/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $DDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_f
-            export LD_PRELOAD=""
+            aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $DDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_f
         }
 
 
@@ -157,9 +150,7 @@ ior(){
             CDIR=/projects/CSC250STDM10/tang/ior_data/ior_${ncore}_${burst}_${stripe_size}
 
 	    let NPROC=NNODE*$ncore
-            export LD_PRELOAD=/usr/common/software/darshan/3.2.1/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_r   
-            export LD_PRELOAD=""
+            aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -r -o $CDIR/ind_${i}_${ncore}_${burst}_${stripe_size}_f&>>$rdir/ind_${ncore}_${burst}_${stripe_size}_r   
         }
         col_read(){ 
             local naggr=$1
@@ -175,9 +166,7 @@ ior(){
             echo $MPICH_MPIIO_HINTS
 
             let NPROC=NNODE*$ncore
-            export LD_PRELOAD=/usr/common/software/darshan/3.2.1/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${stripe_size}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${stripe_size}_r   
-            export LD_PRELOAD=""
+            aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${stripe_size}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${stripe_size}_r   
         }
  
         default_read(){ 
@@ -187,9 +176,7 @@ ior(){
             echo $MPICH_MPIIO_HINTS
 
             let NPROC=NNODE*$ncore
-            export LD_PRELOAD=/usr/common/software/darshan/3.2.1/lib/libdarshan.so
-            srun -N NNODE -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $DDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_r     
-            export LD_PRELOAD=""
+            aprun -N $ncore -n $NPROC $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $DDIR/col_${i}_${ncore}_${burst}_default_f&>>$rdir/col_${ncore}_${burst}_default_r     
         }
 
 
