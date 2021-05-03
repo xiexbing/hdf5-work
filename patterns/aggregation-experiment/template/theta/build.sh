@@ -62,7 +62,7 @@ node(){
 
 
 
-                last=`sqs|grep $user|grep "IOR"|tail -1|awk '{print $1}'`
+                last=`qstat|grep $user|grep "IOR"|tail -1|awk '{print $1}'`
                 if [[ -z $last ]]; then
                     echo "Submitting $per in node${node}"
                     # bsub ${name}
