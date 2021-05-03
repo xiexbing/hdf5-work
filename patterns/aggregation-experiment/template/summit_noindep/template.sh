@@ -33,6 +33,7 @@ qudr_aggr=$((NNODE*4))
 
 naggrs="$doul_aggr $qudr_aggr $eqal_aggr $half_aggr $quat_aggr"
 buff_sizes="1M 4M 16M 64M 256M"
+no_indeps="true false"
 
 #target repetitions
 target_repetitions=9
@@ -83,15 +84,16 @@ ior(){
         col_write(){
             local naggr=$1
             local buffer=$2  
+            local noindep=$3
 
-            hfile=$rdir/aggr_${naggr}_${buffer}
-            cp hints/aggr_${naggr}_${buffer} $hfile  
+            hfile=$rdir/aggr_${naggr}_${buffer}_noindep${noindep}
+            cp hints/aggr_${naggr}_${buffer}_noindep${noindep} $hfile  
 
             #load romio hints
             export ROMIO_HINTS=$hfile
 
             #flush data in data transfer, before file close 
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_f
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -e -w -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_noindep${noindep}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_noindep${noindep}_f
         }
 
         default_write(){
@@ -103,7 +105,9 @@ ior(){
         }
         for naggr in $naggrs; do
             for buffer in $buff_sizes; do
-                col_write $naggr $buffer
+                for no_indep in $no_indeps; do
+                    col_write $naggr $buffer $no_indep
+                done
             done
         done
 
@@ -119,10 +123,11 @@ ior(){
         col_read(){ 
             local naggr=$1
             local buffer=$2  
+            local noindep=$3
 
             #load romio hints
-            export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}
-            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_r   
+            export ROMIO_HINTS=$rdir/aggr_${naggr}_${buffer}_noindep${noindep}
+            jsrun -n NNODE -r 1 -a $ncore -c $ncore $EXEC -b $burst -t $burst -i 1 -v -v -v -k -a HDF5 -J $align -c -r -o $CDIR/col_${i}_${ncore}_${burst}_${naggr}_${buffer}_noindep${noindep}_f&>>$rdir/col_${ncore}_${burst}_${naggr}_${buffer}_noindep${noindep}_r   
         }
  
         default_read(){ 
@@ -134,7 +139,9 @@ ior(){
 
         for naggr in $naggrs; do
             for buffer in $buff_sizes; do
-                col_read $naggr $buffer
+                for no_indep in $no_indeps; do
+                    col_read $naggr $buffer $no_indep
+                done
             done
         done
 
