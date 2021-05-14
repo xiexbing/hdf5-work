@@ -3,6 +3,7 @@ i=0
 while [ true ];
 do
     echo "Submission $i"
+    ./test.sh
     ./build.sh
     date
 

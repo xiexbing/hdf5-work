@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -N NNODE
 # #SBATCH --qos=premium
-#SBATCH -A m1248
+#SBATCH -A m2621
 #SBATCH -p debug
 #SBATCH -t 00:30:00
 ##SBATCH -p regular
@@ -19,7 +19,8 @@ fi
 EXEC=$CFS/m1248/tang/hdf5-work/ior_mod/src/ior
 # LD_LIBRARY_PATH=/gpfs/alpine/csc300/world-shared/gnu_build/hdf5-1.10.6.mod/build/hdf5/lib:$LD_LIBRARY_PATH
 module unload darshan
-module load darshan/3.2.1
+# module load darshan/3.2.1
+module load darshan
 
 #enable darshan dxt trace 
 export MPICH_MPIIO_STATS=1
@@ -217,7 +218,7 @@ ior(){
     if [[ $read_count -lt $target_repetitions ]]; then
         if [[ -f $DDIR/col_${i}_${ncore}_${burst}_default_f && $check -ne 2 ]]; then
             ior_read 
-            echo $read_line>>complete
+#           echo $read_line>>complete
             read_count=$(($read_count+1))
             check=1
         fi 
@@ -228,12 +229,12 @@ ior(){
         if [[ $write_count -lt $target_repetitions ]]; then
            ior_write
            write_count=$(($write_count+1))
-           echo $write_line>>complete
+#           echo $write_line>>complete
            check=2
         elif [[ $read_count -lt $target_repetitions && $i -eq 1 ]]; then
             ior_write
             write_count=$(($write_count+1))
-            echo $write_line>>complete
+#            echo $write_line>>complete
             check=2 
         fi
     fi

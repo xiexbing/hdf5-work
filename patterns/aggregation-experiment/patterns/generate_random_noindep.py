@@ -6,8 +6,9 @@ import math
 
 machines = ['summit', 'cori', 'theta']
 nodes = [4, 8, 16, 32]
-per_set = 20
-rdir = "benchmark_pattern"
+per_set = 2
+# per_set = 20
+rdir = "benchmark_pattern_noindep"
 
 def generate_pattern():
 
@@ -70,24 +71,23 @@ def generate_hints(machine, node):
             if machine == 'summit':
                 for size in buffSizes:
                     bsize = str(size * unit)
-
-                        aggrLine = 'cb_nodes ' + aggr + '\n'
-                        sizeLine = 'cb_buffer_size ' + bsize + '\n'
-                        wLine = 'romio_cb_write enable' + '\n'
-                        rLine = 'romio_cb_read enable' + '\n'
-                        listLine = 'cb_config_list ' + '*:' + str(per) + '\n'
-                        indepLine = 'romio_no_indep_rw ' + indep + '\n'
-                        name = 'aggr_' + aggr + '_' + str(size) + 'M'
-                        f = os.path.join(hdir, name)
-                        hf = open(f, 'a')
-                        hf.write(aggrLine)
-                        hf.write(sizeLine)
-                        hf.write(wLine)
-                        hf.write(rLine)
-                        hf.write(listLine)
-                        hf.write(indepLine)
-                        hf.truncate()
-                        hf.close() 
+                    aggrLine = 'cb_nodes ' + aggr + '\n'
+                    sizeLine = 'cb_buffer_size ' + bsize + '\n'
+                    wLine = 'romio_cb_write enable' + '\n'
+                    rLine = 'romio_cb_read enable' + '\n'
+                    listLine = 'cb_config_list ' + '*:' + str(per) + '\n'
+                    indepLine = 'romio_no_indep_rw ' + indep + '\n'
+                    name = 'aggr_' + aggr + '_' + str(size) + 'M' + '_noindep' + indep
+                    f = os.path.join(hdir, name)
+                    hf = open(f, 'a')
+                    hf.write(aggrLine)
+                    hf.write(sizeLine)
+                    hf.write(wLine)
+                    hf.write(rLine)
+                    hf.write(listLine)
+                    hf.write(indepLine)
+                    hf.truncate()
+                    hf.close() 
 
             if machine == 'cori' or machine == 'theta':
                 aggrLine = 'cb_nodes=' + aggr + ':'
@@ -95,8 +95,9 @@ def generate_hints(machine, node):
                 wLine = 'romio_cb_write=enable' + ':'
                 rLine = 'romio_cb_read=enable' + ':'
                 listLine = 'cb_config_list=' + '#*:' + str(per) + '\n'
+                indepLine = 'romio_no_indep_rw ' + indep + '\n'
      
-                name = 'aggr_' + aggr 
+                name = 'aggr_' + aggr + '_noindep' + indep
                 f = os.path.join(hdir, name)
                 hf = open(f, 'a')
                 hf.write(aggrLine)
@@ -104,6 +105,7 @@ def generate_hints(machine, node):
                 hf.write(wLine)
                 hf.write(rLine)
                 hf.write(listLine)
+                hf.write(indepLine)
                 hf.truncate()
                 hf.close() 
 
@@ -128,41 +130,44 @@ def generate_sizes(machine):
     #aggregate size per node 1KB --- 4MB (4096KB) 
     n1 = np.random.randint(1, 4*1024, per_set)
 
-    #aggregate size per node 4097KB --- 16MB (16*1024KB) 
-    n2 = np.random.randint(4*1024+1, 16*1024, per_set)
+    # #aggregate size per node 4097KB --- 16MB (16*1024KB) 
+    # n2 = np.random.randint(4*1024+1, 16*1024, per_set)
 
-    #aggregate size per node 16*1024+1 KB --- 64MB (64*1024KB)
-    n3 = np.random.randint(16*1024+1, 64*1024, per_set)
+    # #aggregate size per node 16*1024+1 KB --- 64MB (64*1024KB)
+    # n3 = np.random.randint(16*1024+1, 64*1024, per_set)
 
-    #aggregate size per node 64*1024+1 KB --- 256MB (256*1024KB) 
-    n4 = np.random.randint(64*1024+1, 256*1024, per_set)
+    # #aggregate size per node 64*1024+1 KB --- 256MB (256*1024KB) 
+    # n4 = np.random.randint(64*1024+1, 256*1024, per_set)
 
-    #aggregate size per node 256*1024+1 KB --- 1GB (1024*1024KB) 
-    n5 = np.random.randint(256*1024+1, 1024*1024, per_set)
+    # #aggregate size per node 256*1024+1 KB --- 1GB (1024*1024KB) 
+    # n5 = np.random.randint(256*1024+1, 1024*1024, per_set)
 
-    #aggregate size per node 1024*1024+1 KB --- 4GB (4*1024*1024KB) 
-    n6 = np.random.randint(1024*1024+1, 4*1024*1024, per_set)
+    # #aggregate size per node 1024*1024+1 KB --- 4GB (4*1024*1024KB) 
+    # n6 = np.random.randint(1024*1024+1, 4*1024*1024, per_set)
 
-    #aggregate size per node 1024*1024+1 KB --- 4GB (4*1024*1024KB) 
-    n6 = np.random.randint(1024*1024+1, 4*1024*1024, per_set)
+    # #aggregate size per node 1024*1024+1 KB --- 4GB (4*1024*1024KB) 
+    # n6 = np.random.randint(1024*1024+1, 4*1024*1024, per_set)
 
-    #aggregate size per node 4*1024*1024+1 KB --- 60GB (60*1024*1024KB) 
+    # #aggregate size per node 4*1024*1024+1 KB --- 60GB (60*1024*1024KB) 
+    # if machine == 'summit':
+    #     n7 = np.random.randint(4*1024*1024+1, 60*1024*1024, per_set)
+    # elif machine == 'theta':
+    #     n7 = np.random.randint(4*1024*1024+1, 20*1024*1024, per_set)
+    # elif machine == 'cori':
+    #     n7 = np.random.randint(4*1024*1024+1, 13*1024*1024, per_set)
+
+
+
+
     if machine == 'summit':
-        n7 = np.random.randint(4*1024*1024+1, 60*1024*1024, per_set)
+        node_sizes = [[n1, [1, 4*1024], 'n1']]
+# , [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 60*1024*1024], 'n7']
     elif machine == 'theta':
-        n7 = np.random.randint(4*1024*1024+1, 20*1024*1024, per_set)
+        node_sizes = [[n1, [1, 4*1024], 'n1']]
+# , [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 20*1024*1024], 'n7']
     elif machine == 'cori':
-        n7 = np.random.randint(4*1024*1024+1, 13*1024*1024, per_set)
-
-
-
-
-    if machine == 'summit':
-        node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 60*1024*1024], 'n7']]
-    elif machine == 'theta':
-        node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 20*1024*1024], 'n7']]
-    elif machine == 'cori':
-        node_sizes = [[n1, [1, 4*1024], 'n1'], [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 13*1024*1024], 'n7']]
+        node_sizes = [[n1, [1, 4*1024], 'n1']]
+# , [n2, [4*1024+1, 16*1024], 'n2'],  [n3, [16*1024+1, 64*1024], 'n3'],  [n4, [64*1024+1, 256*1024], 'n4'],  [n5, [256*1024+1, 1024*1024], 'n5'],  [n6, [1024*1024+1, 4*1024*1024], 'n6'], [n7, [4*1024*1024+1, 13*1024*1024], 'n7']
 
 
 

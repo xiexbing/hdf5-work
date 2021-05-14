@@ -1,6 +1,6 @@
 #!/bin/bash
 
-nodes="4"
+nodes="8"
 user=$USER
 
 repetitions=9
@@ -10,9 +10,9 @@ cdir=$CFS/m1248/tang/hdf5-work/patterns/aggregation-experiment/patterns/benchmar
 machine=cori
 idir=$cdir/$machine
 #determine how many jobs in the queue
-count=`sqs|grep $user|grep IOR|wc -l`
+count=`sqs|grep $user|grep debug_hsw|wc -l`
 curr_dir=`pwd`
-num_running_jobs=20
+num_running_jobs=5
 
 node(){
     local node=$1
