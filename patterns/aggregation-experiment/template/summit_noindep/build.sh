@@ -1,13 +1,13 @@
 #!/bin/bash
 
 
-nodes="8"
+nodes="4"
 user=$USER
 
 repetitions=9
 per_write=3
 
-cdir=/gpfs/alpine/csc300/world-shared/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern
+cdir=/gpfs/alpine/csc300/world-shared/hdf5-work/patterns/aggregation-experiment/patterns/benchmark_pattern_noindep
 machine=summit
 idir=$cdir/$machine
 #determine how many jobs in the queue
